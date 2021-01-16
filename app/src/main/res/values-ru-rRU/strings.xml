@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Global errors -->
+    <string name="global_errors.server_error.text">Ошибка на сервере</string>
+    <string name="global_errors.internet_connection_error.text">Интернет не подключен</string>
+    <!-- Global errors -->
+
+    <!-- Description Fragment -->
+    <string name="description_fragment.description.text">TradeMate - помощник в вашей работе. Это набор полезных функций, связанных с понятным интерфейсом. Давайте начнём!</string>
+    <string name="description_fragment.description_btn.text">Начать</string>
+    <!-- Description Fragment -->
+
+    <!-- Start Using Activity -->
+    <string name="choice_activity.sign_up_company_btn.text">Зарегистрировать компанию</string>
+    <string name="choice_activity.log_in_company_btn.text">Войти как компания</string>
+    <string name="choice_activity.log_in_merchandiser_btn.text">Войти как мерчендайзер</string>
+    <!-- Start Using Activity -->
+
+    <!-- Sign Up Company Activity -->
+    <string name="sign_up_company_activity.sign_up_tv.text">Зарегистрировать компанию</string>
+    <string name="sign_up_company_activity.name_et.hint">Название</string>
+    <string name="sign_up_company_activity.password_et.hint">Пароль</string>
+    <string name="sign_up_company_activity.sign_up_btn.text">Готово</string>
+    <!-- Errors -->
+        <string name="sign_up_company_activity.password_is_unreliable_error.text">Пароль не надёжен</string>
+        <string name="sign_up_company_activity.empty_fields_error.text">Вы должны заполнить все поля</string>
+        <string name="sign_up_company_activity.company_exist_error.text">Такая компания уже существует</string>]
+        <string name="sign_up_company_activity.incorrect_email_error.text">Email некорректен</string>
+    <!-- Sign Up Company Activity -->
+
+    <!-- Log In Company Activity -->
+    <string name="log_in_company_activity.log_in_tv.text">Войти как компания</string>
+    <string name="log_in_company_activity.password_et.hint">Пароль</string>
+    <string name="log_in_company_activity.log_in_btn.text">Войти</string>
+    <!-- Errors -->
+        <string name="log_in_company_activity.empty_fields_error.text">Вы должны заполнить все поля</string>
+        <string name="log_in_company_activity.company_was_not_found_error.text">Компания с таким email не существует</string>
+        <string name="log_in_company_activity.wrong_password_error.text">Пароль неверный</string>
+    <!-- Log In Company Activity -->
+</resources>

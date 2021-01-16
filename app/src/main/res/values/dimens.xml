@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding">30dp</dimen>
+
+    <!-- Description Fragment -->
+    <dimen name="description_fragment.description.text_size">18sp</dimen>
+    <!-- Description Fragment -->
+
+    <!-- Start Using Activity -->
+    <dimen name="choice_activity.sign_up_company_btn.text_size">18sp</dimen>
+    <dimen name="choice_activity.log_in_company_btn.text_size">18sp</dimen>
+    <dimen name="choice_activity.log_in_merchandiser_btn.text_size">18sp</dimen>
+    <!-- Start Using Activity -->
+
+    <!-- Sign Up Company Activity -->
+    <dimen name="sign_up_company_activity.sign_up.text_size">26sp</dimen>
+    <dimen name="sign_up_company_activity.error_tv.text_size">16sp</dimen>
+    <!-- Sign Up Company Activity -->
+
+    <!-- Log In Company Activity -->
+    <dimen name="log_in_company_activity.log_in.text_size">26sp</dimen>
+    <dimen name="log_in_company_activity.error_tv.text_size">16sp</dimen>
+    <!-- Log In Company Activity -->
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
