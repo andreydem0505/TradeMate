@@ -11,8 +11,6 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 
-import static android.app.Activity.RESULT_OK;
-
 public class DescriptionFragment extends Fragment implements View.OnClickListener {
 
     @Override

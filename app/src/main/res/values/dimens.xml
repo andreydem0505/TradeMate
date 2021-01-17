@@ -6,6 +6,12 @@
     <dimen name="description_fragment.description.text_size">18sp</dimen>
     <!-- Description Fragment -->
 
+    <!-- Company Fragment -->
+    <dimen name="company_fragment.company_name.text_size">26sp</dimen>
+    <dimen name="company_fragment.usual.text_size">18sp</dimen>
+    <dimen name="company_fragment.padding">20dp</dimen>
+    <!-- Company Fragment -->
+
     <!-- Start Using Activity -->
     <dimen name="choice_activity.sign_up_company_btn.text_size">18sp</dimen>
     <dimen name="choice_activity.log_in_company_btn.text_size">18sp</dimen>

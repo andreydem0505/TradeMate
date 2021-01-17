@@ -6,12 +6,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.os.Environment;
 
-import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
@@ -32,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
             Fragment descriptionFragment = new DescriptionFragment();
             transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.fragment, descriptionFragment);
+            transaction.commit();
+        } else if (spe.getString("type").equals("company")) {
+            Bundle bundle = new Bundle();
+            bundle.putString("companyName", spe.getString("name"));
+            Fragment companyFragment = new CompanyFragment();
+            companyFragment.setArguments(bundle);
+            transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment, companyFragment);
             transaction.commit();
         }
     }

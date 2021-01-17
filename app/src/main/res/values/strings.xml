@@ -47,14 +47,7 @@
     <string name="log_in_company_activity.empty_fields_error.text">You have to fill all fields</string>
     <string name="log_in_company_activity.company_was_not_found_error.text">Company with this email isn`t exist</string>
     <string name="log_in_company_activity.wrong_password_error.text">Wrong password</string>
-    <string name="title_activity_company">CompanyActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- Log In Company Activity -->
+
+
 </resources>
