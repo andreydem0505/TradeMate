@@ -15,4 +15,9 @@ public class JsonEngine {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         return jo.get(arg).getAsString();
     }
+
+    public int getIntegerFromJson(String json, String arg) {
+        JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
+        return jo.get(arg).getAsInt();
+    }
 }

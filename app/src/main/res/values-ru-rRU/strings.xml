@@ -11,6 +11,10 @@
     <string name="description_fragment.description_btn.text">Начать</string>
     <!-- Description Fragment -->
 
+    <!-- Main Activity -->
+    <string name="main_activity.employees_quantity.text">Мерчендайзеров в компании: %1$d</string>
+    <!-- Main Activity -->
+
     <!-- Start Using Activity -->
     <string name="choice_activity.sign_up_company_btn.text">Зарегистрировать компанию</string>
     <string name="choice_activity.log_in_company_btn.text">Войти как компания</string>

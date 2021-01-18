@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
+        android:id="@+id/company_fragment.employees_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/company_fragment.usual.text_size"

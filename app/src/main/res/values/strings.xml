@@ -19,6 +19,10 @@
     <string name="description_fragment.description_btn.text">Start</string>
     <!-- Description Fragment -->
 
+    <!-- Main Activity -->
+    <string name="main_activity.employees_quantity.text">Merchandisers in company: %1$d</string>
+    <!-- Main Activity -->
+
     <!-- Start Using Activity -->
     <string name="choice_activity.sign_up_company_btn.text">Sign up as company</string>
     <string name="choice_activity.log_in_company_btn.text">Log in as company</string>

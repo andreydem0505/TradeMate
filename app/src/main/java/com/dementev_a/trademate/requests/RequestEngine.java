@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 public class RequestEngine {
     public static boolean isConnectedToInternet(Context context) {
@@ -30,6 +31,26 @@ public class RequestEngine {
         os.write(input, 0, input.length);
         if (urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
             return null;
+        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8));
+        StringBuilder response = new StringBuilder();
+        String responseLine;
+        while ((responseLine = br.readLine()) != null) {
+            response.append(responseLine.trim());
+        }
+        return response.toString();
+    }
+
+    @SafeVarargs
+    public static String makeGetRequest(String address, Map<String, String>... headers) throws IOException {
+        URL url = new URL(address);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Accept", "application/json");
+        if (headers.length == 1) {
+            for (String key : headers[0].keySet()) {
+                urlConnection.setRequestProperty(key, headers[0].get(key));
+            }
         }
         BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8));
         StringBuilder response = new StringBuilder();

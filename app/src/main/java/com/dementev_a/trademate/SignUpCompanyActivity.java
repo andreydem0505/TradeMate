@@ -78,7 +78,8 @@ public class SignUpCompanyActivity extends AppCompatActivity {
                         case "Email is incorrect":
                             return R.string.sign_up_company_activity_incorrect_email_error_text;
                     }
-                }
+                } else
+                    return R.string.global_errors_server_error_text;
             } catch (IOException e) {
                 return R.string.global_errors_server_error_text;
             }
