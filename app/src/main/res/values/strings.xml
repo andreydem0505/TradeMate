@@ -4,6 +4,7 @@
     <!-- Global errors -->
     <string name="global_errors.server_error.text">An error on the server</string>
     <string name="global_errors.internet_connection_error.text">Internet isn`t connected</string>
+    <string name="global_errors.empty_fields_error.text">You have to fill all fields</string>
     <!-- Global errors -->
 
     <!-- Shared Preferences -->
@@ -21,6 +22,7 @@
 
     <!-- Main Activity -->
     <string name="main_activity.employees_quantity.text">Merchandisers in company: %1$d</string>
+    <string name="main_activity.add_merchandiser_btn.text">Add</string>
     <!-- Main Activity -->
 
     <!-- Start Using Activity -->
@@ -37,7 +39,6 @@
     <string name="sign_up_company_activity.sign_up_btn.text">Sign up</string>
     <!-- Errors -->
     <string name="sign_up_company_activity.password_is_unreliable_error.text">Password is unreliable</string>
-    <string name="sign_up_company_activity.empty_fields_error.text">You have to fill all fields</string>
     <string name="sign_up_company_activity.company_exist_error.text">Such company is already exist</string>
     <string name="sign_up_company_activity.incorrect_email_error.text">Email is incorrect</string>
     <!-- Sign Up Company Activity -->
@@ -48,10 +49,19 @@
     <string name="log_in_company_activity.password_et.hint">Password</string>
     <string name="log_in_company_activity.log_in_btn.text">Log in</string>
     <!-- Errors -->
-    <string name="log_in_company_activity.empty_fields_error.text">You have to fill all fields</string>
     <string name="log_in_company_activity.company_was_not_found_error.text">Company with this email isn`t exist</string>
     <string name="log_in_company_activity.wrong_password_error.text">Wrong password</string>
     <!-- Log In Company Activity -->
 
-
+    <!-- Add Merchandiser Activity -->
+    <string name="add_merchandiser_activity.add_merchandiser_tv.text">Add merchandiser</string>
+    <string name="add_merchandiser_activity.name_et.hint">Name</string>
+    <string name="add_merchandiser_activity.email_et.hint" translatable="false">Email</string>
+    <string name="add_merchandiser_activity.password_et.hint">Password</string>
+    <string name="add_merchandiser_activity.compute_btn.text">Sign up</string>
+    <!-- Errors -->
+    <string name="add_merchandiser_activity.password_is_unreliable_error.text">Password is unreliable</string>
+    <string name="add_merchandiser_activity.merchandiser_exist_error.text">Such merchandiser is already exist</string>
+    <string name="add_merchandiser_activity.incorrect_email_error.text">Email is incorrect</string>
+    <!-- Add Merchandiser Activity -->
 </resources>

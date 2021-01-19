@@ -12,17 +12,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:textColor="@color/black"
         android:textSize="@dimen/company_fragment.company_name.text_size"
+        android:text="Google"
         android:paddingBottom="30dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/company_fragment.company_name">
 
     <TextView
         android:id="@+id/company_fragment.employees_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/company_fragment.usual.text_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/company_fragment.company_name"/>
+        android:text="Some text is here: 38" />
+
+    <Button
+        android:id="@+id/add_merchandiser_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_activity.add_merchandiser_btn.text"
+        android:backgroundTint="@color/green" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

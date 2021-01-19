@@ -41,7 +41,7 @@ public class LogInCompanyActivity extends AppCompatActivity {
         @Override
         protected Integer doInBackground(Void... voids) {
             if (TextUtils.isEmpty(emailET.getText().toString()) || TextUtils.isEmpty(passwordET.getText().toString())) {
-                return R.string.sign_up_company_activity_empty_fields_error_text;
+                return R.string.global_errors_empty_fields_error_text;
             }
 
             if (!RequestEngine.isConnectedToInternet(LogInCompanyActivity.this)) {

@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
-    tools:context=".LogInCompanyActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".AddMerchandiserActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="@dimen/log_in_company_activity.log_in.text_size"
-        android:text="@string/log_in_company_activity.log_in_tv.text"/>
+        android:textSize="@dimen/add_merchandiser_activity.add_merchandiser_tv.text_size"
+        android:text="@string/add_merchandiser_activity.add_merchandiser_tv.text"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,18 +24,26 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/log_in_company_activity.email_et"
+                android:id="@+id/add_merchandiser_activity.name_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/log_in_company_activity.email_et.hint"
+                android:hint="@string/add_merchandiser_activity.name_et.hint"
+                android:inputType="text"
+                android:autofillHints="name" />
+
+            <EditText
+                android:id="@+id/add_merchandiser_activity.email_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/sign_up_company_activity.email_et.hint"
                 android:inputType="textWebEmailAddress"
                 android:autofillHints="email" />
 
             <EditText
-                android:id="@+id/log_in_company_activity.password_et"
+                android:id="@+id/add_merchandiser_activity.password_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/log_in_company_activity.password_et.hint"
+                android:hint="@string/sign_up_company_activity.password_et.hint"
                 android:inputType="textPassword"
                 android:autofillHints="password" />
 
@@ -43,25 +51,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/green"
-                android:text="@string/log_in_company_activity.log_in_btn.text"
-                android:onClick="onLogInClickBtn"
+                android:text="@string/add_merchandiser_activity.compute_btn.text"
+                android:onClick="onAddMerchandiserClickBtn"
                 android:layout_gravity="center_horizontal"/>
 
             <ProgressBar
-                android:id="@+id/log_in_company_activity.progress_bar"
+                android:id="@+id/add_merchandiser_activity.progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:visibility="invisible"/>
 
             <TextView
-                android:id="@+id/log_in_company_activity.error_tv"
+                android:id="@+id/add_merchandiser_activity.error_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/log_in_company_activity.error_tv.text_size"
+                android:textSize="@dimen/add_merchandiser_activity.error_tv.text_size"
                 android:textColor="@color/red"
                 android:layout_gravity="center_horizontal"/>
-
         </LinearLayout>
     </RelativeLayout>
 

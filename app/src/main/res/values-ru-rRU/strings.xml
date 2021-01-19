@@ -4,6 +4,7 @@
     <!-- Global errors -->
     <string name="global_errors.server_error.text">Ошибка на сервере</string>
     <string name="global_errors.internet_connection_error.text">Интернет не подключен</string>
+    <string name="global_errors.empty_fields_error.text">Вы должны заполнить все поля</string>
     <!-- Global errors -->
 
     <!-- Description Fragment -->
@@ -13,6 +14,7 @@
 
     <!-- Main Activity -->
     <string name="main_activity.employees_quantity.text">Мерчендайзеров в компании: %1$d</string>
+    <string name="main_activity.add_merchandiser_btn.text">Добавить</string>
     <!-- Main Activity -->
 
     <!-- Start Using Activity -->
@@ -28,7 +30,6 @@
     <string name="sign_up_company_activity.sign_up_btn.text">Готово</string>
     <!-- Errors -->
         <string name="sign_up_company_activity.password_is_unreliable_error.text">Пароль не надёжен</string>
-        <string name="sign_up_company_activity.empty_fields_error.text">Вы должны заполнить все поля</string>
         <string name="sign_up_company_activity.company_exist_error.text">Такая компания уже существует</string>]
         <string name="sign_up_company_activity.incorrect_email_error.text">Email некорректен</string>
     <!-- Sign Up Company Activity -->
@@ -38,8 +39,18 @@
     <string name="log_in_company_activity.password_et.hint">Пароль</string>
     <string name="log_in_company_activity.log_in_btn.text">Войти</string>
     <!-- Errors -->
-        <string name="log_in_company_activity.empty_fields_error.text">Вы должны заполнить все поля</string>
         <string name="log_in_company_activity.company_was_not_found_error.text">Компания с таким email не существует</string>
         <string name="log_in_company_activity.wrong_password_error.text">Пароль неверный</string>
     <!-- Log In Company Activity -->
+
+    <!-- Add Merchandiser Activity -->
+    <string name="add_merchandiser_activity.add_merchandiser_tv.text">Добавить мерчендайзера</string>
+    <string name="add_merchandiser_activity.name_et.hint">Имя</string>
+    <string name="add_merchandiser_activity.password_et.hint">Пароль</string>
+    <string name="add_merchandiser_activity.compute_btn.text">Готово</string>
+    <!-- Errors -->
+    <string name="add_merchandiser_activity.password_is_unreliable_error.text">Пароль не надёжен</string>
+    <string name="add_merchandiser_activity.merchandiser_exist_error.text">Такой мерчандайзер уже существует</string>
+    <string name="add_merchandiser_activity.incorrect_email_error.text">Email некорректен</string>
+    <!-- Add Merchandiser Activity -->
 </resources>

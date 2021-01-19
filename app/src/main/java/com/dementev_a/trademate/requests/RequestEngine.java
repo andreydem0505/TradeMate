@@ -20,11 +20,17 @@ public class RequestEngine {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    public static String makePostRequestWithJson(String address, String json) throws IOException {
+    @SafeVarargs
+    public static String makePostRequestWithJson(String address, String json, Map<String, String>... headers) throws IOException {
         URL url = new URL(address);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestProperty("Content-Type", "application/json; utf-8");
         urlConnection.setRequestProperty("Accept", "application/json");
+        if (headers.length == 1) {
+            for (String key : headers[0].keySet()) {
+                urlConnection.setRequestProperty(key, headers[0].get(key));
+            }
+        }
         urlConnection.setDoOutput(true);
         OutputStream os = urlConnection.getOutputStream();
         byte[] input = json.getBytes(StandardCharsets.UTF_8);

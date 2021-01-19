@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TradeMate">
+        <activity android:name=".AddMerchandiserActivity"></activity>
         <activity android:name=".LogInCompanyActivity" />
         <activity
             android:name=".ChoiceActivity"

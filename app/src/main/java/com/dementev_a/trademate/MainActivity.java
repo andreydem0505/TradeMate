@@ -29,11 +29,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
+        update();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        update();
+    }
+
+    private void update() {
         SharedPreferencesEngine spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         if (spe.count() == 0) {
             Fragment descriptionFragment = new DescriptionFragment();
@@ -51,12 +56,18 @@ public class MainActivity extends AppCompatActivity {
 
     private class SetCompanyFragment extends AsyncTask<SharedPreferencesEngine, Void, Bundle> {
         private final int STATUS_OK = 0;
-        private final int STATUS_ERROR = 1;
+        private final int STATUS_SERVER_ERROR = 1;
+        private final int STATUS_INTERNET_ERROR = 2;
 
         @Override
         protected Bundle doInBackground(SharedPreferencesEngine... spe) {
             Bundle bundle = new Bundle();
+            if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
+                bundle.putInt("status", STATUS_INTERNET_ERROR);
+                return bundle;
+            }
             bundle.putString("companyName", spe[0].getString("name"));
+            bundle.putString("accessToken", spe[0].getString("accessToken"));
             String url = API.API_URL + "/merchandisers";
             Map<String, String> headers = new HashMap<>();
             headers.put("access_token", spe[0].getString("accessToken"));
@@ -71,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
                         bundle.putInt("status", STATUS_OK);
                     } break;
                     case "Access token is wrong": {
-                        bundle.putInt("status", STATUS_ERROR);
+                        bundle.putInt("status", STATUS_SERVER_ERROR);
                     } break;
                 }
             } catch (IOException e) {
-                bundle.putInt("status", STATUS_ERROR);
+                bundle.putInt("status", STATUS_SERVER_ERROR);
             }
             return bundle;
         }
@@ -83,14 +94,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bundle bundle) {
             transaction = fragmentManager.beginTransaction();
-            if (bundle.getInt("status") == STATUS_OK) {
+            int status = bundle.getInt("status");
+            if (status == STATUS_OK) {
                 bundle.remove("status");
                 Fragment companyFragment = new CompanyFragment();
                 companyFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment, companyFragment);
             } else {
                 bundle.remove("status");
-                bundle.putString("error", getString(R.string.global_errors_server_error_text));
+                if (status == STATUS_SERVER_ERROR)
+                    bundle.putString("error", getString(R.string.global_errors_server_error_text));
+                else if (status == STATUS_INTERNET_ERROR)
+                    bundle.putString("error", getString(R.string.global_errors_internet_connection_error_text));
                 ErrorFragment errorFragment = new ErrorFragment();
                 errorFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment, errorFragment);
