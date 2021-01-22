@@ -12,24 +12,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class CompanyFragment extends Fragment implements View.OnClickListener {
     private View view;
     private TextView companyNameTV, employeesQuantityTV;
-    private Button addMerchandiserBtn;
+    private FloatingActionButton addMerchandiserBtn;
     private String companyName, accessToken;
     private int employeesQuantity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        companyNameTV.setText(companyName);
-        String employeesQuantityText = getString(R.string.main_activity_employees_quantity_text);
-        employeesQuantityTV.setText(String.format(employeesQuantityText, employeesQuantity));
     }
 
     @Override
@@ -43,6 +37,11 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         employeesQuantityTV = view.findViewById(R.id.company_fragment_employees_quantity);
         addMerchandiserBtn = view.findViewById(R.id.add_merchandiser_btn);
         addMerchandiserBtn.setOnClickListener(this);
+
+        companyNameTV.setText(companyName);
+        String employeesQuantityText = getString(R.string.main_activity_employees_quantity_text);
+        employeesQuantityTV.setText(String.format(employeesQuantityText, employeesQuantity));
+
         return view;
     }
 

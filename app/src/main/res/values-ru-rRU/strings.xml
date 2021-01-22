@@ -14,7 +14,7 @@
 
     <!-- Main Activity -->
     <string name="main_activity.employees_quantity.text">Мерчендайзеров в компании: %1$d</string>
-    <string name="main_activity.add_merchandiser_btn.text">Добавить</string>
+    <string name="main_activity.about_merchandisers_btn.text">Подробнее</string>
     <!-- Main Activity -->
 
     <!-- Start Using Activity -->
@@ -30,7 +30,7 @@
     <string name="sign_up_company_activity.sign_up_btn.text">Готово</string>
     <!-- Errors -->
         <string name="sign_up_company_activity.password_is_unreliable_error.text">Пароль не надёжен</string>
-        <string name="sign_up_company_activity.company_exist_error.text">Такая компания уже существует</string>]
+        <string name="sign_up_company_activity.company_exist_error.text">Такая компания уже существует</string>
         <string name="sign_up_company_activity.incorrect_email_error.text">Email некорректен</string>
     <!-- Sign Up Company Activity -->
 
@@ -53,4 +53,13 @@
     <string name="add_merchandiser_activity.merchandiser_exist_error.text">Такой мерчандайзер уже существует</string>
     <string name="add_merchandiser_activity.incorrect_email_error.text">Email некорректен</string>
     <!-- Add Merchandiser Activity -->
+
+    <!-- Log In Merchandiser Activity -->
+    <string name="log_in_merchandiser_activity.log_in_merchandiser_tv.text">Войти как мерчендайзер</string>
+    <string name="log_in_merchandiser_activity.password_et.hint">Пароль</string>
+    <string name="log_in_merchandiser_activity.log_in_btn.text">Войти</string>
+    <!-- Errors -->
+    <string name="log_in_merchandiser_activity.merchandiser_was_not_found_error.text">Мерчендайзер с таким email не существует</string>
+    <string name="log_in_merchandiser_activity.wrong_password_error.text">Пароль неверный</string>
+    <!-- Log In Merchandiser Activity -->
 </resources>

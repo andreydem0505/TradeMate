@@ -29,28 +29,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
-        update();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        update();
+        update(true);
     }
 
-    private void update() {
+    private void update(boolean progress) {
         SharedPreferencesEngine spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         if (spe.count() == 0) {
-            Fragment descriptionFragment = new DescriptionFragment();
             transaction = fragmentManager.beginTransaction();
+            Fragment descriptionFragment = new DescriptionFragment();
             transaction.replace(R.id.fragment, descriptionFragment);
             transaction.commit();
-        } else if (spe.getString("type").equals("company")) {
-            Fragment progressFragment = new ProgressFragment();
-            transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fragment, progressFragment);
-            transaction.commit();
-            new SetCompanyFragment().execute(spe);
+        } else {
+            String type = spe.getString("type");
+            if (type.equals(getString(R.string.shared_preferences_type_company))) {
+                if (progress) {
+                    transaction = fragmentManager.beginTransaction();
+                    Fragment progressFragment = new ProgressFragment();
+                    transaction.replace(R.id.fragment, progressFragment);
+                    transaction.commit();
+                }
+                new SetCompanyFragment().execute(spe);
+            } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
+                transaction = fragmentManager.beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putString("name", spe.getString("name"));
+                Fragment merchandiserFragment = new MerchandiserFragment();
+                merchandiserFragment.setArguments(bundle);
+                transaction.replace(R.id.fragment, merchandiserFragment);
+                transaction.commit();
+            }
         }
     }
 

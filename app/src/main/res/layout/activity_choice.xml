@@ -1,51 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="@dimen/padding"
     android:gravity="center"
     tools:context=".ChoiceActivity">
 
-    <GridLayout
-        android:layout_width="wrap_content"
+
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:columnCount="4"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="4"
-            android:layout_gravity="fill"
-            android:text="@string/choice_activity.sign_up_company_btn.text"
-            android:textAllCaps="false"
-            android:onClick="onSignUpCompanyClickBtn"
-            android:textSize="@dimen/choice_activity.sign_up_company_btn.text_size" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="4"
-            android:layout_gravity="fill"
-            android:backgroundTint="@color/green"
-            android:text="@string/choice_activity.log_in_company_btn.text"
-            android:textAllCaps="false"
-            android:onClick="onLogInCompanyClickBtn"
-            android:textSize="@dimen/choice_activity.log_in_company_btn.text_size" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="4"
-            android:layout_gravity="fill"
-            android:backgroundTint="@color/blue"
-            android:text="@string/choice_activity.log_in_merchandiser_btn.text"
-            android:textAllCaps="false"
-            android:onClick="onLogInMerchandiserClickBtn"
-            android:textSize="@dimen/choice_activity.log_in_merchandiser_btn.text_size" />
-    </GridLayout>
+        android:layout_gravity="fill"
+        android:text="@string/choice_activity.sign_up_company_btn.text"
+        android:textAllCaps="false"
+        android:onClick="onSignUpCompanyClickBtn"
+        android:textSize="@dimen/choice_activity.sign_up_company_btn.text_size" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/color_3B70CD"
+        android:text="@string/choice_activity.log_in_company_btn.text"
+        android:textAllCaps="false"
+        android:onClick="onLogInCompanyClickBtn"
+        android:textSize="@dimen/choice_activity.log_in_company_btn.text_size" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/blue"
+        android:text="@string/choice_activity.log_in_merchandiser_btn.text"
+        android:textAllCaps="false"
+        android:onClick="onLogInMerchandiserClickBtn"
+        android:textSize="@dimen/choice_activity.log_in_merchandiser_btn.text_size" />
 
 </LinearLayout>

@@ -33,6 +33,11 @@
     <dimen name="add_merchandiser_activity.error_tv.text_size">16sp</dimen>
     <!-- Add Merchandiser Activity -->
 
+    <!-- Log In Merchandiser Activity -->
+    <dimen name="log_in_merchandiser_activity.log_in.text_size">26sp</dimen>
+    <dimen name="log_in_merchandiser_activity.error_tv.text_size">16sp</dimen>
+    <!-- Log In Merchandiser Activity -->
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

@@ -26,6 +26,7 @@ public class ChoiceActivity extends AppCompatActivity {
     }
 
     public void onLogInMerchandiserClickBtn(View v) {
-
+        Intent intent = new Intent(ChoiceActivity.this, LogInMerchandiserActivity.class);
+        startActivity(intent);
     }
 }

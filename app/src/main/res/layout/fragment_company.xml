@@ -23,23 +23,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="#EEEFF1"
+        android:padding="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/company_fragment.company_name">
 
-    <TextView
-        android:id="@+id/company_fragment.employees_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/company_fragment.usual.text_size"
-        android:text="Some text is here: 38" />
+        <TextView
+            android:id="@+id/company_fragment.employees_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/company_fragment.usual.text_size"
+            android:text="Some text is here: 38" />
 
-    <Button
+
+        <Button
+            android:id="@+id/about_merchandisers_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:text="@string/main_activity.about_merchandisers_btn.text"
+            android:backgroundTint="@color/color_3B70CD" />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_merchandiser_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/main_activity.add_merchandiser_btn.text"
-        android:backgroundTint="@color/green" />
-
-    </LinearLayout>
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/theme"
+        app:tint="@color/white"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/main_activity.add_merchandiser_btn.description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

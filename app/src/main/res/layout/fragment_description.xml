@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/padding"
-    tools:context=".DescriptionFragment"
-    android:orientation="vertical">
+    tools:context=".DescriptionFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -14,20 +14,30 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/description_fragment.description.text_size"
-        android:text="@string/description_fragment.description.text" />
+        android:text="@string/description_fragment.description.text"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:src="@mipmap/trademate"
+        android:contentDescription="@string/description_fragment.logo_description.description" />
 
-        <Button
-            android:id="@+id/description_fragment.description_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue"
-            android:text="@string/description_fragment.description_btn.text"/>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="center">-->
 
-    </LinearLayout>
+<!--        -->
 
-</LinearLayout>
+<!--    </LinearLayout>-->
+
+    <Button
+        android:id="@+id/description_fragment.description_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:text="@string/description_fragment.description_btn.text"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
