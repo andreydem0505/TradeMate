@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/trademate_letter"
         android:supportsRtl="true"
         android:theme="@style/Theme.TradeMate">
-        <activity android:name=".LogInMerchandiserActivity"></activity>
+        <activity android:name=".AddOperatorActivity"></activity>
+        <activity android:name=".AboutEmployeesActivity" />
+        <activity android:name=".LogInMerchandiserActivity" />
         <activity android:name=".AddMerchandiserActivity" />
         <activity android:name=".LogInCompanyActivity" />
         <activity

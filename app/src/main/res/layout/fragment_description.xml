@@ -8,6 +8,7 @@
     tools:context=".DescriptionFragment">
 
     <TextView
+        android:id="@+id/description_fragment.description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -18,19 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/description_fragment.image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@mipmap/trademate"
-        android:contentDescription="@string/description_fragment.logo_description.description" />
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:gravity="center">-->
-
-<!--        -->
-
-<!--    </LinearLayout>-->
+        android:contentDescription="@string/description_fragment.logo_description.description"
+        app:layout_constraintTop_toBottomOf="@id/description_fragment.description" />
 
     <Button
         android:id="@+id/description_fragment.description_btn"
@@ -38,6 +32,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue"
         android:text="@string/description_fragment.description_btn.text"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

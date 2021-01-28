@@ -12,10 +12,16 @@
     <string name="description_fragment.description_btn.text">Начать</string>
     <!-- Description Fragment -->
 
-    <!-- Main Activity -->
-    <string name="main_activity.employees_quantity.text">Мерчендайзеров в компании: %1$d</string>
-    <string name="main_activity.about_merchandisers_btn.text">Подробнее</string>
-    <!-- Main Activity -->
+    <!-- Company Fragment -->
+    <string name="company_fragment.employees_quantity.text">Мерчендайзеров в компании: %1$d</string>
+    <string name="company_fragment.operators_quantity.text">Операторов в компании: %1$d</string>
+    <string name="company_fragment.about_merchandisers_btn.text">Подробнее</string>
+    <string name="company_fragment.about_operators_btn.text">Подробнее</string>
+    <!-- Company Fragment -->
+
+    <!-- Merchandiser Fragment -->
+    <string name="merchandiser_fragment.about_requests_btn.text">Подробнее</string>
+    <!-- Merchandiser Fragment -->
 
     <!-- Start Using Activity -->
     <string name="choice_activity.sign_up_company_btn.text">Зарегистрировать компанию</string>

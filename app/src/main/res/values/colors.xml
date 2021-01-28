@@ -13,4 +13,5 @@
     <color name="blue">#08A8F3</color>
     <color name="red">#FF0000</color>
     <color name="color_3B70CD">#3B70CD</color>
+    <color name="panel_background">#EEEFF1</color>
 </resources>

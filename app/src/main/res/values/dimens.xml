@@ -10,7 +10,15 @@
     <dimen name="company_fragment.company_name.text_size">26sp</dimen>
     <dimen name="company_fragment.usual.text_size">18sp</dimen>
     <dimen name="company_fragment.padding">20dp</dimen>
+    <dimen name="company_fragment.panel.padding">10dp</dimen>
     <!-- Company Fragment -->
+
+    <!-- Merchandiser Fragment -->
+    <dimen name="merchandiser_fragment.merchandiser_name.text_size">26sp</dimen>
+    <dimen name="merchandiser_fragment.usual.text_size">18sp</dimen>
+    <dimen name="merchandiser_fragment.padding">20dp</dimen>
+    <dimen name="merchandiser_fragment.panel.padding">10dp</dimen>
+    <!-- Merchandiser Fragment -->
 
     <!-- Start Using Activity -->
     <dimen name="choice_activity.sign_up_company_btn.text_size">18sp</dimen>

@@ -12,14 +12,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.dementev_a.trademate.json.MerchandiserJson;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.jetbrains.annotations.NotNull;
 
 public class CompanyFragment extends Fragment implements View.OnClickListener {
     private View view;
-    private TextView companyNameTV, employeesQuantityTV;
+    private TextView companyNameTV, employeesQuantityTV, operatorsQuantityTV;
+    private Button aboutMerchandisersBtn;
     private FloatingActionButton addMerchandiserBtn;
     private String companyName, accessToken;
-    private int employeesQuantity;
+    private int merchandisersQuantity, operatorsQuantity;
+    private MerchandiserJson[] merchandisers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,31 +32,45 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        companyName = getArguments().getString("companyName");
-        accessToken = getArguments().getString("accessToken");
-        employeesQuantity = getArguments().getInt("total");
+        Bundle bundle = getArguments();
+        companyName = bundle.getString("companyName");
+        accessToken = bundle.getString("accessToken");
+        merchandisersQuantity = bundle.getInt("total_merchandisers");
+        operatorsQuantity = bundle.getInt("total_operators");
+        merchandisers = (MerchandiserJson[]) bundle.getParcelableArray("merchandisers");
+
         view = inflater.inflate(R.layout.fragment_company, container, false);
         companyNameTV = view.findViewById(R.id.company_fragment_company_name);
-        employeesQuantityTV = view.findViewById(R.id.company_fragment_employees_quantity);
+        employeesQuantityTV = view.findViewById(R.id.company_fragment_merchandisers_quantity);
+        operatorsQuantityTV = view.findViewById(R.id.company_fragment_operators_quantity);
+        aboutMerchandisersBtn = view.findViewById(R.id.company_fragment_about_merchandisers_btn);
+        aboutMerchandisersBtn.setOnClickListener(this);
         addMerchandiserBtn = view.findViewById(R.id.add_merchandiser_btn);
         addMerchandiserBtn.setOnClickListener(this);
 
         companyNameTV.setText(companyName);
-        String employeesQuantityText = getString(R.string.main_activity_employees_quantity_text);
-        employeesQuantityTV.setText(String.format(employeesQuantityText, employeesQuantity));
+        String employeesQuantityText = getString(R.string.company_fragment_employees_quantity_text);
+        employeesQuantityTV.setText(String.format(employeesQuantityText, merchandisersQuantity));
+        String operatorsQuantityText = getString(R.string.company_fragment_operators_quantity_text);
+        operatorsQuantityTV.setText(String.format(operatorsQuantityText, operatorsQuantity));
 
         return view;
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
-    public void onClick(View v) {
+    public void onClick(@NotNull View v) {
         switch (v.getId()) {
             case R.id.add_merchandiser_btn: {
                 Intent intent = new Intent(getContext(), AddMerchandiserActivity.class);
                 intent.putExtra("accessToken", accessToken);
+                startActivity(intent);
+            } break;
+            case R.id.company_fragment_about_merchandisers_btn: {
+                Intent intent = new Intent(getContext(), AboutEmployeesActivity.class);
+                intent.putExtra("merchandisers", merchandisers);
                 startActivity(intent);
             } break;
         }
