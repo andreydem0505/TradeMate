@@ -72,8 +72,10 @@ public class AddMerchandiserActivity extends AppCompatActivity {
                     switch (message) {
                         case "Success":
                             return RESULT_OK;
-                        case "Such merchandiser is already exist":
-                            return R.string.add_merchandiser_activity_merchandiser_exist_error_text;
+                        case "Merchandiser with this name is already exist":
+                            return R.string.add_merchandiser_activity_merchandiser_exist_with_name_error_text;
+                        case "Merchandiser with this email is already exist":
+                            return R.string.add_merchandiser_activity_merchandiser_exist_with_email_error_text;
                         case "Password is unreliable":
                             return R.string.add_merchandiser_activity_password_is_unreliable_error_text;
                         case "Email is incorrect":

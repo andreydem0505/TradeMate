@@ -6,13 +6,13 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 
-public class MerchandiserJson extends EmployeeJson implements Parcelable {
+public class OperatorJson extends EmployeeJson implements Parcelable {
 
-    public MerchandiserJson(String name, String email) {
+    public OperatorJson(String name, String email) {
         super(name, email);
     }
 
-    protected MerchandiserJson(Parcel in) {
+    protected OperatorJson(Parcel in) {
         super();
         String name = in.readString();
         String email = in.readString();
@@ -20,15 +20,15 @@ public class MerchandiserJson extends EmployeeJson implements Parcelable {
         super.setEmail(email);
     }
 
-    public static final Creator<MerchandiserJson> CREATOR = new Creator<MerchandiserJson>() {
+    public static final Creator<OperatorJson> CREATOR = new Creator<OperatorJson>() {
         @Override
-        public MerchandiserJson createFromParcel(Parcel in) {
-            return new MerchandiserJson(in);
+        public OperatorJson createFromParcel(Parcel in) {
+            return new OperatorJson(in);
         }
 
         @Override
-        public MerchandiserJson[] newArray(int size) {
-            return new MerchandiserJson[size];
+        public OperatorJson[] newArray(int size) {
+            return new OperatorJson[size];
         }
     };
 

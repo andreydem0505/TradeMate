@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
+import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
 
@@ -121,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
                     case "Success": {
                         int total = jsonEngine.getIntegerFromJson(response, "total");
                         bundle.putInt("total_operators", total);
+
+                        OperatorJson[] operatorsArray = jsonEngine.getOperatorsArrayFromJson(response, "operators");
+                        bundle.putParcelableArray("operators", operatorsArray);
+
                         bundle.putInt("status", STATUS_OK);
                     } break;
                     case "Access token is wrong": {

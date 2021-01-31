@@ -55,9 +55,10 @@
     <string name="add_merchandiser_activity.password_et.hint">Пароль</string>
     <string name="add_merchandiser_activity.compute_btn.text">Готово</string>
     <!-- Errors -->
-    <string name="add_merchandiser_activity.password_is_unreliable_error.text">Пароль не надёжен</string>
-    <string name="add_merchandiser_activity.merchandiser_exist_error.text">Такой мерчандайзер уже существует</string>
-    <string name="add_merchandiser_activity.incorrect_email_error.text">Email некорректен</string>
+        <string name="add_merchandiser_activity.password_is_unreliable_error.text">Пароль не надёжен</string>
+        <string name="add_merchandiser_activity.merchandiser_exist_with_name_error.text">Мерчандайзер с таким именем уже существует</string>
+        <string name="add_merchandiser_activity.merchandiser_exist_with_email_error.text">Мерчандайзер с таким email уже существует</string>
+        <string name="add_merchandiser_activity.incorrect_email_error.text">Email некорректен</string>
     <!-- Add Merchandiser Activity -->
 
     <!-- Log In Merchandiser Activity -->
@@ -65,7 +66,17 @@
     <string name="log_in_merchandiser_activity.password_et.hint">Пароль</string>
     <string name="log_in_merchandiser_activity.log_in_btn.text">Войти</string>
     <!-- Errors -->
-    <string name="log_in_merchandiser_activity.merchandiser_was_not_found_error.text">Мерчендайзер с таким email не существует</string>
-    <string name="log_in_merchandiser_activity.wrong_password_error.text">Пароль неверный</string>
+        <string name="log_in_merchandiser_activity.merchandiser_was_not_found_error.text">Мерчендайзер с таким email не существует</string>
+        <string name="log_in_merchandiser_activity.wrong_password_error.text">Пароль неверный</string>
     <!-- Log In Merchandiser Activity -->
+
+    <!-- Add Operator Activity -->
+    <string name="add_operator_activity.add_operator_tv.text">Добавить оператора</string>
+    <string name="add_operator_activity.name_et.hint">Имя</string>
+    <string name="add_operator_activity.add_btn.text">Готово</string>
+    <!-- Errors -->
+        <string name="add_operator_activity.operator_with_name_exist_error.text">Оператор с таким именем уже существует</string>
+        <string name="add_operator_activity.operator_with_email_exist_error.text">Оператор с таким email уже существует</string>
+        <string name="add_operator_activity.incorrect_email_error.text">Email некорректен</string>
+    <!-- Add Operator Activity -->
 </resources>

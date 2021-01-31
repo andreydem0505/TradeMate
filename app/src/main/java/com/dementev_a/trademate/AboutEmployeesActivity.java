@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
 
 import com.dementev_a.trademate.json.MerchandiserJson;
+import com.dementev_a.trademate.json.OperatorJson;
 
 public class AboutEmployeesActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
@@ -23,12 +23,23 @@ public class AboutEmployeesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_employees);
         linearLayout = findViewById(R.id.about_merchandisers_activity_list);
 
-        Parcelable[] merchandisers = getIntent().getParcelableArrayExtra("merchandisers");
-        for (Parcelable merchandiser : merchandisers) {
-            MerchandiserJson merchandiserJson = (MerchandiserJson) merchandiser;
-            MyButton myButton = new MyButton(this);
-            myButton.setText(merchandiserJson.getName());
-            linearLayout.addView(myButton.getView());
+        String type = getIntent().getStringExtra("type");
+        if (type.equals("merchandisers")) {
+            Parcelable[] merchandisers = getIntent().getParcelableArrayExtra("merchandisers");
+            for (Parcelable merchandiser : merchandisers) {
+                MerchandiserJson merchandiserJson = (MerchandiserJson) merchandiser;
+                MyButton myButton = new MyButton(this);
+                myButton.setText(merchandiserJson.getName());
+                linearLayout.addView(myButton.getView());
+            }
+        } else {
+            Parcelable[] operators = getIntent().getParcelableArrayExtra("operators");
+            for (Parcelable operator : operators) {
+                OperatorJson operatorJson = (OperatorJson) operator;
+                MyButton myButton = new MyButton(this);
+                myButton.setText(operatorJson.getName());
+                linearLayout.addView(myButton.getView());
+            }
         }
     }
 
@@ -38,7 +49,8 @@ public class AboutEmployeesActivity extends AppCompatActivity {
 
         public MyButton(Context context) {
             button = new Button(context);
-            button.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            button.setLayoutParams(params);
             button.setBackgroundTintList(getResources().getColorStateList(R.color.white, context.getTheme()));
             button.setTextColor(getResources().getColor(R.color.black, context.getTheme()));
             button.setTransformationMethod(null);

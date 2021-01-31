@@ -70,7 +70,8 @@
     <string name="add_merchandiser_activity.compute_btn.text">Sign up</string>
     <!-- Errors -->
     <string name="add_merchandiser_activity.password_is_unreliable_error.text">Password is unreliable</string>
-    <string name="add_merchandiser_activity.merchandiser_exist_error.text">Such merchandiser is already exist</string>
+    <string name="add_merchandiser_activity.merchandiser_exist_with_name_error.text">Merchandiser with this name is already exist</string>
+    <string name="add_merchandiser_activity.merchandiser_exist_with_email_error.text">Merchandiser with this email is already exist</string>
     <string name="add_merchandiser_activity.incorrect_email_error.text">Email is incorrect</string>
     <!-- Add Merchandiser Activity -->
 
@@ -83,4 +84,15 @@
     <string name="log_in_merchandiser_activity.merchandiser_was_not_found_error.text">Merchandiser with this email isn`t exist</string>
     <string name="log_in_merchandiser_activity.wrong_password_error.text">Wrong password</string>
     <!-- Log In Merchandiser Activity -->
+
+    <!-- Add Operator Activity -->
+    <string name="add_operator_activity.add_operator_tv.text">Add operator</string>
+    <string name="add_operator_activity.name_et.hint">Name</string>
+    <string name="add_operator_activity.email_et.hint" translatable="false">Email</string>
+    <string name="add_operator_activity.add_btn.text">Add</string>
+    <!-- Errors -->
+    <string name="add_operator_activity.operator_with_name_exist_error.text">Operator with this name is already exist</string>
+    <string name="add_operator_activity.operator_with_email_exist_error.text">Operator with this email is already exist</string>
+    <string name="add_operator_activity.incorrect_email_error.text">Email is incorrect</string>
+    <!-- Add Operator Activity -->
 </resources>
