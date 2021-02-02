@@ -21,10 +21,10 @@ public class ProgressFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_progress, container, false);
-        final SlidingSquareLoaderView slidingview = (SlidingSquareLoaderView) view.findViewById(R.id.sliding_view);
-        slidingview.start();
-        slidingview.setDuration(200);
-        slidingview.setDelay(15);
+        final SlidingSquareLoaderView slidingView = view.findViewById(R.id.sliding_view);
+        slidingView.start();
+        slidingView.setDuration(200);
+        slidingView.setDelay(15);
         return view;
     }
 }

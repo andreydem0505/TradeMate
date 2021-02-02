@@ -56,7 +56,7 @@ public class AddOperatorActivity extends AppCompatActivity {
             String name = nameET.getText().toString();
             String email = emailET.getText().toString();
 
-            String url = API.API_URL + "/register/operator";
+            String url = API.MAIN_URL + API.ADD_OPERATOR_URL;
             String json = String.format("{\"name\": \"%s\"," +
                     "\"email\": \"%s\"" +
                     "}", name, email);

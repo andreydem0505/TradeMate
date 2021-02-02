@@ -57,7 +57,7 @@ public class AddMerchandiserActivity extends AppCompatActivity {
             String email = emailET.getText().toString();
             String password = passwordET.getText().toString();
 
-            String url = API.API_URL + "/register/merchandiser";
+            String url = API.MAIN_URL + API.ADD_MERCHANDISER_URL;
             String json = String.format("{\"name\": \"%s\"," +
                     "\"password\": \"%s\"," +
                     "\"email\": \"%s\"" +

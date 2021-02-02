@@ -54,7 +54,7 @@ public class SignUpCompanyActivity extends AppCompatActivity {
             String email = emailET.getText().toString();
             String password = passwordET.getText().toString();
 
-            String url = API.API_URL + "/register/company";
+            String url = API.MAIN_URL + API.SIGN_UP_COMPANY_URL;
             String json = String.format("{\"name\": \"%s\"," +
                     "\"password\": \"%s\"," +
                     "\"email\": \"%s\"" +

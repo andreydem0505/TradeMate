@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("companyName", spe[0].getString("name"));
             bundle.putString("accessToken", spe[0].getString("accessToken"));
 
-            String url = API.API_URL + "/merchandisers";
+            String url = API.MAIN_URL + API.ALL_MERCHANDISERS_URL;
             Map<String, String> headers = new HashMap<>();
             headers.put("access_token", spe[0].getString("accessToken"));
             try {
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 return bundle;
             }
 
-            url = API.API_URL + "/operators";
+            url = API.MAIN_URL + API.ALL_OPERATORS_URL;
             try {
                 String response = RequestEngine.makeGetRequest(url, headers);
                 String message = jsonEngine.getStringFromJson(response, "message");
