@@ -34,6 +34,17 @@
     <string name="merchandiser_fragment.add_request_btn.description" translatable="false">Add request</string>
     <!-- Merchandiser Fragment -->
 
+    <!-- About Employees Activity -->
+    <string name="about_employees_activity.header_merchandisers.text">Merchandisers of %1$s</string>
+    <string name="about_employees_activity.header_operators.text">Operators of %1$s</string>
+    <!-- About Employees Activity -->
+
+    <!-- Make Request Activity -->
+    <string name="make_request_activity.header.text">Make a request</string>
+    <string name="make_request_activity.name_et.hint">Name</string>
+    <string name="make_request_activity.speak_btn.description" translatable="false">Speak</string>
+    <!-- Make Request Activity -->
+
     <!-- Start Using Activity -->
     <string name="choice_activity.sign_up_company_btn.text">Sign up as company</string>
     <string name="choice_activity.log_in_company_btn.text">Log in as company</string>

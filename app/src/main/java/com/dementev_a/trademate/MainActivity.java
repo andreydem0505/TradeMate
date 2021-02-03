@@ -2,6 +2,7 @@ package com.dementev_a.trademate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -52,31 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 transaction.commit();
             }
         } else {
+            if (restart) {
+                transaction = fragmentManager.beginTransaction();
+                Fragment progressFragment = new ProgressFragment();
+                transaction.replace(R.id.fragment, progressFragment);
+                transaction.commit();
+            }
             String type = spe.getString("type");
             if (type.equals(getString(R.string.shared_preferences_type_company))) {
-                if (restart) {
-                    transaction = fragmentManager.beginTransaction();
-                    Fragment progressFragment = new ProgressFragment();
-                    transaction.replace(R.id.fragment, progressFragment);
-                    transaction.commit();
-                }
                 new SetCompanyFragment().execute(spe);
             } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
-                transaction = fragmentManager.beginTransaction();
-                Bundle bundle = new Bundle();
-                bundle.putString("name", spe.getString("name"));
-                Fragment merchandiserFragment = new MerchandiserFragment();
-                merchandiserFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment, merchandiserFragment);
-                transaction.commit();
+                new SetMerchandiserFragment().execute(spe);
             }
         }
     }
 
+
     private class SetCompanyFragment extends AsyncTask<SharedPreferencesEngine, Void, Bundle> {
-        private final int STATUS_OK = 0;
-        private final int STATUS_SERVER_ERROR = 1;
-        private final int STATUS_INTERNET_ERROR = 2;
+
+        private final int
+                STATUS_OK = 0,
+                STATUS_SERVER_ERROR = 1,
+                STATUS_INTERNET_ERROR = 2;
 
         @Override
         protected Bundle doInBackground(SharedPreferencesEngine... spe) {
@@ -162,6 +160,26 @@ public class MainActivity extends AppCompatActivity {
                 errorFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment, errorFragment);
             }
+            transaction.commit();
+        }
+    }
+
+
+    private class SetMerchandiserFragment extends AsyncTask<SharedPreferencesEngine, Void, Bundle> {
+
+        @Override
+        protected Bundle doInBackground(SharedPreferencesEngine... spe) {
+            Bundle bundle = new Bundle();
+            bundle.putString("merchandiserName", spe[0].getString("name"));
+            return bundle;
+        }
+
+        @Override
+        protected void onPostExecute(Bundle bundle) {
+            transaction = fragmentManager.beginTransaction();
+            Fragment merchandiserFragment = new MerchandiserFragment();
+            merchandiserFragment.setArguments(bundle);
+            transaction.replace(R.id.fragment, merchandiserFragment);
             transaction.commit();
         }
     }

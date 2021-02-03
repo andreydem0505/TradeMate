@@ -6,12 +6,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AboutEmployeesActivity">
 
+    <TextView
+        android:id="@+id/about_employees_activity.header_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/padding"
+        android:paddingBottom="20dp"
+        android:textSize="@dimen/about_employees_activity.header.text_size"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <LinearLayout
         android:id="@+id/about_merchandisers_activity.list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/about_employees_activity.header_tv">
 
 <!--        <Button-->
 <!--            android:layout_width="match_parent"-->
@@ -21,6 +32,7 @@
 <!--            android:textAllCaps="false"-->
 <!--            android:gravity="start"-->
 <!--            android:textSize="20sp"-->
+<!--            android:backgroundTintMode="@drawable/wide_button"-->
 <!--            style="?android:attr/borderlessButtonStyle"-->
 <!--            android:text="Андрей Дементьев"/>-->
 

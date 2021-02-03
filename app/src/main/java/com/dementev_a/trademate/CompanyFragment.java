@@ -83,12 +83,14 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
             case R.id.company_fragment_about_merchandisers_btn: {
                 Intent intent = new Intent(getContext(), AboutEmployeesActivity.class);
                 intent.putExtra("type", "merchandisers");
+                intent.putExtra("companyName", companyName);
                 intent.putExtra("merchandisers", merchandisers);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_about_operators_btn: {
                 Intent intent = new Intent(getContext(), AboutEmployeesActivity.class);
                 intent.putExtra("type", "operators");
+                intent.putExtra("companyName", companyName);
                 intent.putExtra("operators", operators);
                 startActivity(intent);
             } break;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,16 +15,15 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/description_fragment.description.text_size"
-        android:text="@string/description_fragment.description.text"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/description_fragment.description.text" />
 
     <ImageView
         android:id="@+id/description_fragment.image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:src="@drawable/trademate"
         android:contentDescription="@string/description_fragment.logo_description.description"
-        app:layout_constraintTop_toBottomOf="@id/description_fragment.description" />
+        android:layout_centerInParent="true"/>
 
     <Button
         android:id="@+id/description_fragment.description_btn"
@@ -32,6 +31,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue"
         android:text="@string/description_fragment.description_btn.text"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_alignParentBottom="true"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

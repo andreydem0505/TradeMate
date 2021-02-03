@@ -20,6 +20,14 @@
     <dimen name="merchandiser_fragment.panel.padding">10dp</dimen>
     <!-- Merchandiser Fragment -->
 
+    <!-- About Employees Activity -->
+    <dimen name="about_employees_activity.header.text_size">20sp</dimen>
+    <!-- About Employees Activity -->
+
+    <!-- Make Request Activity -->
+    <dimen name="make_request_activity.header.text_size">20sp</dimen>
+    <!-- Make Request Activity -->
+
     <!-- Start Using Activity -->
     <dimen name="choice_activity.sign_up_company_btn.text_size">18sp</dimen>
     <dimen name="choice_activity.log_in_company_btn.text_size">18sp</dimen>

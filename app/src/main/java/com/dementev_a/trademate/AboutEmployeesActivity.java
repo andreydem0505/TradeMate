@@ -10,21 +10,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.OperatorJson;
 
 public class AboutEmployeesActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
+    private TextView headerTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_employees);
+        headerTV = findViewById(R.id.about_employees_activity_header_tv);
         linearLayout = findViewById(R.id.about_merchandisers_activity_list);
 
+        String header;
         String type = getIntent().getStringExtra("type");
         if (type.equals("merchandisers")) {
+            header = getString(R.string.about_employees_activity_header_merchandisers_text);
             Parcelable[] merchandisers = getIntent().getParcelableArrayExtra("merchandisers");
             for (Parcelable merchandiser : merchandisers) {
                 MerchandiserJson merchandiserJson = (MerchandiserJson) merchandiser;
@@ -33,6 +38,7 @@ public class AboutEmployeesActivity extends AppCompatActivity {
                 linearLayout.addView(myButton.getView());
             }
         } else {
+            header = getString(R.string.about_employees_activity_header_operators_text);
             Parcelable[] operators = getIntent().getParcelableArrayExtra("operators");
             for (Parcelable operator : operators) {
                 OperatorJson operatorJson = (OperatorJson) operator;
@@ -41,6 +47,7 @@ public class AboutEmployeesActivity extends AppCompatActivity {
                 linearLayout.addView(myButton.getView());
             }
         }
+        headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
     }
 
 

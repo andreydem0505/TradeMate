@@ -33,11 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/merchandiser_fragment.usual.text_size"
-            android:text="Some text is here: 38" />
+            android:text="Заявок сегодня: 12" />
 
 
         <Button
-            android:id="@+id/about_requests_btn"
+            android:id="@+id/merchandiser_fragment.about_requests_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_request_btn"
+        android:id="@+id/merchandiser_fragment.add_request_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

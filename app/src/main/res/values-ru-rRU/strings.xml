@@ -23,6 +23,16 @@
     <string name="merchandiser_fragment.about_requests_btn.text">Подробнее</string>
     <!-- Merchandiser Fragment -->
 
+    <!-- About Employees Activity -->
+    <string name="about_employees_activity.header_merchandisers.text">Мерчандайзеры %1$s</string>
+    <string name="about_employees_activity.header_operators.text">Операторы %1$s</string>
+    <!-- About Employees Activity -->
+
+    <!-- Make Request Activity -->
+    <string name="make_request_activity.header.text">Создать заявку</string>
+    <string name="make_request_activity.name_et.hint">Название</string>
+    <!-- Make Request Activity -->
+
     <!-- Start Using Activity -->
     <string name="choice_activity.sign_up_company_btn.text">Зарегистрировать компанию</string>
     <string name="choice_activity.log_in_company_btn.text">Войти как компания</string>
