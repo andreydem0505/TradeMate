@@ -129,16 +129,43 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Bundle doInBackground(SharedPreferencesEngine... spe) {
             Bundle bundle = new Bundle();
+
+            if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
+                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
+                return bundle;
+            }
+
             bundle.putString("merchandiserName", spe[0].getString("name"));
+
+            Map<String, String> headers = new HashMap<>();
+            headers.put("access_token", spe[0].getString("accessToken"));
+            API.getOperators(bundle, headers);
+
             return bundle;
         }
 
         @Override
         protected void onPostExecute(Bundle bundle) {
             transaction = fragmentManager.beginTransaction();
-            Fragment merchandiserFragment = new MerchandiserFragment();
-            merchandiserFragment.setArguments(bundle);
-            transaction.replace(R.id.fragment, merchandiserFragment);
+            int status = bundle.getInt("status");
+            if (status == RequestStatus.STATUS_OK) {
+                Fragment merchandiserFragment = new MerchandiserFragment();
+                merchandiserFragment.setArguments(bundle);
+                transaction.replace(R.id.fragment, merchandiserFragment);
+            } else {
+                switch (status) {
+                    case RequestStatus.STATUS_SERVER_ERROR:
+                        bundle.putString("error", getString(R.string.global_errors_server_error_text));
+                        break;
+                    case RequestStatus.STATUS_INTERNET_ERROR:
+                        bundle.putString("error", getString(R.string.global_errors_internet_connection_error_text));
+                        break;
+                }
+                ErrorFragment errorFragment = new ErrorFragment();
+                errorFragment.setArguments(bundle);
+                transaction.replace(R.id.fragment, errorFragment);
+            }
+            bundle.remove("status");
             transaction.commit();
         }
     }
