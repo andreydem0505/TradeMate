@@ -31,6 +31,8 @@
     <!-- Make Request Activity -->
     <string name="make_request_activity.header.text">Создать заявку</string>
     <string name="make_request_activity.name_et.hint">Название</string>
+    <string name="make_request_activity.text_et.hint">Текст</string>
+    <string name="make_request_activity.make_btn.text">Отправить</string>
     <!-- Make Request Activity -->
 
     <!-- Start Using Activity -->

@@ -43,6 +43,8 @@
     <string name="make_request_activity.header.text">Make a request</string>
     <string name="make_request_activity.name_et.hint">Name</string>
     <string name="make_request_activity.speak_btn.description" translatable="false">Speak</string>
+    <string name="make_request_activity.text_et.hint">Text</string>
+    <string name="make_request_activity.make_btn.text">Send</string>
     <!-- Make Request Activity -->
 
     <!-- Start Using Activity -->

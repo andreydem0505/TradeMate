@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.api.RequestStatus;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.OperatorJson;
@@ -71,68 +72,27 @@ public class MainActivity extends AppCompatActivity {
 
     private class SetCompanyFragment extends AsyncTask<SharedPreferencesEngine, Void, Bundle> {
 
-        private final int
-                STATUS_OK = 0,
-                STATUS_SERVER_ERROR = 1,
-                STATUS_INTERNET_ERROR = 2;
-
         @Override
         protected Bundle doInBackground(SharedPreferencesEngine... spe) {
             Bundle bundle = new Bundle();
-            JsonEngine jsonEngine = new JsonEngine();
 
             if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
-                bundle.putInt("status", STATUS_INTERNET_ERROR);
+                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
                 return bundle;
             }
+
             bundle.putString("companyName", spe[0].getString("name"));
             bundle.putString("accessToken", spe[0].getString("accessToken"));
 
-            String url = API.MAIN_URL + API.ALL_MERCHANDISERS_URL;
             Map<String, String> headers = new HashMap<>();
             headers.put("access_token", spe[0].getString("accessToken"));
-            try {
-                String response = RequestEngine.makeGetRequest(url, headers);
-                String message = jsonEngine.getStringFromJson(response, "message");
-                switch (message) {
-                    case "Success": {
-                        int total = jsonEngine.getIntegerFromJson(response, "total");
-                        bundle.putInt("total_merchandisers", total);
 
-                        MerchandiserJson[] merchandisersArray = jsonEngine.getMerchandisersArrayFromJson(response, "merchandisers");
-                        bundle.putParcelableArray("merchandisers", merchandisersArray);
-                    } break;
-                    case "Access token is wrong": {
-                        bundle.putInt("status", STATUS_SERVER_ERROR);
-                        return bundle;
-                    }
-                }
-            } catch (IOException e) {
-                bundle.putInt("status", STATUS_SERVER_ERROR);
+            API.getMerchandisers(bundle, headers);
+
+            if (bundle.getString("status") != null)
                 return bundle;
-            }
 
-            url = API.MAIN_URL + API.ALL_OPERATORS_URL;
-            try {
-                String response = RequestEngine.makeGetRequest(url, headers);
-                String message = jsonEngine.getStringFromJson(response, "message");
-                switch (message) {
-                    case "Success": {
-                        int total = jsonEngine.getIntegerFromJson(response, "total");
-                        bundle.putInt("total_operators", total);
-
-                        OperatorJson[] operatorsArray = jsonEngine.getOperatorsArrayFromJson(response, "operators");
-                        bundle.putParcelableArray("operators", operatorsArray);
-
-                        bundle.putInt("status", STATUS_OK);
-                    } break;
-                    case "Access token is wrong": {
-                        bundle.putInt("status", STATUS_SERVER_ERROR);
-                    } break;
-                }
-            } catch (IOException e) {
-                bundle.putInt("status", STATUS_SERVER_ERROR);
-            }
+            API.getOperators(bundle, headers);
 
             return bundle;
         }
@@ -141,18 +101,16 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Bundle bundle) {
             transaction = fragmentManager.beginTransaction();
             int status = bundle.getInt("status");
-            if (status == STATUS_OK) {
-                bundle.remove("status");
+            if (status == RequestStatus.STATUS_OK) {
                 Fragment companyFragment = new CompanyFragment();
                 companyFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment, companyFragment);
             } else {
-                bundle.remove("status");
                 switch (status) {
-                    case STATUS_SERVER_ERROR:
+                    case RequestStatus.STATUS_SERVER_ERROR:
                         bundle.putString("error", getString(R.string.global_errors_server_error_text));
                         break;
-                    case STATUS_INTERNET_ERROR:
+                    case RequestStatus.STATUS_INTERNET_ERROR:
                         bundle.putString("error", getString(R.string.global_errors_internet_connection_error_text));
                         break;
                 }
@@ -160,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 errorFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment, errorFragment);
             }
+            bundle.remove("status");
             transaction.commit();
         }
     }

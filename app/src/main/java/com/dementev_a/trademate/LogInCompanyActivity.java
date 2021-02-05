@@ -11,6 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.api.RequestStatus;
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
@@ -37,15 +39,19 @@ public class LogInCompanyActivity extends AppCompatActivity {
         new Request().execute();
     }
 
-    private class Request extends AsyncTask<Void, Void, Integer> {
+    private class Request extends AsyncTask<Void, Void, Bundle> {
         @Override
-        protected Integer doInBackground(Void... voids) {
+        protected Bundle doInBackground(Void... voids) {
+            Bundle bundle = new Bundle();
+
             if (TextUtils.isEmpty(emailET.getText().toString()) || TextUtils.isEmpty(passwordET.getText().toString())) {
-                return R.string.global_errors_empty_fields_error_text;
+                bundle.putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
+                return bundle;
             }
 
             if (!RequestEngine.isConnectedToInternet(LogInCompanyActivity.this)) {
-                return R.string.global_errors_internet_connection_error_text;
+                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
+                return bundle;
             }
 
             String email = emailET.getText().toString();
@@ -66,28 +72,48 @@ public class LogInCompanyActivity extends AppCompatActivity {
                             String accessToken = jsonEngine.getStringFromJson(response, "accessToken");
                             SharedPreferencesEngine spe = new SharedPreferencesEngine(LogInCompanyActivity.this, getString(R.string.shared_preferences_user));
                             spe.saveUser(getString(R.string.shared_preferences_type_company), name, email, accessToken);
-                            return RESULT_OK;
+                            bundle.putInt("status", RequestStatus.STATUS_OK);
+                        } break;
+                        case "Company with this email wasn't found": {
+                            BundleEngine.putError(bundle, R.string.log_in_company_activity_company_was_not_found_error_text);
+                        } break;
+                        case "Password is incorrect": {
+                            BundleEngine.putError(bundle, R.string.log_in_company_activity_wrong_password_error_text);
+                        } break;
+                        default: {
+                            bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
                         }
-                        case "Company with this email wasn't found":
-                            return R.string.log_in_company_activity_company_was_not_found_error_text;
-                        case "Password is incorrect":
-                            return R.string.log_in_company_activity_wrong_password_error_text;
                     }
                 } else
-                    return R.string.global_errors_server_error_text;
+                    bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             } catch (IOException e) {
-                return R.string.global_errors_server_error_text;
+                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             }
-            return R.string.global_errors_server_error_text;
+
+            return bundle;
         }
 
         @Override
-        protected void onPostExecute(Integer code) {
+        protected void onPostExecute(Bundle bundle) {
             progressBar.setVisibility(ProgressBar.INVISIBLE);
-            if (code != RESULT_OK)
-                errorTV.setText(code);
-            else
-                finish();
+            int status = bundle.getInt("status");
+            switch (status) {
+                case RequestStatus.STATUS_OK: {
+                    finish();
+                } break;
+                case RequestStatus.STATUS_ERROR_TEXT: {
+                    errorTV.setText(bundle.getInt("error_text"));
+                } break;
+                case RequestStatus.STATUS_INTERNET_ERROR: {
+                    errorTV.setText(R.string.global_errors_internet_connection_error_text);
+                } break;
+                case RequestStatus.STATUS_SERVER_ERROR: {
+                    errorTV.setText(R.string.global_errors_server_error_text);
+                } break;
+                case RequestStatus.STATUS_EMPTY_FIELDS: {
+                    errorTV.setText(R.string.global_errors_empty_fields_error_text);
+                } break;
+            }
         }
     }
 }

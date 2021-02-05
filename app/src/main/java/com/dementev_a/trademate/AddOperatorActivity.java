@@ -11,6 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.api.RequestStatus;
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
@@ -42,15 +44,19 @@ public class AddOperatorActivity extends AppCompatActivity {
     }
 
 
-    private class Request extends AsyncTask<Void, Void, Integer> {
+    private class Request extends AsyncTask<Void, Void, Bundle> {
         @Override
-        protected Integer doInBackground(Void... voids) {
+        protected Bundle doInBackground(Void... voids) {
+            Bundle bundle = new Bundle();
+
             if (TextUtils.isEmpty(nameET.getText().toString()) || TextUtils.isEmpty(emailET.getText().toString())) {
-                return R.string.global_errors_empty_fields_error_text;
+                bundle.putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
+                return bundle;
             }
 
             if (!RequestEngine.isConnectedToInternet(AddOperatorActivity.this)) {
-                return R.string.global_errors_internet_connection_error_text;
+                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
+                return bundle;
             }
 
             String name = nameET.getText().toString();
@@ -68,31 +74,52 @@ public class AddOperatorActivity extends AppCompatActivity {
                     JsonEngine jsonEngine = new JsonEngine();
                     String message = jsonEngine.getStringFromJson(response, "message");
                     switch (message) {
-                        case "Success":
-                            return RESULT_OK;
-                        case "Operator with this name is already exist":
-                            return R.string.add_operator_activity_operator_with_name_exist_error_text;
-                        case "Operator with this email is already exist":
-                            return R.string.add_operator_activity_operator_with_email_exist_error_text;
-                        case "Email is incorrect":
-                            return R.string.add_operator_activity_incorrect_email_error_text;
-                        default:
-                            return R.string.global_errors_server_error_text;
+                        case "Success": {
+                            bundle.putInt("status", RequestStatus.STATUS_OK);
+                        } break;
+                        case "Operator with this name is already exist": {
+                            BundleEngine.putError(bundle, R.string.add_operator_activity_operator_with_name_exist_error_text);
+                        } break;
+                        case "Operator with this email is already exist": {
+                            BundleEngine.putError(bundle, R.string.add_operator_activity_operator_with_email_exist_error_text);
+                        } break;
+                        case "Email is incorrect": {
+                            BundleEngine.putError(bundle, R.string.add_operator_activity_incorrect_email_error_text);
+                        } break;
+                        default: {
+                            bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+                        }
                     }
                 } else
-                    return R.string.global_errors_server_error_text;
+                    bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             } catch (IOException e) {
-                return R.string.global_errors_server_error_text;
+                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             }
+
+            return bundle;
         }
 
         @Override
-        protected void onPostExecute(Integer code) {
+        protected void onPostExecute(Bundle bundle) {
             progressBar.setVisibility(ProgressBar.INVISIBLE);
-            if (code != RESULT_OK)
-                errorTV.setText(code);
-            else
-                finish();
+            int status = bundle.getInt("status");
+            switch (status) {
+                case RequestStatus.STATUS_OK: {
+                    finish();
+                } break;
+                case RequestStatus.STATUS_ERROR_TEXT: {
+                    errorTV.setText(bundle.getInt("error_text"));
+                } break;
+                case RequestStatus.STATUS_INTERNET_ERROR: {
+                    errorTV.setText(R.string.global_errors_internet_connection_error_text);
+                } break;
+                case RequestStatus.STATUS_SERVER_ERROR: {
+                    errorTV.setText(R.string.global_errors_server_error_text);
+                } break;
+                case RequestStatus.STATUS_EMPTY_FIELDS: {
+                    errorTV.setText(R.string.global_errors_empty_fields_error_text);
+                } break;
+            }
         }
     }
 }
