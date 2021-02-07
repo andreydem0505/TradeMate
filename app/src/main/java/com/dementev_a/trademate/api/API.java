@@ -31,7 +31,6 @@ public class API {
         try {
             JsonEngine jsonEngine = new JsonEngine();
             String response = RequestEngine.makeGetRequest(url, headers);
-            System.out.println(response);
             String message = jsonEngine.getStringFromJson(response, "message");
             switch (message) {
                 case "Success": {

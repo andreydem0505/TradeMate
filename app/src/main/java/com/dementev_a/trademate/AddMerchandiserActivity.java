@@ -49,7 +49,7 @@ public class AddMerchandiserActivity extends AppCompatActivity {
         protected Bundle doInBackground(Void... voids) {
             Bundle bundle = new Bundle();
 
-            if (TextUtils.isEmpty(nameET.getText().toString()) || TextUtils.isEmpty(emailET.getText().toString()) || TextUtils.isEmpty(passwordET.getText().toString())) {
+            if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
                 bundle.putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
                 return bundle;
             }

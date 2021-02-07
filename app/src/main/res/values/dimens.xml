@@ -26,6 +26,7 @@
 
     <!-- Make Request Activity -->
     <dimen name="make_request_activity.header.text_size">20sp</dimen>
+    <dimen name="make_request_activity.choose_operator_tv.text_size">18sp</dimen>
     <!-- Make Request Activity -->
 
     <!-- Start Using Activity -->

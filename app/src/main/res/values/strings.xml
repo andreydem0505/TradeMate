@@ -45,6 +45,8 @@
     <string name="make_request_activity.speak_btn.description" translatable="false">Speak</string>
     <string name="make_request_activity.text_et.hint">Text</string>
     <string name="make_request_activity.make_btn.text">Send</string>
+    <string name="make_request_activity.choose_operator_tv.text">Receiver:</string>
+    <string name="make_request_activity.text_was_not_recognised_error.text">Text was not recognised</string>
     <!-- Make Request Activity -->
 
     <!-- Start Using Activity -->

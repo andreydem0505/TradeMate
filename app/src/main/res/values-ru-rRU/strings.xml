@@ -33,6 +33,8 @@
     <string name="make_request_activity.name_et.hint">Название</string>
     <string name="make_request_activity.text_et.hint">Текст</string>
     <string name="make_request_activity.make_btn.text">Отправить</string>
+    <string name="make_request_activity.choose_operator_tv.text">Получатель:</string>
+    <string name="make_request_activity.text_was_not_recognised_error.text">Текст не распознан</string>
     <!-- Make Request Activity -->
 
     <!-- Start Using Activity -->
