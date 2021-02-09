@@ -93,7 +93,27 @@
             android:layout_marginTop="20dp"
             android:text="@string/make_request_activity.make_btn.text"
             android:backgroundTint="@color/green"
+            android:onClick="onSendBtnClick"
             app:layout_constraintTop_toBottomOf="@+id/make_request_activity.text_et"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/make_request_activity.progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/make_request_activity.make_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/make_request_activity.error_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/log_in_company_activity.error_tv.text_size"
+            android:textColor="@color/red"
+            app:layout_constraintTop_toBottomOf="@id/make_request_activity.progress_bar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 

@@ -1,5 +1,6 @@
 package com.dementev_a.trademate;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -40,6 +41,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
