@@ -18,11 +18,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.api.RequestStatus;
+import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.messages.EmailSending;
 import com.dementev_a.trademate.messages.MessageSender;
 import com.dementev_a.trademate.messages.StrategyMessage;
+import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
 
 import java.util.ArrayList;
@@ -107,11 +110,34 @@ public class MakeRequestActivity extends AppCompatActivity {
             }
 
             try {
-                String to = operatorsMap.get(spinner.getSelectedItem().toString());
+                String subject = nameET.getText().toString();
+                String text = textET.getText().toString();
+                String operator = spinner.getSelectedItem().toString();
+
+                String to = operatorsMap.get(operator);
                 MessageSender sender = new MessageSender();
                 sender.setMethod(new EmailSending());
-                sender.send(new StrategyMessage(to, nameET.getText().toString(), textET.getText().toString()));
-                bundle.putInt("status", RequestStatus.STATUS_OK);
+                sender.send(new StrategyMessage(to, subject, text));
+
+                String url = API.MAIN_URL + API.CREATE_REQUEST_URL;
+                String json = String.format("{\"subject\": \"%s\"," +
+                        "\"text\": \"%s\"," +
+                        "\"operator\": \"%s\"}",
+                        subject, text, operator);
+                String accessToken = new SharedPreferencesEngine(MakeRequestActivity.this, getString(R.string.shared_preferences_user)).getString("accessToken");
+                Map<String, String> headers = new HashMap<>();
+                headers.put("access_token", accessToken);
+                String response = RequestEngine.makePostRequestWithJson(url, json, headers);
+                if (response != null) {
+                    JsonEngine jsonEngine = new JsonEngine();
+                    String message = jsonEngine.getStringFromJson(response, "message");
+                    if ("Success".equals(message)) {
+                        bundle.putInt("status", RequestStatus.STATUS_OK);
+                    } else {
+                        bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+                    }
+                } else
+                    bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             } catch (Exception e) {
                 bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             }

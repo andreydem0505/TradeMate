@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
@@ -33,45 +31,40 @@ public class AboutEmployeesActivity extends AppCompatActivity {
             Parcelable[] merchandisers = getIntent().getParcelableArrayExtra("merchandisers");
             for (Parcelable merchandiser : merchandisers) {
                 MerchandiserJson merchandiserJson = (MerchandiserJson) merchandiser;
-                MyButton myButton = new MyButton(this);
-                myButton.setText(merchandiserJson.getName());
-                linearLayout.addView(myButton.getView());
+                MyTextView myTextView = new MyTextView(this, merchandiserJson.getName());
+                linearLayout.addView(myTextView.getView());
             }
         } else {
             header = getString(R.string.about_employees_activity_header_operators_text);
             Parcelable[] operators = getIntent().getParcelableArrayExtra("operators");
             for (Parcelable operator : operators) {
                 OperatorJson operatorJson = (OperatorJson) operator;
-                MyButton myButton = new MyButton(this);
-                myButton.setText(operatorJson.getName());
-                linearLayout.addView(myButton.getView());
+                MyTextView myTextView = new MyTextView(this, operatorJson.getName());
+                linearLayout.addView(myTextView.getView());
             }
         }
         headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
     }
 
 
-    private class MyButton {
-        private Button button;
+    private class MyTextView {
+        private final TextView textView;
 
-        public MyButton(Context context) {
-            button = new Button(context);
+        public MyTextView(Context context, String text) {
+            textView = new TextView(context);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            button.setLayoutParams(params);
-            button.setBackgroundTintList(getResources().getColorStateList(R.color.white, context.getTheme()));
-            button.setTextColor(getResources().getColor(R.color.black, context.getTheme()));
-            button.setTransformationMethod(null);
-            button.setGravity(Gravity.START);
-            button.setStateListAnimator(null);
-            button.setTextSize(20);
-        }
-
-        public void setText(String text) {
-            button.setText(text);
+            textView.setLayoutParams(params);
+            textView.setTextColor(getResources().getColor(R.color.black, context.getTheme()));
+            textView.setTextSize(20);
+            textView.setPadding(20, 10, 20, 10);
+            textView.setClickable(true);
+            textView.setOnClickListener(v -> {
+            });
+            textView.setText(text);
         }
 
         public View getView() {
-            return button;
+            return textView;
         }
     }
 }

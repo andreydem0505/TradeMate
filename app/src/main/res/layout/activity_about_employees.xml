@@ -24,38 +24,24 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/about_employees_activity.header_tv">
 
-<!--        <Button-->
+<!--        <TextView-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:backgroundTint="@color/white"-->
 <!--            android:textColor="@color/black"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:gravity="start"-->
+<!--            android:padding="10dp"-->
+<!--            android:paddingStart="20dp"-->
+<!--            android:paddingEnd="20dp"-->
 <!--            android:textSize="20sp"-->
-<!--            android:backgroundTintMode="@drawable/wide_button"-->
-<!--            style="?android:attr/borderlessButtonStyle"-->
-<!--            android:text="Андрей Дементьев"/>-->
+<!--            android:text="Андрей Дементьев" />-->
 
-<!--        <Button-->
+<!--        <TextView-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:backgroundTint="@color/white"-->
 <!--            android:textColor="@color/black"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:gravity="start"-->
+<!--            android:padding="10dp"-->
+<!--            android:paddingStart="20dp"-->
+<!--            android:paddingEnd="20dp"-->
 <!--            android:textSize="20sp"-->
-<!--            style="?android:attr/borderlessButtonStyle"-->
-<!--            android:text="Андрей Дементьев"/>-->
-
-<!--        <Button-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:gravity="start"-->
-<!--            android:textSize="20sp"-->
-<!--            style="?android:attr/borderlessButtonStyle"-->
 <!--            android:text="Андрей Дементьев"/>-->
 
     </LinearLayout>

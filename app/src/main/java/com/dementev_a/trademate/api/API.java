@@ -22,7 +22,8 @@ public class API {
             ADD_MERCHANDISER_URL = "/register/merchandiser",
             ALL_MERCHANDISERS_URL = "/merchandisers",
             ADD_OPERATOR_URL = "/register/operator",
-            ALL_OPERATORS_URL = "/operators";
+            ALL_OPERATORS_URL = "/operators",
+            CREATE_REQUEST_URL = "/create/request";
 
 
     // using several times
@@ -51,6 +52,7 @@ public class API {
         }
     }
 
+    // using once
     public static void getMerchandisers(Bundle bundle, Map<String, String> headers) {
         String url = API.MAIN_URL + API.ALL_MERCHANDISERS_URL;
         try {

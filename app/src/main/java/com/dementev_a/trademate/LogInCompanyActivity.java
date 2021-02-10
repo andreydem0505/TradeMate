@@ -59,8 +59,8 @@ public class LogInCompanyActivity extends AppCompatActivity {
 
             String url = API.MAIN_URL + API.AUTH_COMPANY_URL;
             String json = String.format("{\"email\": \"%s\"," +
-                    "\"password\": \"%s\"" +
-                    "}", email, password);
+                    "\"password\": \"%s\"}",
+                    email, password);
             try {
                 String response = RequestEngine.makePostRequestWithJson(url, json);
                 if (response != null) {
