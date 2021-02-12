@@ -7,10 +7,14 @@ import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.OperatorJson;
+import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
 
 import java.io.IOException;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class API {
@@ -23,53 +27,73 @@ public class API {
             ALL_MERCHANDISERS_URL = "/merchandisers",
             ADD_OPERATOR_URL = "/register/operator",
             ALL_OPERATORS_URL = "/operators",
-            CREATE_REQUEST_URL = "/create/request";
+            CREATE_REQUEST_URL = "/create/request",
+            GET_ALL_REQUESTS_URL = "/requests";
 
 
-    // using several times
+    // using without error text
     public static void getOperators(Bundle bundle, Map<String, String> headers) {
         String url = API.MAIN_URL + API.ALL_OPERATORS_URL;
         try {
             JsonEngine jsonEngine = new JsonEngine();
             String response = RequestEngine.makeGetRequest(url, headers);
             String message = jsonEngine.getStringFromJson(response, "message");
-            switch (message) {
-                case "Success": {
-                    int total = jsonEngine.getIntegerFromJson(response, "total");
-                    bundle.putInt("total_operators", total);
+            if ("Success".equals(message)) {
+                int total = jsonEngine.getIntegerFromJson(response, "total");
+                bundle.putInt("total_operators", total);
 
-                    OperatorJson[] operatorsArray = jsonEngine.getOperatorsArrayFromJson(response, "operators");
-                    bundle.putParcelableArray("operators", operatorsArray);
+                OperatorJson[] operatorsArray = jsonEngine.getOperatorsArrayFromJson(response, "operators");
+                bundle.putParcelableArray("operators", operatorsArray);
 
-                    bundle.putInt("status", RequestStatus.STATUS_OK);
-                } break;
-                case "Access token is wrong": {
-                    bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
-                } break;
+                bundle.putInt("status", RequestStatus.STATUS_OK);
+            } else {
+                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             }
         } catch (IOException e) {
             bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
         }
     }
 
-    // using once
     public static void getMerchandisers(Bundle bundle, Map<String, String> headers) {
         String url = API.MAIN_URL + API.ALL_MERCHANDISERS_URL;
         try {
             JsonEngine jsonEngine = new JsonEngine();
             String response = RequestEngine.makeGetRequest(url, headers);
             String message = jsonEngine.getStringFromJson(response, "message");
-            switch (message) {
-                case "Success": {
-                    int total = jsonEngine.getIntegerFromJson(response, "total");
-                    bundle.putInt("total_merchandisers", total);
+            if ("Success".equals(message)) {
+                int total = jsonEngine.getIntegerFromJson(response, "total");
+                bundle.putInt("total_merchandisers", total);
 
-                    MerchandiserJson[] merchandisersArray = jsonEngine.getMerchandisersArrayFromJson(response, "merchandisers");
-                    bundle.putParcelableArray("merchandisers", merchandisersArray);
-                } break;
-                case "Access token is wrong": {
-                    bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
-                }
+                MerchandiserJson[] merchandisersArray = jsonEngine.getMerchandisersArrayFromJson(response, "merchandisers");
+                bundle.putParcelableArray("merchandisers", merchandisersArray);
+            } else {
+                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+            }
+        } catch (IOException e) {
+            bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+        }
+    }
+
+    public static void getRequests(Bundle bundle, Map<String, String> headers) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Clock clock = Clock.systemUTC();
+        LocalDate localDate = LocalDate.now(clock);
+        String formattedDate = localDate.format(formatter);
+        String url = API.MAIN_URL + API.GET_ALL_REQUESTS_URL + "?date=" + formattedDate;
+        try {
+            JsonEngine jsonEngine = new JsonEngine();
+            String response = RequestEngine.makeGetRequest(url, headers);
+            String message = jsonEngine.getStringFromJson(response, "message");
+            if ("Success".equals(message)) {
+                int total = jsonEngine.getIntegerFromJson(response, "total");
+                bundle.putInt("total_requests", total);
+
+                RequestJson[] requestsArray = jsonEngine.getRequestsArrayFromJson(response, "requests");
+                bundle.putParcelableArray("requests", requestsArray);
+
+                bundle.putInt("status", RequestStatus.STATUS_OK);
+            } else {
+                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             }
         } catch (IOException e) {
             bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);

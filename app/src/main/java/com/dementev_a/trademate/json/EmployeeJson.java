@@ -1,5 +1,7 @@
 package com.dementev_a.trademate.json;
 
+import org.jetbrains.annotations.NotNull;
+
 public class EmployeeJson {
     private String name;
     private String email;
@@ -29,6 +31,7 @@ public class EmployeeJson {
         this.email = email;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "EmployeeJson{" +

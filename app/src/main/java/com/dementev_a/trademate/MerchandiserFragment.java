@@ -16,9 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MerchandiserFragment extends Fragment implements View.OnClickListener {
     private View view;
-    private TextView merchandiserNameTV;
+    private TextView merchandiserNameTV, requestsQuantityTV;
     private FloatingActionButton addRequestBtn;
     private OperatorJson[] operators;
+    private int requestsQuantity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,12 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         merchandiserNameTV = view.findViewById(R.id.merchandiser_fragment_merchandiser_name);
         addRequestBtn = view.findViewById(R.id.merchandiser_fragment_add_request_btn);
         addRequestBtn.setOnClickListener(this);
+        requestsQuantityTV = view.findViewById(R.id.merchandiser_fragment_requests_quantity);
 
         merchandiserNameTV.setText(bundle.getString("merchandiserName"));
+        requestsQuantity = bundle.getInt("total_requests");
+        String requestsQuantityText = getString(R.string.merchandiser_fragment_requests_quantity_text);
+        requestsQuantityTV.setText(String.format(requestsQuantityText, requestsQuantity));
         operators = (OperatorJson[]) bundle.getParcelableArray("operators");
 
         return view;

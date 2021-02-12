@@ -43,4 +43,15 @@ public class JsonEngine {
         }
         return operatorsArray;
     }
+
+    public RequestJson[] getRequestsArrayFromJson(String json, String arg) {
+        JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
+        JsonArray array = jo.get(arg).getAsJsonArray();
+        RequestJson[] requestsArray = new RequestJson[array.size()];
+        for (int i = 0; i < array.size(); i++) {
+            jo = array.get(i).getAsJsonObject();
+            requestsArray[i] = new RequestJson(jo.get("subject").getAsString(), jo.get("text").getAsString(), jo.get("operator").getAsString());
+        }
+        return requestsArray;
+    }
 }

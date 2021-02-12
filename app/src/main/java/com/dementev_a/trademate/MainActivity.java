@@ -139,7 +139,13 @@ public class MainActivity extends AppCompatActivity {
 
             Map<String, String> headers = new HashMap<>();
             headers.put("access_token", spe[0].getString("accessToken"));
+
             API.getOperators(bundle, headers);
+
+            if (bundle.getString("status") != null)
+                return bundle;
+
+            API.getRequests(bundle, headers);
 
             return bundle;
         }
