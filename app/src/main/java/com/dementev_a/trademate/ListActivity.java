@@ -3,6 +3,7 @@ package com.dementev_a.trademate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -20,10 +21,6 @@ public class ListActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private TextView headerTV;
 
-    private enum BtnType {
-        COMPANY_TYPE, MERCHANDISER_TYPE, REQUEST_TYPE
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +35,7 @@ public class ListActivity extends AppCompatActivity {
                 Parcelable[] merchandisers = getIntent().getParcelableArrayExtra("merchandisers");
                 for (Parcelable merchandiser : merchandisers) {
                     MerchandiserJson merchandiserJson = (MerchandiserJson) merchandiser;
-                    MyTextView myTextView = new MyTextView(this, merchandiserJson.getName());
+                    MyTextViewForMerchandisers myTextView = new MyTextViewForMerchandisers(this, merchandiserJson);
                     linearLayout.addView(myTextView.getView());
                 }
                 headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
@@ -48,7 +45,7 @@ public class ListActivity extends AppCompatActivity {
                 Parcelable[] operators = getIntent().getParcelableArrayExtra("operators");
                 for (Parcelable operator : operators) {
                     OperatorJson operatorJson = (OperatorJson) operator;
-                    MyTextView myTextView = new MyTextView(this, operatorJson.getName());
+                    MyTextViewForOperators myTextView = new MyTextViewForOperators(this, operatorJson);
                     linearLayout.addView(myTextView.getView());
                 }
                 headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
@@ -58,19 +55,19 @@ public class ListActivity extends AppCompatActivity {
                 Parcelable[] requests = getIntent().getParcelableArrayExtra("requests");
                 for (Parcelable request : requests) {
                     RequestJson requestJson = (RequestJson) request;
-                    MyTextView myTextView = new MyTextView(this, requestJson.getSubject());
-                    myTextView.setOnClick(BtnType.REQUEST_TYPE);
+                    MyTextViewForRequests myTextView = new MyTextViewForRequests(this, requestJson);
                     linearLayout.addView(myTextView.getView());
                 }
             }
         }
     }
 
+    private class MyTextViewAbstract {
+        protected final TextView textView;
+        protected final Context context;
 
-    private class MyTextView {
-        private final TextView textView;
-
-        public MyTextView(Context context, String text) {
+        public MyTextViewAbstract(Context context) {
+            this.context = context;
             textView = new TextView(context);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             textView.setLayoutParams(params);
@@ -78,20 +75,48 @@ public class ListActivity extends AppCompatActivity {
             textView.setTextSize(20);
             textView.setPadding(20, 10, 20, 10);
             textView.setClickable(true);
-            textView.setText(text);
-        }
-
-        public void setOnClick(@NotNull BtnType type) {
-            switch (type) {
-                case REQUEST_TYPE: {
-                    textView.setOnClickListener(v -> {
-                    });
-                } break;
-            }
         }
 
         public View getView() {
             return textView;
+        }
+    }
+
+    private class MyTextViewForMerchandisers extends MyTextViewAbstract {
+        private final MerchandiserJson merchandiserJson;
+
+        public MyTextViewForMerchandisers(Context context, @NotNull MerchandiserJson merchandiserJson) {
+            super(context);
+            this.merchandiserJson = merchandiserJson;
+            textView.setText(merchandiserJson.getName());
+        }
+    }
+
+    private class MyTextViewForOperators extends MyTextViewAbstract {
+        private final OperatorJson operatorJson;
+
+        public MyTextViewForOperators(Context context, @NotNull OperatorJson operatorJson) {
+            super(context);
+            this.operatorJson = operatorJson;
+            textView.setText(operatorJson.getName());
+        }
+    }
+
+    private class MyTextViewForRequests extends MyTextViewAbstract {
+        private final RequestJson requestJson;
+
+        public MyTextViewForRequests(Context context, @NotNull RequestJson requestJson) {
+            super(context);
+            this.requestJson = requestJson;
+            textView.setText(requestJson.getSubject());
+            textView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, AboutRequestActivity.class);
+                intent.putExtra("subject", requestJson.getSubject());
+                intent.putExtra("text", requestJson.getText());
+                intent.putExtra("receiver", requestJson.getOperator());
+                intent.putExtra("dateTime", requestJson.getDateTime());
+                startActivity(intent);
+            });
         }
     }
 }

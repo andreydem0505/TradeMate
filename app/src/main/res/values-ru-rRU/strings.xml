@@ -30,6 +30,10 @@
     <string name="list_activity.header_requests.text">Заявки сегодня</string>
     <!-- List Activity -->
 
+    <!-- About Request Activity -->
+    <string name="about_request_activity.receiver.text">Кому: %1$s</string>
+    <!-- About Request Activity -->
+
     <!-- Make Request Activity -->
     <string name="make_request_activity.header.text">Создать заявку</string>
     <string name="make_request_activity.name_et.hint">Название</string>
