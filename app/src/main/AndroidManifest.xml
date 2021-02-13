@@ -14,7 +14,7 @@
         android:theme="@style/Theme.TradeMate">
         <activity android:name=".MakeRequestActivity"/>
         <activity android:name=".AddOperatorActivity" />
-        <activity android:name=".AboutEmployeesActivity" />
+        <activity android:name=".ListActivity" />
         <activity android:name=".LogInMerchandiserActivity" />
         <activity android:name=".AddMerchandiserActivity" />
         <activity android:name=".LogInCompanyActivity" />

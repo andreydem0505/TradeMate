@@ -43,4 +43,16 @@ public class RequestJson implements Parcelable {
         dest.writeString(text);
         dest.writeString(operator);
     }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
 }

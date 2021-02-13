@@ -9,16 +9,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.json.OperatorJson;
+import com.dementev_a.trademate.json.RequestJson;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MerchandiserFragment extends Fragment implements View.OnClickListener {
     private View view;
     private TextView merchandiserNameTV, requestsQuantityTV;
     private FloatingActionButton addRequestBtn;
+    private Button aboutRequestsBtn;
     private OperatorJson[] operators;
+    private RequestJson[] requests;
     private int requestsQuantity;
 
     @Override
@@ -35,6 +39,8 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         merchandiserNameTV = view.findViewById(R.id.merchandiser_fragment_merchandiser_name);
         addRequestBtn = view.findViewById(R.id.merchandiser_fragment_add_request_btn);
         addRequestBtn.setOnClickListener(this);
+        aboutRequestsBtn = view.findViewById(R.id.merchandiser_fragment_about_requests_btn);
+        aboutRequestsBtn.setOnClickListener(this);
         requestsQuantityTV = view.findViewById(R.id.merchandiser_fragment_requests_quantity);
 
         merchandiserNameTV.setText(bundle.getString("merchandiserName"));
@@ -42,6 +48,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         String requestsQuantityText = getString(R.string.merchandiser_fragment_requests_quantity_text);
         requestsQuantityTV.setText(String.format(requestsQuantityText, requestsQuantity));
         operators = (OperatorJson[]) bundle.getParcelableArray("operators");
+        requests = (RequestJson[]) bundle.getParcelableArray("requests");
 
         return view;
     }
@@ -53,6 +60,12 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
             case R.id.merchandiser_fragment_add_request_btn: {
                 Intent intent = new Intent(getContext(), MakeRequestActivity.class);
                 intent.putExtra("operators", operators);
+                startActivity(intent);
+            } break;
+            case R.id.merchandiser_fragment_about_requests_btn: {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("type", "requests");
+                intent.putExtra("requests", requests);
                 startActivity(intent);
             } break;
         }

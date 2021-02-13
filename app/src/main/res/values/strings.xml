@@ -35,10 +35,11 @@
     <string name="merchandiser_fragment.requests_quantity.text">Requests today: %1$d</string>
     <!-- Merchandiser Fragment -->
 
-    <!-- About Employees Activity -->
-    <string name="about_employees_activity.header_merchandisers.text">Merchandisers of %1$s</string>
-    <string name="about_employees_activity.header_operators.text">Operators of %1$s</string>
-    <!-- About Employees Activity -->
+    <!-- List Activity -->
+    <string name="list_activity.header_merchandisers.text">Merchandisers of %1$s</string>
+    <string name="list_activity.header_operators.text">Operators of %1$s</string>
+    <string name="list_activity.header_requests.text">Requests today</string>
+    <!-- List Activity -->
 
     <!-- Make Request Activity -->
     <string name="make_request_activity.header.text">Make a request</string>

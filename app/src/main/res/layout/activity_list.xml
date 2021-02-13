@@ -4,25 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AboutEmployeesActivity">
+    tools:context=".ListActivity">
 
     <TextView
-        android:id="@+id/about_employees_activity.header_tv"
+        android:id="@+id/list_activity.header_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/padding"
         android:paddingBottom="20dp"
-        android:textSize="@dimen/about_employees_activity.header.text_size"
+        android:textSize="@dimen/list_activity.header.text_size"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
-        android:id="@+id/about_merchandisers_activity.list"
+        android:id="@+id/list_activity.list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/about_employees_activity.header_tv">
+        app:layout_constraintTop_toBottomOf="@id/list_activity.header_tv">
 
 <!--        <TextView-->
 <!--            android:layout_width="match_parent"-->
