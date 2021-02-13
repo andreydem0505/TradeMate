@@ -7,17 +7,20 @@ public class RequestJson implements Parcelable {
     private String subject;
     private String text;
     private String operator;
+    private String dateTime;
 
-    public RequestJson(String subject, String text, String operator) {
+    public RequestJson(String subject, String text, String operator, String dateTime) {
         this.subject = subject;
         this.text = text;
         this.operator = operator;
+        this.dateTime = dateTime;
     }
 
     protected RequestJson(Parcel in) {
         subject = in.readString();
         text = in.readString();
         operator = in.readString();
+        dateTime = in.readString();
     }
 
     public static final Creator<RequestJson> CREATOR = new Creator<RequestJson>() {
@@ -42,6 +45,7 @@ public class RequestJson implements Parcelable {
         dest.writeString(subject);
         dest.writeString(text);
         dest.writeString(operator);
+        dest.writeString(dateTime);
     }
 
     public String getSubject() {
@@ -54,5 +58,9 @@ public class RequestJson implements Parcelable {
 
     public String getOperator() {
         return operator;
+    }
+
+    public String getDateTime() {
+        return dateTime;
     }
 }

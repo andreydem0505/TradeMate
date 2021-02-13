@@ -50,7 +50,7 @@ public class JsonEngine {
         RequestJson[] requestsArray = new RequestJson[array.size()];
         for (int i = 0; i < array.size(); i++) {
             jo = array.get(i).getAsJsonObject();
-            requestsArray[i] = new RequestJson(jo.get("subject").getAsString(), jo.get("text").getAsString(), jo.get("operator").getAsString());
+            requestsArray[i] = new RequestJson(jo.get("subject").getAsString(), jo.get("text").getAsString(), jo.get("operator").getAsString(), jo.get("dateTime").getAsString());
         }
         return requestsArray;
     }

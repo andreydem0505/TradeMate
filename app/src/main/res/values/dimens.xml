@@ -24,6 +24,13 @@
     <dimen name="list_activity.header.text_size">20sp</dimen>
     <!-- List Activity -->
 
+    <!-- About Request Activity -->
+    <dimen name="about_request_activity.header.text_size">20sp</dimen>
+    <dimen name="about_request_activity.text.text_size">16sp</dimen>
+    <dimen name="about_request_activity.receiver.text_size">16sp</dimen>
+    <dimen name="about_request_activity.time.text_size">16sp</dimen>
+    <!-- About Request Activity -->
+
     <!-- Make Request Activity -->
     <dimen name="make_request_activity.header.text_size">20sp</dimen>
     <dimen name="make_request_activity.choose_operator_tv.text_size">18sp</dimen>

@@ -28,6 +28,7 @@ import com.dementev_a.trademate.messages.StrategyMessage;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -122,8 +123,9 @@ public class MakeRequestActivity extends AppCompatActivity {
                 String url = API.MAIN_URL + API.CREATE_REQUEST_URL;
                 String json = String.format("{\"subject\": \"%s\"," +
                         "\"text\": \"%s\"," +
-                        "\"operator\": \"%s\"}",
-                        subject, text, operator);
+                        "\"operator\": \"%s\"," +
+                                "\"dateTime\": \"%s\"}",
+                        subject, text, operator, LocalDateTime.now().toString());
                 String accessToken = new SharedPreferencesEngine(MakeRequestActivity.this, getString(R.string.shared_preferences_user)).getString("accessToken");
                 Map<String, String> headers = new HashMap<>();
                 headers.put("access_token", accessToken);

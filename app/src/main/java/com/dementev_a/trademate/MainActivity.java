@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
             API.getMerchandisers(bundle, headers);
 
-            if (bundle.getString("status") != null)
+            if (bundle.getInt("status") != RequestStatus.STATUS_OK)
                 return bundle;
 
             API.getOperators(bundle, headers);
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
             API.getOperators(bundle, headers);
 
-            if (bundle.getString("status") != null)
+            if (bundle.getInt("status") != RequestStatus.STATUS_OK)
                 return bundle;
 
             API.getRequests(bundle, headers);

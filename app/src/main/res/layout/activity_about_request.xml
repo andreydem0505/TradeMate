@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".AboutRequestActivity">
+
+    <TextView
+        android:id="@+id/about_request_activity.header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:textSize="@dimen/about_request_activity.header.text_size"
+        android:text="Заявка №1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/about_request_activity.text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:paddingBottom="20dp"
+        android:textSize="@dimen/about_request_activity.text.text_size"
+        android:text="сыр 2 кг\nпельмени 3 кг\nкарандаши 43 шт."
+        app:layout_constraintTop_toBottomOf="@id/about_request_activity.header"/>
+
+    <TextView
+        android:id="@+id/about_request_activity.receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/about_request_activity.receiver.text_size"
+        android:text="Кому: оператор 1"
+        app:layout_constraintTop_toBottomOf="@id/about_request_activity.text"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextClock
+        android:id="@+id/about_request_activity.time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/about_request_activity.time.text_size"
+        android:text="12:34"
+        app:layout_constraintTop_toTopOf="@id/about_request_activity.receiver"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

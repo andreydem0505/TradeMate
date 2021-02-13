@@ -66,6 +66,8 @@ public class API {
 
                 MerchandiserJson[] merchandisersArray = jsonEngine.getMerchandisersArrayFromJson(response, "merchandisers");
                 bundle.putParcelableArray("merchandisers", merchandisersArray);
+
+                bundle.putInt("status", RequestStatus.STATUS_OK);
             } else {
                 bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             }

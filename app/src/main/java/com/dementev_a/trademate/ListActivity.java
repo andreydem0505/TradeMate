@@ -14,9 +14,15 @@ import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.json.RequestJson;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ListActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private TextView headerTV;
+
+    private enum BtnType {
+        COMPANY_TYPE, MERCHANDISER_TYPE, REQUEST_TYPE
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class ListActivity extends AppCompatActivity {
                 for (Parcelable request : requests) {
                     RequestJson requestJson = (RequestJson) request;
                     MyTextView myTextView = new MyTextView(this, requestJson.getSubject());
+                    myTextView.setOnClick(BtnType.REQUEST_TYPE);
                     linearLayout.addView(myTextView.getView());
                 }
             }
@@ -71,9 +78,16 @@ public class ListActivity extends AppCompatActivity {
             textView.setTextSize(20);
             textView.setPadding(20, 10, 20, 10);
             textView.setClickable(true);
-            textView.setOnClickListener(v -> {
-            });
             textView.setText(text);
+        }
+
+        public void setOnClick(@NotNull BtnType type) {
+            switch (type) {
+                case REQUEST_TYPE: {
+                    textView.setOnClickListener(v -> {
+                    });
+                } break;
+            }
         }
 
         public View getView() {
