@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -32,9 +33,9 @@ public class RequestEngine {
             }
         }
         urlConnection.setDoOutput(true);
-        OutputStream os = urlConnection.getOutputStream();
-        byte[] input = json.getBytes(StandardCharsets.UTF_8);
-        os.write(input, 0, input.length);
+        OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
+        writer.write(json.replaceAll("\r\n", "/r/n"));
+        writer.flush();
         if (urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
             return null;
         }
@@ -62,7 +63,7 @@ public class RequestEngine {
         StringBuilder response = new StringBuilder();
         String responseLine;
         while ((responseLine = br.readLine()) != null) {
-            response.append(responseLine.trim());
+            response.append(responseLine.trim().replaceAll("/r/n", "\r\n"));
         }
         return response.toString();
     }

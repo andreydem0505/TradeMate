@@ -39,6 +39,9 @@
     <string name="list_activity.header_merchandisers.text">Merchandisers of %1$s</string>
     <string name="list_activity.header_operators.text">Operators of %1$s</string>
     <string name="list_activity.header_requests.text">Requests today</string>
+    <string name="list_activity.error_tv_merchandisers.text">No merchandisers yet</string>
+    <string name="list_activity.error_tv_operators.text">No operators yet</string>
+    <string name="list_activity.error_tv_requests.text">No requests yet</string>
     <!-- List Activity -->
 
     <!-- About Request Activity -->

@@ -125,7 +125,7 @@ public class MakeRequestActivity extends AppCompatActivity {
                         "\"text\": \"%s\"," +
                         "\"operator\": \"%s\"," +
                                 "\"dateTime\": \"%s\"}",
-                        subject, text, operator, LocalDateTime.now().toString());
+                        subject, text.replaceAll("\n", "\r\n"), operator, LocalDateTime.now().toString());
                 String accessToken = new SharedPreferencesEngine(MakeRequestActivity.this, getString(R.string.shared_preferences_user)).getString("accessToken");
                 Map<String, String> headers = new HashMap<>();
                 headers.put("access_token", accessToken);

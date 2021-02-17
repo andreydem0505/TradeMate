@@ -28,6 +28,9 @@
     <string name="list_activity.header_merchandisers.text">Мерчандайзеры %1$s</string>
     <string name="list_activity.header_operators.text">Операторы %1$s</string>
     <string name="list_activity.header_requests.text">Заявки сегодня</string>
+    <string name="list_activity.error_tv_merchandisers.text">Пока нет мерчендайзеров</string>
+    <string name="list_activity.error_tv_operators.text">Пока нет операторов</string>
+    <string name="list_activity.error_tv_requests.text">Пока нет заявок</string>
     <!-- List Activity -->
 
     <!-- About Request Activity -->

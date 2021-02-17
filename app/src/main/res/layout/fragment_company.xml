@@ -83,7 +83,7 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/orange"
+                android:backgroundTint="@color/purple_500"
                 android:layout_marginStart="20dp"
                 app:fabCustomSize="38dp"
                 app:maxImageSize="20dp"
