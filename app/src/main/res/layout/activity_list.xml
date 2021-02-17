@@ -17,33 +17,12 @@
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
+    <ListView
         android:id="@+id/list_activity.list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/list_activity.header_tv">
 
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:padding="10dp"-->
-<!--            android:paddingStart="20dp"-->
-<!--            android:paddingEnd="20dp"-->
-<!--            android:textSize="20sp"-->
-<!--            android:text="Андрей Дементьев" />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:padding="10dp"-->
-<!--            android:paddingStart="20dp"-->
-<!--            android:paddingEnd="20dp"-->
-<!--            android:textSize="20sp"-->
-<!--            android:text="Андрей Дементьев"/>-->
-
-    </LinearLayout>
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

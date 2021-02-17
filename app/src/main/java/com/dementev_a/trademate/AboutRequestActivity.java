@@ -24,6 +24,7 @@ public class AboutRequestActivity extends AppCompatActivity {
         textTV = findViewById(R.id.about_request_activity_text);
         receiverTV = findViewById(R.id.about_request_activity_receiver);
         textTime = findViewById(R.id.about_request_activity_time);
+
         headerTV.setText(getIntent().getStringExtra("subject"));
         textTV.setText(getIntent().getStringExtra("text"));
         String receiverText = getString(R.string.about_request_activity_receiver_text);

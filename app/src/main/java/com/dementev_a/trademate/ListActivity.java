@@ -2,23 +2,20 @@ package com.dementev_a.trademate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.json.RequestJson;
 
-import org.jetbrains.annotations.NotNull;
 
 public class ListActivity extends AppCompatActivity {
-    private LinearLayout linearLayout;
+    private ListView listView;
     private TextView headerTV;
 
     @Override
@@ -26,97 +23,59 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         headerTV = findViewById(R.id.list_activity_header_tv);
-        linearLayout = findViewById(R.id.list_activity_list);
+        listView = findViewById(R.id.list_activity_list);
 
         String type = getIntent().getStringExtra("type");
         switch (type) {
-            case "merchandisers": {
-                String header = getString(R.string.list_activity_header_merchandisers_text);
-                Parcelable[] merchandisers = getIntent().getParcelableArrayExtra("merchandisers");
-                for (Parcelable merchandiser : merchandisers) {
-                    MerchandiserJson merchandiserJson = (MerchandiserJson) merchandiser;
-                    MyTextViewForMerchandisers myTextView = new MyTextViewForMerchandisers(this, merchandiserJson);
-                    linearLayout.addView(myTextView.getView());
-                }
-                headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
-            } break;
-            case "operators": {
-                String header = getString(R.string.list_activity_header_operators_text);
-                Parcelable[] operators = getIntent().getParcelableArrayExtra("operators");
-                for (Parcelable operator : operators) {
-                    OperatorJson operatorJson = (OperatorJson) operator;
-                    MyTextViewForOperators myTextView = new MyTextViewForOperators(this, operatorJson);
-                    linearLayout.addView(myTextView.getView());
-                }
-                headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
-            } break;
             case "requests": {
                 headerTV.setText(R.string.list_activity_header_requests_text);
                 Parcelable[] requests = getIntent().getParcelableArrayExtra("requests");
-                for (Parcelable request : requests) {
-                    RequestJson requestJson = (RequestJson) request;
-                    MyTextViewForRequests myTextView = new MyTextViewForRequests(this, requestJson);
-                    linearLayout.addView(myTextView.getView());
+                RequestJson[] arrayOfRequestJson = new RequestJson[requests.length];
+                String[] arrayNames = new String[requests.length];
+                for (int i = 0; i < requests.length; i++) {
+                    RequestJson requestJson = (RequestJson) requests[i];
+                    arrayOfRequestJson[i] = requestJson;
+                    arrayNames[i] = requestJson.getSubject();
                 }
-            }
-        }
-    }
-
-    private class MyTextViewAbstract {
-        protected final TextView textView;
-        protected final Context context;
-
-        public MyTextViewAbstract(Context context) {
-            this.context = context;
-            textView = new TextView(context);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            textView.setLayoutParams(params);
-            textView.setTextColor(getResources().getColor(R.color.black, context.getTheme()));
-            textView.setTextSize(20);
-            textView.setPadding(20, 10, 20, 10);
-            textView.setClickable(true);
-        }
-
-        public View getView() {
-            return textView;
-        }
-    }
-
-    private class MyTextViewForMerchandisers extends MyTextViewAbstract {
-        private final MerchandiserJson merchandiserJson;
-
-        public MyTextViewForMerchandisers(Context context, @NotNull MerchandiserJson merchandiserJson) {
-            super(context);
-            this.merchandiserJson = merchandiserJson;
-            textView.setText(merchandiserJson.getName());
-        }
-    }
-
-    private class MyTextViewForOperators extends MyTextViewAbstract {
-        private final OperatorJson operatorJson;
-
-        public MyTextViewForOperators(Context context, @NotNull OperatorJson operatorJson) {
-            super(context);
-            this.operatorJson = operatorJson;
-            textView.setText(operatorJson.getName());
-        }
-    }
-
-    private class MyTextViewForRequests extends MyTextViewAbstract {
-        private final RequestJson requestJson;
-
-        public MyTextViewForRequests(Context context, @NotNull RequestJson requestJson) {
-            super(context);
-            this.requestJson = requestJson;
-            textView.setText(requestJson.getSubject());
-            textView.setOnClickListener(v -> {
-                Intent intent = new Intent(context, AboutRequestActivity.class);
-                intent.putExtra("subject", requestJson.getSubject());
-                intent.putExtra("text", requestJson.getText());
-                intent.putExtra("receiver", requestJson.getOperator());
-                intent.putExtra("dateTime", requestJson.getDateTime());
-                startActivity(intent);
-            });
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayNames);
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener((parent, view, position, id) -> {
+                    Intent intent = new Intent(this, AboutRequestActivity.class);
+                    intent.putExtra("subject", arrayOfRequestJson[position].getSubject());
+                    intent.putExtra("text", arrayOfRequestJson[position].getText());
+                    intent.putExtra("receiver", arrayOfRequestJson[position].getOperator());
+                    intent.putExtra("dateTime", arrayOfRequestJson[position].getDateTime());
+                    startActivity(intent);
+                });
+            } break;
+            case "merchandisers": {
+                String header = getString(R.string.list_activity_header_merchandisers_text);
+                headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
+                Parcelable[] merchandisers = getIntent().getParcelableArrayExtra("merchandisers");
+                MerchandiserJson[] arrayOfMerchandiserJson = new MerchandiserJson[merchandisers.length];
+                String[] arrayNames = new String[merchandisers.length];
+                for (int i = 0; i < merchandisers.length; i++) {
+                    MerchandiserJson merchandiserJson = (MerchandiserJson) merchandisers[i];
+                    arrayOfMerchandiserJson[i] = merchandiserJson;
+                    arrayNames[i] = merchandiserJson.getName();
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayNames);
+                listView.setAdapter(adapter);
+            } break;
+            case "operators": {
+                String header = getString(R.string.list_activity_header_operators_text);
+                headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
+                Parcelable[] operators = getIntent().getParcelableArrayExtra("operators");
+                OperatorJson[] arrayOfOperatorJson = new OperatorJson[operators.length];
+                String[] arrayNames = new String[operators.length];
+                for (int i = 0; i < operators.length; i++) {
+                    OperatorJson operatorJson = (OperatorJson) operators[i];
+                    arrayOfOperatorJson[i] = operatorJson;
+                    arrayNames[i] = operatorJson.getName();
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayNames);
+                listView.setAdapter(adapter);
+            } break;
         }
     }
 }
