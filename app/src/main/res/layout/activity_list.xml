@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ListActivity">
 
-    <TextView
-        android:id="@+id/list_activity.header_tv"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingTop="@dimen/padding"
-        android:paddingBottom="20dp"
-        android:textSize="@dimen/list_activity.header.text_size"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="wrap_content">
 
-    <ListView
-        android:id="@+id/list_activity.list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/list_activity.header_tv">
+        <TextView
+            android:id="@+id/list_activity.header_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/padding"
+            android:paddingBottom="20dp"
+            android:textSize="@dimen/list_activity.header.text_size"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    </ListView>
+        <ListView
+            android:id="@+id/list_activity.list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/list_activity.header_tv">
 
-    <TextView
-        android:id="@+id/list_activity.error_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:textColor="@color/red"
-        app:layout_constraintTop_toBottomOf="@id/list_activity.header_tv"/>
+        </ListView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/list_activity.error_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:textColor="@color/red"
+            app:layout_constraintTop_toBottomOf="@id/list_activity.header_tv"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
