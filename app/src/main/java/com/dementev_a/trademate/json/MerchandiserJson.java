@@ -7,9 +7,11 @@ import androidx.annotation.NonNull;
 
 
 public class MerchandiserJson extends EmployeeJson implements Parcelable {
+    private String password;
 
-    public MerchandiserJson(String name, String email) {
+    public MerchandiserJson(String name, String email, String password) {
         super(name, email);
+        this.password = password;
     }
 
     protected MerchandiserJson(Parcel in) {
@@ -18,6 +20,7 @@ public class MerchandiserJson extends EmployeeJson implements Parcelable {
         String email = in.readString();
         super.setName(name);
         super.setEmail(email);
+        password = in.readString();
     }
 
     public static final Creator<MerchandiserJson> CREATOR = new Creator<MerchandiserJson>() {
@@ -41,6 +44,11 @@ public class MerchandiserJson extends EmployeeJson implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(super.getName());
         dest.writeString(super.getEmail());
+        dest.writeString(password);
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @NonNull

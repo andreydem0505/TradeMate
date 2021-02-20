@@ -3,97 +3,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/company_fragment.padding"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CompanyFragment">
 
-    <TextView
-        android:id="@+id/company_fragment.company_name"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:textSize="@dimen/company_fragment.company_name.text_size"
-        android:text="Google"
-        android:paddingBottom="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/company_fragment.layout_companies"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/panel_background"
-        android:padding="@dimen/company_fragment.panel.padding"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/company_fragment.company_name">
-
-        <TextView
-            android:id="@+id/company_fragment.merchandisers_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/company_fragment.usual.text_size"
-            android:text="Мерчендайзеров в компании: 4" />
-
-
-        <Button
-            android:id="@+id/company_fragment.about_merchandisers_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="@string/company_fragment.about_merchandisers_btn.text"
-            android:backgroundTint="@color/color_3B70CD" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/company_fragment.panel_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/panel_background_dark"
-        android:padding="@dimen/company_fragment.panel.padding"
-        android:layout_marginTop="20dp"
-        app:layout_constraintLeft_toLeftOf="@id/company_fragment.layout_companies"
-        app:layout_constraintTop_toBottomOf="@id/company_fragment.layout_companies">
-
-        <TextView
-            android:id="@+id/company_fragment.operators_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/company_fragment.usual.text_size"
-            android:text="Операторов в компании: 2" />
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/company_fragment.padding">
 
-            <Button
-                android:id="@+id/company_fragment.about_operators_btn"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/company_fragment.company_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="@string/company_fragment.about_operators_btn.text"
-                android:backgroundTint="@color/blue" />
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/company_fragment.company_name.text_size"
+                android:text="Google"
+                android:paddingBottom="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/company_fragment.add_operator_btn"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/purple_500"
-                android:layout_marginStart="20dp"
-                app:fabCustomSize="38dp"
-                app:maxImageSize="20dp"
-                app:tint="@color/white"
-                app:srcCompat="@android:drawable/ic_input_add"
-                android:contentDescription="@string/company_fragment.add_merchandiser_btn.description" />
+            <LinearLayout
+                android:id="@+id/company_fragment.layout_companies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/panel_background"
+                android:padding="@dimen/company_fragment.panel.padding"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/company_fragment.company_name">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/company_fragment.merchandisers_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/company_fragment.usual.text_size"
+                    android:text="Мерчендайзеров в компании: 4" />
 
-    </LinearLayout>
+
+                <Button
+                    android:id="@+id/company_fragment.about_merchandisers_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/company_fragment.about_merchandisers_btn.text"
+                    android:backgroundTint="@color/color_3B70CD" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/company_fragment.panel_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/panel_background_dark"
+                android:padding="@dimen/company_fragment.panel.padding"
+                android:layout_marginTop="20dp"
+                app:layout_constraintLeft_toLeftOf="@id/company_fragment.layout_companies"
+                app:layout_constraintTop_toBottomOf="@id/company_fragment.layout_companies">
+
+                <TextView
+                    android:id="@+id/company_fragment.operators_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/company_fragment.usual.text_size"
+                    android:text="Операторов в компании: 2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/company_fragment.about_operators_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/company_fragment.about_operators_btn.text"
+                        android:backgroundTint="@color/blue" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/company_fragment.add_operator_btn"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/blue"
+                        android:layout_marginStart="20dp"
+                        app:fabCustomSize="38dp"
+                        app:maxImageSize="20dp"
+                        app:tint="@color/white"
+                        app:srcCompat="@android:drawable/ic_input_add"
+                        android:contentDescription="@string/company_fragment.add_merchandiser_btn.description" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/company_fragment.add_merchandiser_btn"

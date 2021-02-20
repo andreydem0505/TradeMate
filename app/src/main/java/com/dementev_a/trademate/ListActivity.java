@@ -66,6 +66,13 @@ public class ListActivity extends AppCompatActivity {
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayNames);
                     listView.setAdapter(adapter);
+                    listView.setOnItemClickListener((parent, view, position, id) -> {
+                        Intent intent = new Intent(this, AboutMerchandiserActivity.class);
+                        intent.putExtra("name", arrayOfMerchandiserJson[position].getName());
+                        intent.putExtra("email", arrayOfMerchandiserJson[position].getEmail());
+                        intent.putExtra("password", arrayOfMerchandiserJson[position].getPassword());
+                        startActivity(intent);
+                    });
                 } else
                     errorTV.setText(R.string.list_activity_error_tv_merchandisers_text);
             } break;

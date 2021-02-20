@@ -28,7 +28,7 @@ public class JsonEngine {
         MerchandiserJson[] merchandisersArray = new MerchandiserJson[array.size()];
         for (int i = 0; i < array.size(); i++) {
             jo = array.get(i).getAsJsonObject();
-            merchandisersArray[i] = new MerchandiserJson(jo.get("name").getAsString(), jo.get("email").getAsString());
+            merchandisersArray[i] = new MerchandiserJson(jo.get("name").getAsString(), jo.get("email").getAsString(), jo.get("password").getAsString());
         }
         return merchandisersArray;
     }

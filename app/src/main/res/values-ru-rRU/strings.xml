@@ -37,6 +37,12 @@
     <string name="about_request_activity.receiver.text">Кому: %1$s</string>
     <!-- About Request Activity -->
 
+    <!-- About Merchandiser Activity -->
+    <string name="about_merchandiser_activity.password_tv.text">Пароль: %1$s</string>
+    <string name="about_merchandiser_activity.password_btn_show.text">Показать</string>
+    <string name="about_merchandiser_activity.password_btn_hide.text">Скрыть</string>
+    <!-- About Merchandiser Activity -->
+
     <!-- Make Request Activity -->
     <string name="make_request_activity.header.text">Создать заявку</string>
     <string name="make_request_activity.name_et.hint">Название</string>

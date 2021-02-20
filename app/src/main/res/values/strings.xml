@@ -48,6 +48,13 @@
     <string name="about_request_activity.receiver.text">To: %1$s</string>
     <!-- About Request Activity -->
 
+    <!-- About Merchandiser Activity -->
+    <string name="about_merchandiser_activity.email_tv.text" translatable="false">Email: %1$s</string>
+    <string name="about_merchandiser_activity.password_tv.text">Password: %1$s</string>
+    <string name="about_merchandiser_activity.password_btn_show.text">Show</string>
+    <string name="about_merchandiser_activity.password_btn_hide.text">Hide</string>
+    <!-- About Merchandiser Activity -->
+
     <!-- Make Request Activity -->
     <string name="make_request_activity.header.text">Make a request</string>
     <string name="make_request_activity.name_et.hint">Name</string>
