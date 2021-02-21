@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/padding"
+    android:padding="20dp"
     android:gravity="center"
     tools:context=".ChoiceActivity">
-
 
     <Button
         android:layout_width="match_parent"
@@ -16,7 +15,8 @@
         android:text="@string/choice_activity.sign_up_company_btn.text"
         android:textAllCaps="false"
         android:onClick="onSignUpCompanyClickBtn"
-        android:textSize="@dimen/choice_activity.sign_up_company_btn.text_size" />
+        android:textSize="@dimen/choice_activity.log_in_company_btn.text_size" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +26,7 @@
         android:textAllCaps="false"
         android:onClick="onLogInCompanyClickBtn"
         android:textSize="@dimen/choice_activity.log_in_company_btn.text_size" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

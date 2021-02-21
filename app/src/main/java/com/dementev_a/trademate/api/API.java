@@ -16,6 +16,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Optional;
 
 public class API {
     public static final String
@@ -76,12 +77,14 @@ public class API {
         }
     }
 
-    public static void getRequests(Bundle bundle, Map<String, String> headers) {
+    public static void getRequests(Bundle bundle, Map<String, String> headers, String... merchandiser) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Clock clock = Clock.systemUTC();
         LocalDate localDate = LocalDate.now(clock);
         String formattedDate = localDate.format(formatter);
         String url = API.MAIN_URL + API.GET_ALL_REQUESTS_URL + "?date=" + formattedDate;
+        if (merchandiser.length > 0)
+            url += "&name=" + merchandiser[0];
         try {
             JsonEngine jsonEngine = new JsonEngine();
             String response = RequestEngine.makeGetRequest(url, headers);

@@ -33,6 +33,8 @@
 
     <!-- About Merchandiser Activity -->
     <dimen name="about_merchandiser_activity.header.text_size">20sp</dimen>
+    <dimen name="about_merchandiser_activity.error_tv.text_size">16sp</dimen>
+    <dimen name="about_merchandiser_activity.requests_today_tv.text_size">18sp</dimen>
     <!-- About Merchandiser Activity -->
 
     <!-- Make Request Activity -->
@@ -41,9 +43,9 @@
     <!-- Make Request Activity -->
 
     <!-- Start Using Activity -->
-    <dimen name="choice_activity.sign_up_company_btn.text_size">18sp</dimen>
-    <dimen name="choice_activity.log_in_company_btn.text_size">18sp</dimen>
-    <dimen name="choice_activity.log_in_merchandiser_btn.text_size">18sp</dimen>
+    <dimen name="choice_activity.sign_up_company_btn.text_size">16sp</dimen>
+    <dimen name="choice_activity.log_in_company_btn.text_size">16sp</dimen>
+    <dimen name="choice_activity.log_in_merchandiser_btn.text_size">16sp</dimen>
     <!-- Start Using Activity -->
 
     <!-- Sign Up Company Activity -->

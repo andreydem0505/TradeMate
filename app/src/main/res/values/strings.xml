@@ -53,6 +53,7 @@
     <string name="about_merchandiser_activity.password_tv.text">Password: %1$s</string>
     <string name="about_merchandiser_activity.password_btn_show.text">Show</string>
     <string name="about_merchandiser_activity.password_btn_hide.text">Hide</string>
+    <string name="about_merchandiser_activity.requests_today_tv.text">Requests today</string>
     <!-- About Merchandiser Activity -->
 
     <!-- Make Request Activity -->
