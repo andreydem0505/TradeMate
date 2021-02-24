@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Parcelable;
 import android.speech.RecognizerIntent;
 import android.text.TextUtils;
@@ -19,7 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.api.RequestStatus;
+import com.dementev_a.trademate.requests.AsyncRequest;
+import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.messages.EmailSending;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class MakeRequestActivity extends AppCompatActivity {
     private Spinner spinner;
@@ -92,22 +96,55 @@ public class MakeRequestActivity extends AppCompatActivity {
 
     public void onSendBtnClick(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        new SendEmail().execute();
+        new ConcurrentSendEmail().execute();
     }
 
-    private class SendEmail extends AsyncTask<Void, Void, Bundle> {
+
+    private class ConcurrentSendEmail implements AsyncRequest {
+        private final Bundle bundle;
+
+        protected ConcurrentSendEmail() {
+            bundle = new Bundle();
+        }
+
         @Override
-        protected Bundle doInBackground(Void... voids) {
-            Bundle bundle = new Bundle();
+        public void execute() {
+            Executor executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+            executor.execute(() -> {
+                sendRequest();
+                handler.post(() -> {
+                    progressBar.setVisibility(ProgressBar.INVISIBLE);
+                    int status = bundle.getInt("status");
+                    switch (status) {
+                        case RequestStatus.STATUS_OK: {
+                            finish();
+                        } break;
+                        case RequestStatus.STATUS_INTERNET_ERROR: {
+                            errorTV.setText(R.string.global_errors_internet_connection_error_text);
+                        } break;
+                        case RequestStatus.STATUS_SERVER_ERROR: {
+                            errorTV.setText(R.string.global_errors_server_error_text);
+                        } break;
+                        case RequestStatus.STATUS_EMPTY_FIELDS: {
+                            errorTV.setText(R.string.global_errors_empty_fields_error_text);
+                        } break;
+                    }
+                });
+            });
+        }
+
+        @Override
+        public void sendRequest() {
 
             if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(textET.getText())) {
                 bundle.putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
-                return bundle;
+                return;
             }
 
             if (!RequestEngine.isConnectedToInternet(MakeRequestActivity.this)) {
                 bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
-                return bundle;
+                return;
             }
 
             try {
@@ -122,8 +159,8 @@ public class MakeRequestActivity extends AppCompatActivity {
 
                 String url = API.MAIN_URL + API.CREATE_REQUEST_URL;
                 String json = String.format("{\"subject\": \"%s\"," +
-                        "\"text\": \"%s\"," +
-                        "\"operator\": \"%s\"," +
+                                "\"text\": \"%s\"," +
+                                "\"operator\": \"%s\"," +
                                 "\"dateTime\": \"%s\"}",
                         subject, text.replaceAll("\n", "\r\n"), operator, LocalDateTime.now().toString());
                 String accessToken = new SharedPreferencesEngine(MakeRequestActivity.this, getString(R.string.shared_preferences_user)).getString("accessToken");
@@ -142,28 +179,6 @@ public class MakeRequestActivity extends AppCompatActivity {
                     bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             } catch (Exception e) {
                 bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
-            }
-
-            return bundle;
-        }
-
-        @Override
-        protected void onPostExecute(Bundle bundle) {
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-            int status = bundle.getInt("status");
-            switch (status) {
-                case RequestStatus.STATUS_OK: {
-                    finish();
-                } break;
-                case RequestStatus.STATUS_INTERNET_ERROR: {
-                    errorTV.setText(R.string.global_errors_internet_connection_error_text);
-                } break;
-                case RequestStatus.STATUS_SERVER_ERROR: {
-                    errorTV.setText(R.string.global_errors_server_error_text);
-                } break;
-                case RequestStatus.STATUS_EMPTY_FIELDS: {
-                    errorTV.setText(R.string.global_errors_empty_fields_error_text);
-                } break;
             }
         }
     }

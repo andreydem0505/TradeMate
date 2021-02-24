@@ -2,7 +2,7 @@ package com.dementev_a.trademate.bundle;
 
 import android.os.Bundle;
 
-import com.dementev_a.trademate.api.RequestStatus;
+import com.dementev_a.trademate.requests.RequestStatus;
 
 import org.jetbrains.annotations.NotNull;
 

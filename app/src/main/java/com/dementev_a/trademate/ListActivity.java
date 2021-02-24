@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.OperatorJson;
-import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.widgets.WidgetsEngine;
 
 

@@ -1,4 +1,4 @@
-package com.dementev_a.trademate.api;
+package com.dementev_a.trademate.requests;
 
 public class RequestStatus {
     public static final int

@@ -1,6 +1,5 @@
 package com.dementev_a.trademate;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;

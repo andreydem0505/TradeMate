@@ -2,26 +2,26 @@ package com.dementev_a.trademate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.api.RequestStatus;
-import com.dementev_a.trademate.json.RequestJson;
+import com.dementev_a.trademate.requests.AsyncRequest;
+import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
 import com.dementev_a.trademate.widgets.WidgetsEngine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class AboutMerchandiserActivity extends AppCompatActivity {
     private TextView headerTV, emailTV, passwordTV, errorTV;
@@ -43,7 +43,7 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.about_merchandiser_activity_progress_bar);
         errorTV = findViewById(R.id.about_merchandiser_activity_error_tv);
 
-        new SetRequests().execute(new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user)));
+        new ConcurrentSetRequest(new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user))).execute();
         merchandiserName = getIntent().getStringExtra("name");
         headerTV.setText(merchandiserName);
         String emailText = getString(R.string.about_merchandiser_activity_email_tv_text);
@@ -72,40 +72,51 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
         showPassword();
     }
 
-    private class SetRequests extends AsyncTask<SharedPreferencesEngine, Void, Bundle> {
 
-        @Override
-        protected Bundle doInBackground(SharedPreferencesEngine... spe) {
-            Bundle bundle = new Bundle();
+    private class ConcurrentSetRequest implements AsyncRequest {
+        private final Bundle bundle;
+        private final SharedPreferencesEngine spe;
 
-            if (!RequestEngine.isConnectedToInternet(AboutMerchandiserActivity.this)) {
-                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
-                return bundle;
-            }
-
-            Map<String, String> headers = new HashMap<>();
-            headers.put("access_token", spe[0].getString("accessToken"));
-
-            API.getRequests(bundle, headers, merchandiserName);
-
-            return bundle;
+        protected ConcurrentSetRequest(SharedPreferencesEngine spe) {
+            bundle = new Bundle();
+            this.spe = spe;
         }
 
         @Override
-        protected void onPostExecute(Bundle bundle) {
-            int status = bundle.getInt("status");
-            switch (status) {
-                case RequestStatus.STATUS_OK: {
-                    WidgetsEngine.setRequestsOnListView(bundle.getParcelableArray("requests"), listView, AboutMerchandiserActivity.this, errorTV);
-                } break;
-                case RequestStatus.STATUS_SERVER_ERROR: {
-                    errorTV.setText(R.string.global_errors_server_error_text);
-                } break;
-                case RequestStatus.STATUS_INTERNET_ERROR: {
-                    errorTV.setText(R.string.global_errors_internet_connection_error_text);
-                } break;
+        public void execute() {
+            Executor executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+            executor.execute(() -> {
+                sendRequest();
+                handler.post(() -> {
+                    int status = bundle.getInt("status");
+                    switch (status) {
+                        case RequestStatus.STATUS_OK: {
+                            WidgetsEngine.setRequestsOnListView(bundle.getParcelableArray("requests"), listView, AboutMerchandiserActivity.this, errorTV);
+                        } break;
+                        case RequestStatus.STATUS_SERVER_ERROR: {
+                            errorTV.setText(R.string.global_errors_server_error_text);
+                        } break;
+                        case RequestStatus.STATUS_INTERNET_ERROR: {
+                            errorTV.setText(R.string.global_errors_internet_connection_error_text);
+                        } break;
+                    }
+                    progressBar.setVisibility(ProgressBar.INVISIBLE);
+                });
+            });
+        }
+
+        @Override
+        public void sendRequest() {
+            if (!RequestEngine.isConnectedToInternet(AboutMerchandiserActivity.this)) {
+                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
+                return;
             }
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
+
+            Map<String, String> headers = new HashMap<>();
+            headers.put("access_token", spe.getString("accessToken"));
+
+            API.getRequests(bundle, headers, merchandiserName);
         }
     }
 }

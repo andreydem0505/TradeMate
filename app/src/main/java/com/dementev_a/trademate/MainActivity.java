@@ -2,28 +2,25 @@ package com.dementev_a.trademate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.api.RequestStatus;
-import com.dementev_a.trademate.json.JsonEngine;
-import com.dementev_a.trademate.json.MerchandiserJson;
-import com.dementev_a.trademate.json.OperatorJson;
+import com.dementev_a.trademate.requests.AsyncRequest;
+import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -62,117 +59,139 @@ public class MainActivity extends AppCompatActivity {
             }
             String type = spe.getString("type");
             if (type.equals(getString(R.string.shared_preferences_type_company))) {
-                new SetCompanyFragment().execute(spe);
+                new ConcurrentSetCompanyFragment(spe).execute();
             } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
-                new SetMerchandiserFragment().execute(spe);
+                new ConcurrentSetMerchandiserFragment(spe).execute();
             }
         }
     }
 
 
-    private class SetCompanyFragment extends AsyncTask<SharedPreferencesEngine, Void, Bundle> {
+    private class ConcurrentSetCompanyFragment implements AsyncRequest {
+        private final Bundle bundle;
+        private final SharedPreferencesEngine spe;
+
+        protected ConcurrentSetCompanyFragment(SharedPreferencesEngine spe) {
+            bundle = new Bundle();
+            this.spe = spe;
+        }
 
         @Override
-        protected Bundle doInBackground(SharedPreferencesEngine... spe) {
-            Bundle bundle = new Bundle();
+        public void execute() {
+            Executor executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+            executor.execute(() -> {
+                sendRequest();
+                handler.post(() -> {
+                    transaction = fragmentManager.beginTransaction();
+                    int status = bundle.getInt("status");
+                    if (status == RequestStatus.STATUS_OK) {
+                        Fragment companyFragment = new CompanyFragment();
+                        companyFragment.setArguments(bundle);
+                        transaction.replace(R.id.fragment, companyFragment);
+                    } else {
+                        switch (status) {
+                            case RequestStatus.STATUS_SERVER_ERROR:
+                                bundle.putString("error", getString(R.string.global_errors_server_error_text));
+                                break;
+                            case RequestStatus.STATUS_INTERNET_ERROR:
+                                bundle.putString("error", getString(R.string.global_errors_internet_connection_error_text));
+                                break;
+                        }
+                        ErrorFragment errorFragment = new ErrorFragment();
+                        errorFragment.setArguments(bundle);
+                        transaction.replace(R.id.fragment, errorFragment);
+                    }
+                    bundle.remove("status");
+                    transaction.commit();
+                });
+            });
+        }
+
+        @Override
+        public void sendRequest() {
 
             if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
                 bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
-                return bundle;
+                return;
             }
 
-            bundle.putString("companyName", spe[0].getString("name"));
-            bundle.putString("accessToken", spe[0].getString("accessToken"));
+            bundle.putString("companyName", spe.getString("name"));
+            bundle.putString("accessToken", spe.getString("accessToken"));
 
             Map<String, String> headers = new HashMap<>();
-            headers.put("access_token", spe[0].getString("accessToken"));
+            headers.put("access_token", spe.getString("accessToken"));
 
             API.getMerchandisers(bundle, headers);
 
             if (bundle.getInt("status") != RequestStatus.STATUS_OK)
-                return bundle;
+                return;
 
             API.getOperators(bundle, headers);
-
-            return bundle;
-        }
-
-        @Override
-        protected void onPostExecute(Bundle bundle) {
-            transaction = fragmentManager.beginTransaction();
-            int status = bundle.getInt("status");
-            if (status == RequestStatus.STATUS_OK) {
-                Fragment companyFragment = new CompanyFragment();
-                companyFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment, companyFragment);
-            } else {
-                switch (status) {
-                    case RequestStatus.STATUS_SERVER_ERROR:
-                        bundle.putString("error", getString(R.string.global_errors_server_error_text));
-                        break;
-                    case RequestStatus.STATUS_INTERNET_ERROR:
-                        bundle.putString("error", getString(R.string.global_errors_internet_connection_error_text));
-                        break;
-                }
-                ErrorFragment errorFragment = new ErrorFragment();
-                errorFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment, errorFragment);
-            }
-            bundle.remove("status");
-            transaction.commit();
         }
     }
 
 
-    private class SetMerchandiserFragment extends AsyncTask<SharedPreferencesEngine, Void, Bundle> {
+    private class ConcurrentSetMerchandiserFragment implements AsyncRequest {
+        private final Bundle bundle;
+        private final SharedPreferencesEngine spe;
+
+        protected ConcurrentSetMerchandiserFragment(SharedPreferencesEngine spe) {
+            bundle = new Bundle();
+            this.spe = spe;
+        }
 
         @Override
-        protected Bundle doInBackground(SharedPreferencesEngine... spe) {
-            Bundle bundle = new Bundle();
+        public void execute() {
+            Executor executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+            executor.execute(() -> {
+                sendRequest();
+                handler.post(() -> {
+                    transaction = fragmentManager.beginTransaction();
+                    int status = bundle.getInt("status");
+                    if (status == RequestStatus.STATUS_OK) {
+                        Fragment merchandiserFragment = new MerchandiserFragment();
+                        merchandiserFragment.setArguments(bundle);
+                        transaction.replace(R.id.fragment, merchandiserFragment);
+                    } else {
+                        switch (status) {
+                            case RequestStatus.STATUS_SERVER_ERROR:
+                                bundle.putString("error", getString(R.string.global_errors_server_error_text));
+                                break;
+                            case RequestStatus.STATUS_INTERNET_ERROR:
+                                bundle.putString("error", getString(R.string.global_errors_internet_connection_error_text));
+                                break;
+                        }
+                        ErrorFragment errorFragment = new ErrorFragment();
+                        errorFragment.setArguments(bundle);
+                        transaction.replace(R.id.fragment, errorFragment);
+                    }
+                    bundle.remove("status");
+                    transaction.commit();
+                });
+            });
+        }
+
+        @Override
+        public void sendRequest() {
 
             if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
                 bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
-                return bundle;
+                return;
             }
 
-            bundle.putString("merchandiserName", spe[0].getString("name"));
+            bundle.putString("merchandiserName", spe.getString("name"));
 
             Map<String, String> headers = new HashMap<>();
-            headers.put("access_token", spe[0].getString("accessToken"));
+            headers.put("access_token", spe.getString("accessToken"));
 
             API.getOperators(bundle, headers);
 
             if (bundle.getInt("status") != RequestStatus.STATUS_OK)
-                return bundle;
+                return;
 
             API.getRequests(bundle, headers);
-
-            return bundle;
-        }
-
-        @Override
-        protected void onPostExecute(Bundle bundle) {
-            transaction = fragmentManager.beginTransaction();
-            int status = bundle.getInt("status");
-            if (status == RequestStatus.STATUS_OK) {
-                Fragment merchandiserFragment = new MerchandiserFragment();
-                merchandiserFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment, merchandiserFragment);
-            } else {
-                switch (status) {
-                    case RequestStatus.STATUS_SERVER_ERROR:
-                        bundle.putString("error", getString(R.string.global_errors_server_error_text));
-                        break;
-                    case RequestStatus.STATUS_INTERNET_ERROR:
-                        bundle.putString("error", getString(R.string.global_errors_internet_connection_error_text));
-                        break;
-                }
-                ErrorFragment errorFragment = new ErrorFragment();
-                errorFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment, errorFragment);
-            }
-            bundle.remove("status");
-            transaction.commit();
         }
     }
 }

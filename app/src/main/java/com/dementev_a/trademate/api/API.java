@@ -2,21 +2,18 @@ package com.dementev_a.trademate.api;
 
 import android.os.Bundle;
 
-import com.dementev_a.trademate.LogInCompanyActivity;
-import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.json.RequestJson;
-import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
+import com.dementev_a.trademate.requests.RequestStatus;
 
 import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-import java.util.Optional;
 
 public class API {
     public static final String

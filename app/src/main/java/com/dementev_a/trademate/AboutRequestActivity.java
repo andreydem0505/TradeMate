@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class AboutRequestActivity extends AppCompatActivity {
     private TextView headerTV, textTV, receiverTV, textTime;
