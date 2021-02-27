@@ -117,7 +117,10 @@ public class SignUpCompanyActivity extends AppCompatActivity {
                             bundle.putInt("status", RequestStatus.STATUS_OK);
                         } break;
                         case "Such company is already exist": {
-                            BundleEngine.putError(bundle, R.string.sign_up_company_activity_company_exist_error_text);
+                            BundleEngine.putError(bundle, R.string.sign_up_company_activity_company_with_this_name_exist_error_text);
+                        } break;
+                        case "Company with this email is already exist": {
+                            BundleEngine.putError(bundle, R.string.sign_up_company_activity_company_with_this_email_exist_error_text);
                         } break;
                         case "Password is unreliable": {
                             BundleEngine.putError(bundle, R.string.sign_up_company_activity_password_is_unreliable_error_text);

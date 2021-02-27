@@ -88,7 +88,7 @@ public class MakeRequestActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(nameET.getText())) {
                     nameET.setText(resultText);
                 } else {
-                    textET.append(resultText);
+                    textET.append(resultText + "\n");
                 }
             }
         }

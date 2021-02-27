@@ -9,6 +9,8 @@ import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.requests.RequestEngine;
 import com.dementev_a.trademate.requests.RequestStatus;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDate;
@@ -74,7 +76,7 @@ public class API {
         }
     }
 
-    public static void getRequests(Bundle bundle, Map<String, String> headers, String... merchandiser) {
+    public static void getRequests(Bundle bundle, Map<String, String> headers, @NotNull String... merchandiser) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Clock clock = Clock.systemUTC();
         LocalDate localDate = LocalDate.now(clock);

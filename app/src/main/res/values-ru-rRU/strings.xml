@@ -17,6 +17,7 @@
     <string name="company_fragment.operators_quantity.text">Операторов в компании: %1$d</string>
     <string name="company_fragment.about_merchandisers_btn.text">Подробнее</string>
     <string name="company_fragment.about_operators_btn.text">Подробнее</string>
+    <string name="company_fragment.about_requests_btn.text">Подробнее</string>
     <!-- Company Fragment -->
 
     <!-- Merchandiser Fragment -->
@@ -66,7 +67,8 @@
     <string name="sign_up_company_activity.sign_up_btn.text">Готово</string>
     <!-- Errors -->
         <string name="sign_up_company_activity.password_is_unreliable_error.text">Пароль не надёжен</string>
-        <string name="sign_up_company_activity.company_exist_error.text">Такая компания уже существует</string>
+        <string name="sign_up_company_activity.company_with_this_name_exist_error.text">Такая компания уже существует</string>
+        <string name="sign_up_company_activity.company_with_this_email_exist_error.text">Компания с таким email уже существует</string>
         <string name="sign_up_company_activity.incorrect_email_error.text">Email некорректен</string>
     <!-- Sign Up Company Activity -->
 
