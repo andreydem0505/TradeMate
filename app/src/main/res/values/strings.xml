@@ -24,6 +24,7 @@
     <!-- Company Fragment -->
     <string name="company_fragment.employees_quantity.text">Merchandisers in company: %1$d</string>
     <string name="company_fragment.operators_quantity.text">Operators in company: %1$d</string>
+    <string name="company_fragment.requests_quantity.text">Requests today: %1$d</string>
     <string name="company_fragment.about_merchandisers_btn.text">Details</string>
     <string name="company_fragment.about_operators_btn.text">Details</string>
     <string name="company_fragment.about_requests_btn.text">Details</string>

@@ -128,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
             API.getOperators(bundle, headers);
+
+            if (bundle.getInt("status") != RequestStatus.STATUS_OK)
+                return;
+
+            API.getRequests(bundle, headers);
         }
     }
 
