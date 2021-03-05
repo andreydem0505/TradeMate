@@ -37,6 +37,17 @@
             app:layout_constraintTop_toBottomOf="@id/about_request_activity.header"/>
 
         <TextView
+            android:id="@+id/about_request_activity.sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/about_request_activity.sender.text_size"
+            android:text="От: мерчендайзер 1"
+            app:layout_constraintTop_toBottomOf="@id/about_request_activity.text"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
             android:id="@+id/about_request_activity.receiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +55,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/about_request_activity.receiver.text_size"
             android:text="Кому: оператор 1"
-            app:layout_constraintTop_toBottomOf="@id/about_request_activity.text"
+            app:layout_constraintTop_toBottomOf="@id/about_request_activity.sender"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView

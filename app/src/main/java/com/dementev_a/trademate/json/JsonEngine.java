@@ -1,16 +1,10 @@
 package com.dementev_a.trademate.json;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class JsonEngine {
-    private final Gson gson;
-
-    public JsonEngine() {
-        gson = new Gson();
-    }
 
     public String getStringFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
@@ -50,7 +44,7 @@ public class JsonEngine {
         RequestJson[] requestsArray = new RequestJson[array.size()];
         for (int i = 0; i < array.size(); i++) {
             jo = array.get(i).getAsJsonObject();
-            requestsArray[i] = new RequestJson(jo.get("subject").getAsString(), jo.get("text").getAsString(), jo.get("operator").getAsString(), jo.get("dateTime").getAsString());
+            requestsArray[i] = new RequestJson(jo.get("subject").getAsString(), jo.get("text").getAsString(), jo.get("operator").getAsString(), jo.get("from").getAsString(), jo.get("dateTime").getAsString());
         }
         return requestsArray;
     }

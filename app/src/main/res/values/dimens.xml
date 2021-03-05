@@ -28,6 +28,7 @@
     <dimen name="about_request_activity.header.text_size">20sp</dimen>
     <dimen name="about_request_activity.text.text_size">16sp</dimen>
     <dimen name="about_request_activity.receiver.text_size">16sp</dimen>
+    <dimen name="about_request_activity.sender.text_size">16sp</dimen>
     <dimen name="about_request_activity.time.text_size">16sp</dimen>
     <!-- About Request Activity -->
 

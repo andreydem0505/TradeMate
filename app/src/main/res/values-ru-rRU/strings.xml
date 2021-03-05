@@ -36,6 +36,7 @@
     <!-- List Activity -->
 
     <!-- About Request Activity -->
+    <string name="about_request_activity.sender.text">От: %1$s</string>
     <string name="about_request_activity.receiver.text">Кому: %1$s</string>
     <!-- About Request Activity -->
 

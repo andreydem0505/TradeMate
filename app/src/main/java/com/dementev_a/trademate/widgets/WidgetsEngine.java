@@ -30,6 +30,7 @@ public class WidgetsEngine {
                 intent.putExtra("subject", arrayOfRequestJson[position].getSubject());
                 intent.putExtra("text", arrayOfRequestJson[position].getText());
                 intent.putExtra("receiver", arrayOfRequestJson[position].getOperator());
+                intent.putExtra("sender", arrayOfRequestJson[position].getSender());
                 intent.putExtra("dateTime", arrayOfRequestJson[position].getDateTime());
                 context.startActivity(intent);
             });

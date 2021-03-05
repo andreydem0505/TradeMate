@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDateTime;
 
 public class AboutRequestActivity extends AppCompatActivity {
-    private TextView headerTV, textTV, receiverTV, textTime;
+    private TextView headerTV, textTV, receiverTV, senderTV, textTime;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -21,10 +21,13 @@ public class AboutRequestActivity extends AppCompatActivity {
         headerTV = findViewById(R.id.about_request_activity_header);
         textTV = findViewById(R.id.about_request_activity_text);
         receiverTV = findViewById(R.id.about_request_activity_receiver);
+        senderTV = findViewById(R.id.about_request_activity_sender);
         textTime = findViewById(R.id.about_request_activity_time);
 
         headerTV.setText(getIntent().getStringExtra("subject"));
         textTV.setText(getIntent().getStringExtra("text"));
+        String senderText = getString(R.string.about_request_activity_sender_text);
+        senderTV.setText(String.format(senderText, getIntent().getStringExtra("sender")));
         String receiverText = getString(R.string.about_request_activity_receiver_text);
         receiverTV.setText(String.format(receiverText, getIntent().getStringExtra("receiver")));
         String dateTimeString = getIntent().getStringExtra("dateTime");
