@@ -3,49 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/merchandiser_fragment.padding"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MerchandiserFragment">
 
-    <TextView
-        android:id="@+id/merchandiser_fragment.merchandiser_name"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:textSize="@dimen/merchandiser_fragment.merchandiser_name.text_size"
-        android:text="Андрей"
-        android:paddingBottom="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/panel_background"
-        android:padding="@dimen/merchandiser_fragment.panel.padding"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/merchandiser_fragment.merchandiser_name">
-
-        <TextView
-            android:id="@+id/merchandiser_fragment.requests_quantity"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/merchandiser_fragment.usual.text_size"
-            android:text="Заявок сегодня: 12" />
+            android:padding="@dimen/padding">
+
+            <TextView
+                android:id="@+id/merchandiser_fragment.merchandiser_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/merchandiser_fragment.merchandiser_name.text_size"
+                android:text="Андрей"
+                android:paddingBottom="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <LinearLayout
+                android:id="@+id/merchandiser_fragment.panel_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/panel_background"
+                android:padding="@dimen/merchandiser_fragment.panel.padding"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/merchandiser_fragment.merchandiser_name">
+
+                <TextView
+                    android:id="@+id/merchandiser_fragment.requests_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/merchandiser_fragment.usual.text_size"
+                    android:text="Заявок сегодня: 12" />
 
 
-        <Button
-            android:id="@+id/merchandiser_fragment.about_requests_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="@string/merchandiser_fragment.about_requests_btn.text"
-            android:backgroundTint="@color/color_3B70CD" />
+                <Button
+                    android:id="@+id/merchandiser_fragment.about_requests_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/merchandiser_fragment.about_requests_btn.text"
+                    android:backgroundTint="@color/color_3B70CD" />
 
+            </LinearLayout>
 
-    </LinearLayout>
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/merchandiser_fragment.graph"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/merchandiser_fragment.panel_1">
+
+            </com.jjoe64.graphview.GraphView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/merchandiser_fragment.add_request_btn"

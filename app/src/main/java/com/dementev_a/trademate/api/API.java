@@ -76,10 +76,36 @@ public class API {
         }
     }
 
-    public static void getRequests(Bundle bundle, Map<String, String> headers, @NotNull String... merchandiser) {
+    public static void getRequestsToday(Bundle bundle, Map<String, String> headers, @NotNull String... merchandiser) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Clock clock = Clock.systemUTC();
         LocalDate localDate = LocalDate.now(clock);
+        String formattedDate = localDate.format(formatter);
+        String url = API.MAIN_URL + API.GET_ALL_REQUESTS_URL + "?date=" + formattedDate;
+        if (merchandiser.length > 0)
+            url += "&name=" + merchandiser[0];
+        try {
+            JsonEngine jsonEngine = new JsonEngine();
+            String response = RequestEngine.makeGetRequest(url, headers);
+            String message = jsonEngine.getStringFromJson(response, "message");
+            if ("Success".equals(message)) {
+                int total = jsonEngine.getIntegerFromJson(response, "total");
+                bundle.putInt("total_requests", total);
+
+                RequestJson[] requestsArray = jsonEngine.getRequestsArrayFromJson(response, "requests");
+                bundle.putParcelableArray("requests", requestsArray);
+
+                bundle.putInt("status", RequestStatus.STATUS_OK);
+            } else {
+                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+            }
+        } catch (IOException e) {
+            bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+        }
+    }
+
+    public static void getRequestsForDate(Bundle bundle, Map<String, String> headers, @NotNull LocalDate localDate, @NotNull String... merchandiser) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = localDate.format(formatter);
         String url = API.MAIN_URL + API.GET_ALL_REQUESTS_URL + "?date=" + formattedDate;
         if (merchandiser.length > 0)

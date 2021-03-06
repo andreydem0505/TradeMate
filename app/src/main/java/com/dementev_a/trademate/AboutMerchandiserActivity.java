@@ -116,7 +116,7 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
             Map<String, String> headers = new HashMap<>();
             headers.put("access_token", spe.getString("accessToken"));
 
-            API.getRequests(bundle, headers, merchandiserName);
+            API.getRequestsToday(bundle, headers, merchandiserName);
         }
     }
 }

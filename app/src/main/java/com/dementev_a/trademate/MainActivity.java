@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             if (bundle.getInt("status") != RequestStatus.STATUS_OK)
                 return;
 
-            API.getRequests(bundle, headers);
+            API.getRequestsToday(bundle, headers);
         }
     }
 
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             if (bundle.getInt("status") != RequestStatus.STATUS_OK)
                 return;
 
-            API.getRequests(bundle, headers);
+            API.getRequestsToday(bundle, headers);
         }
     }
 }
