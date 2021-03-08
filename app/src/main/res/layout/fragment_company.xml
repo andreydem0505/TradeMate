@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <LinearLayout
-                android:id="@+id/company_fragment.layout_companies"
+                android:id="@+id/company_fragment.panel_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -37,13 +37,28 @@
                 android:padding="@dimen/company_fragment.panel.padding"
                 app:layout_constraintTop_toBottomOf="@id/company_fragment.company_name">
 
-                <TextView
-                    android:id="@+id/company_fragment.merchandisers_quantity"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/company_fragment.usual.text_size"
-                    android:text="Мерчендайзеров в компании: 4" />
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
 
+                    <TextView
+                        android:id="@+id/company_fragment.merchandisers_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/company_fragment.usual.text_size"
+                        android:text="Мерчендайзеров в компании: 4" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        android:paddingBottom="8dp"
+                        android:src="@drawable/merchandiser"
+                        android:contentDescription="@string/company_fragment.merchandiser.description" />
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/company_fragment.about_merchandisers_btn"
@@ -63,7 +78,7 @@
                 android:background="@color/color_3B70CD"
                 android:padding="@dimen/company_fragment.panel.padding"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/company_fragment.layout_companies">
+                app:layout_constraintTop_toBottomOf="@id/company_fragment.panel_1">
 
                 <TextView
                     android:id="@+id/company_fragment.operators_quantity"
@@ -130,8 +145,54 @@
                     android:text="@string/company_fragment.about_requests_btn.text"
                     android:backgroundTint="@color/blue" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/company_fragment.layout_shops"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/panel_background"
+                android:padding="@dimen/company_fragment.panel.padding"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/company_fragment.panel_3">
+
+                <TextView
+                    android:id="@+id/company_fragment.shops_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/company_fragment.usual.text_size"
+                    android:text="Торговых точек: 4" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/company_fragment.about_shops_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/company_fragment.about_shops_btn.text"
+                        android:backgroundTint="@color/color_3B70CD" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/company_fragment.add_shop_btn"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/color_3B70CD"
+                        android:layout_marginStart="20dp"
+                        app:fabCustomSize="38dp"
+                        app:maxImageSize="20dp"
+                        app:tint="@color/white"
+                        app:srcCompat="@android:drawable/ic_input_add"
+                        android:contentDescription="@string/company_fragment.add_shop_btn.description" />
+
+                </LinearLayout>
 
             </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

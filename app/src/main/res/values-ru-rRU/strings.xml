@@ -19,6 +19,7 @@
     <string name="company_fragment.about_merchandisers_btn.text">Подробнее</string>
     <string name="company_fragment.about_operators_btn.text">Подробнее</string>
     <string name="company_fragment.about_requests_btn.text">Подробнее</string>
+    <string name="company_fragment.about_shops_btn.text">Подробнее</string>
     <!-- Company Fragment -->
 
     <!-- Merchandiser Fragment -->
