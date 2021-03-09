@@ -104,12 +104,11 @@ public class LogInCompanyActivity extends AppCompatActivity {
             try {
                 String response = RequestEngine.makePostRequestWithJson(url, json);
                 if (response != null) {
-                    JsonEngine jsonEngine = new JsonEngine();
-                    String message = jsonEngine.getStringFromJson(response, "message");
+                    String message = JsonEngine.getStringFromJson(response, "message");
                     switch (message) {
                         case "Success": {
-                            String name = jsonEngine.getStringFromJson(response, "name");
-                            String accessToken = jsonEngine.getStringFromJson(response, "accessToken");
+                            String name = JsonEngine.getStringFromJson(response, "name");
+                            String accessToken = JsonEngine.getStringFromJson(response, "accessToken");
                             SharedPreferencesEngine spe = new SharedPreferencesEngine(LogInCompanyActivity.this, getString(R.string.shared_preferences_user));
                             spe.saveUser(getString(R.string.shared_preferences_type_company), name, email, accessToken);
                             bundle.putInt("status", RequestStatus.STATUS_OK);

@@ -168,8 +168,7 @@ public class MakeRequestActivity extends AppCompatActivity {
                 headers.put("access_token", accessToken);
                 String response = RequestEngine.makePostRequestWithJson(url, json, headers);
                 if (response != null) {
-                    JsonEngine jsonEngine = new JsonEngine();
-                    String message = jsonEngine.getStringFromJson(response, "message");
+                    String message = JsonEngine.getStringFromJson(response, "message");
                     if ("Success".equals(message)) {
                         bundle.putInt("status", RequestStatus.STATUS_OK);
                     } else {

@@ -35,14 +35,13 @@ public class API {
     public static void getOperators(Bundle bundle, Map<String, String> headers) {
         String url = API.MAIN_URL + API.ALL_OPERATORS_URL;
         try {
-            JsonEngine jsonEngine = new JsonEngine();
             String response = RequestEngine.makeGetRequest(url, headers);
-            String message = jsonEngine.getStringFromJson(response, "message");
+            String message = JsonEngine.getStringFromJson(response, "message");
             if ("Success".equals(message)) {
-                int total = jsonEngine.getIntegerFromJson(response, "total");
+                int total = JsonEngine.getIntegerFromJson(response, "total");
                 bundle.putInt("total_operators", total);
 
-                OperatorJson[] operatorsArray = jsonEngine.getOperatorsArrayFromJson(response, "operators");
+                OperatorJson[] operatorsArray = JsonEngine.getOperatorsArrayFromJson(response, "operators");
                 bundle.putParcelableArray("operators", operatorsArray);
 
                 bundle.putInt("status", RequestStatus.STATUS_OK);
@@ -57,14 +56,13 @@ public class API {
     public static void getMerchandisers(Bundle bundle, Map<String, String> headers) {
         String url = API.MAIN_URL + API.ALL_MERCHANDISERS_URL;
         try {
-            JsonEngine jsonEngine = new JsonEngine();
             String response = RequestEngine.makeGetRequest(url, headers);
-            String message = jsonEngine.getStringFromJson(response, "message");
+            String message = JsonEngine.getStringFromJson(response, "message");
             if ("Success".equals(message)) {
-                int total = jsonEngine.getIntegerFromJson(response, "total");
+                int total = JsonEngine.getIntegerFromJson(response, "total");
                 bundle.putInt("total_merchandisers", total);
 
-                MerchandiserJson[] merchandisersArray = jsonEngine.getMerchandisersArrayFromJson(response, "merchandisers");
+                MerchandiserJson[] merchandisersArray = JsonEngine.getMerchandisersArrayFromJson(response, "merchandisers");
                 bundle.putParcelableArray("merchandisers", merchandisersArray);
 
                 bundle.putInt("status", RequestStatus.STATUS_OK);
@@ -85,14 +83,13 @@ public class API {
         if (merchandiser.length > 0)
             url += "&name=" + merchandiser[0];
         try {
-            JsonEngine jsonEngine = new JsonEngine();
             String response = RequestEngine.makeGetRequest(url, headers);
-            String message = jsonEngine.getStringFromJson(response, "message");
+            String message = JsonEngine.getStringFromJson(response, "message");
             if ("Success".equals(message)) {
-                int total = jsonEngine.getIntegerFromJson(response, "total");
+                int total = JsonEngine.getIntegerFromJson(response, "total");
                 bundle.putInt("total_requests", total);
 
-                RequestJson[] requestsArray = jsonEngine.getRequestsArrayFromJson(response, "requests");
+                RequestJson[] requestsArray = JsonEngine.getRequestsArrayFromJson(response, "requests");
                 bundle.putParcelableArray("requests", requestsArray);
 
                 bundle.putInt("status", RequestStatus.STATUS_OK);
@@ -111,15 +108,33 @@ public class API {
         if (merchandiser.length > 0)
             url += "&name=" + merchandiser[0];
         try {
-            JsonEngine jsonEngine = new JsonEngine();
             String response = RequestEngine.makeGetRequest(url, headers);
-            String message = jsonEngine.getStringFromJson(response, "message");
+            String message = JsonEngine.getStringFromJson(response, "message");
             if ("Success".equals(message)) {
-                int total = jsonEngine.getIntegerFromJson(response, "total");
+                int total = JsonEngine.getIntegerFromJson(response, "total");
                 bundle.putInt("total_requests", total);
 
-                RequestJson[] requestsArray = jsonEngine.getRequestsArrayFromJson(response, "requests");
+                RequestJson[] requestsArray = JsonEngine.getRequestsArrayFromJson(response, "requests");
                 bundle.putParcelableArray("requests", requestsArray);
+
+                bundle.putInt("status", RequestStatus.STATUS_OK);
+            } else {
+                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+            }
+        } catch (IOException e) {
+            bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+        }
+    }
+
+    public static void getShops(Bundle bundle, Map<String, String> headers) {
+        String url = API.MAIN_URL + API.ALL_MERCHANDISERS_URL;
+        try {
+            String response = RequestEngine.makeGetRequest(url, headers);
+            String message = JsonEngine.getStringFromJson(response, "message");
+            if ("Success".equals(message)) {
+                int total = JsonEngine.getIntegerFromJson(response, "total");
+                bundle.putInt("total_shops", total);
+                bundle.putStringArray("shops", JsonEngine.getShopsArrayFromJson(response, "shops"));
 
                 bundle.putInt("status", RequestStatus.STATUS_OK);
             } else {

@@ -6,17 +6,17 @@ import com.google.gson.JsonParser;
 
 public class JsonEngine {
 
-    public String getStringFromJson(String json, String arg) {
+    public static String getStringFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         return jo.get(arg).getAsString();
     }
 
-    public int getIntegerFromJson(String json, String arg) {
+    public static int getIntegerFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         return jo.get(arg).getAsInt();
     }
 
-    public MerchandiserJson[] getMerchandisersArrayFromJson(String json, String arg) {
+    public static MerchandiserJson[] getMerchandisersArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
         MerchandiserJson[] merchandisersArray = new MerchandiserJson[array.size()];
@@ -27,7 +27,7 @@ public class JsonEngine {
         return merchandisersArray;
     }
 
-    public OperatorJson[] getOperatorsArrayFromJson(String json, String arg) {
+    public static OperatorJson[] getOperatorsArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
         OperatorJson[] operatorsArray = new OperatorJson[array.size()];
@@ -38,7 +38,7 @@ public class JsonEngine {
         return operatorsArray;
     }
 
-    public RequestJson[] getRequestsArrayFromJson(String json, String arg) {
+    public static RequestJson[] getRequestsArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
         RequestJson[] requestsArray = new RequestJson[array.size()];
@@ -47,5 +47,15 @@ public class JsonEngine {
             requestsArray[i] = new RequestJson(jo.get("subject").getAsString(), jo.get("text").getAsString(), jo.get("operator").getAsString(), jo.get("from").getAsString(), jo.get("dateTime").getAsString());
         }
         return requestsArray;
+    }
+
+    public static String[] getShopsArrayFromJson(String json, String arg) {
+        JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
+        JsonArray array = jo.get(arg).getAsJsonArray();
+        String[] result = new String[array.size()];
+        for (int i = 0; i < array.size(); i++) {
+            result[i] = array.get(i).getAsJsonObject().get("name").getAsString();
+        }
+        return result;
     }
 }
