@@ -16,10 +16,14 @@
     <string name="company_fragment.employees_quantity.text">Мерчендайзеров в компании: %1$d</string>
     <string name="company_fragment.operators_quantity.text">Операторов в компании: %1$d</string>
     <string name="company_fragment.requests_quantity.text">Заявок сегодня: %1$d</string>
+    <string name="company_fragment.shops_quantity.text">Торговых точек: %1$d</string>
     <string name="company_fragment.about_merchandisers_btn.text">Подробнее</string>
     <string name="company_fragment.about_operators_btn.text">Подробнее</string>
     <string name="company_fragment.about_requests_btn.text">Подробнее</string>
     <string name="company_fragment.about_shops_btn.text">Подробнее</string>
+    <string name="company_fragment.add_shop_et.hint">Новая точка</string>
+    <!-- Errors -->
+    <string name="company_fragment.shop_exist.error">Торговая точка уже существует</string>
     <!-- Company Fragment -->
 
     <!-- Merchandiser Fragment -->

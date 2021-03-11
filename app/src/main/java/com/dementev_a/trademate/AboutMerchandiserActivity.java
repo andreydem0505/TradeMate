@@ -73,50 +73,42 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
     }
 
 
-    private class ConcurrentSetRequest implements AsyncRequest {
-        private final Bundle bundle;
+    private class ConcurrentSetRequest extends AsyncRequest {
         private final SharedPreferencesEngine spe;
 
         protected ConcurrentSetRequest(SharedPreferencesEngine spe) {
-            bundle = new Bundle();
+            super();
             this.spe = spe;
         }
 
         @Override
-        public void execute() {
-            Executor executor = Executors.newSingleThreadExecutor();
-            Handler handler = new Handler(Looper.getMainLooper());
-            executor.execute(() -> {
-                sendRequest();
-                handler.post(() -> {
-                    int status = bundle.getInt("status");
-                    switch (status) {
-                        case RequestStatus.STATUS_OK: {
-                            WidgetsEngine.setRequestsOnListView(bundle.getParcelableArray("requests"), listView, AboutMerchandiserActivity.this, errorTV);
-                        } break;
-                        case RequestStatus.STATUS_SERVER_ERROR: {
-                            errorTV.setText(R.string.global_errors_server_error_text);
-                        } break;
-                        case RequestStatus.STATUS_INTERNET_ERROR: {
-                            errorTV.setText(R.string.global_errors_internet_connection_error_text);
-                        } break;
-                    }
-                    progressBar.setVisibility(ProgressBar.INVISIBLE);
-                });
-            });
+        public void UIWork() {
+            int status = getBundle().getInt("status");
+            switch (status) {
+                case RequestStatus.STATUS_OK: {
+                    WidgetsEngine.setRequestsOnListView(getBundle().getParcelableArray("requests"), listView, AboutMerchandiserActivity.this, errorTV);
+                } break;
+                case RequestStatus.STATUS_SERVER_ERROR: {
+                    errorTV.setText(R.string.global_errors_server_error_text);
+                } break;
+                case RequestStatus.STATUS_INTERNET_ERROR: {
+                    errorTV.setText(R.string.global_errors_internet_connection_error_text);
+                } break;
+            }
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
         }
 
         @Override
         public void sendRequest() {
             if (!RequestEngine.isConnectedToInternet(AboutMerchandiserActivity.this)) {
-                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
+                getBundle().putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
                 return;
             }
 
             Map<String, String> headers = new HashMap<>();
             headers.put("access_token", spe.getString("accessToken"));
 
-            API.getRequestsToday(bundle, headers, merchandiserName);
+            API.getRequestsToday(getBundle(), headers, merchandiserName);
         }
     }
 }

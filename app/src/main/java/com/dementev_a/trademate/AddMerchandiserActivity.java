@@ -48,52 +48,44 @@ public class AddMerchandiserActivity extends AppCompatActivity {
     }
 
 
-    private class ConcurrentAddMerchandiser implements AsyncRequest {
-        private final Bundle bundle;
+    private class ConcurrentAddMerchandiser extends AsyncRequest {
 
         protected ConcurrentAddMerchandiser() {
-            bundle = new Bundle();
+            super();
         }
 
         @Override
-        public void execute() {
-            Executor executor = Executors.newSingleThreadExecutor();
-            Handler handler = new Handler(Looper.getMainLooper());
-            executor.execute(() -> {
-                sendRequest();
-                handler.post(() -> {
-                    progressBar.setVisibility(ProgressBar.INVISIBLE);
-                    int status = bundle.getInt("status");
-                    switch (status) {
-                        case RequestStatus.STATUS_OK: {
-                            finish();
-                        } break;
-                        case RequestStatus.STATUS_ERROR_TEXT: {
-                            errorTV.setText(bundle.getInt("error_text"));
-                        } break;
-                        case RequestStatus.STATUS_INTERNET_ERROR: {
-                            errorTV.setText(R.string.global_errors_internet_connection_error_text);
-                        } break;
-                        case RequestStatus.STATUS_SERVER_ERROR: {
-                            errorTV.setText(R.string.global_errors_server_error_text);
-                        } break;
-                        case RequestStatus.STATUS_EMPTY_FIELDS: {
-                            errorTV.setText(R.string.global_errors_empty_fields_error_text);
-                        } break;
-                    }
-                });
-            });
+        public void UIWork() {
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            int status = getBundle().getInt("status");
+            switch (status) {
+                case RequestStatus.STATUS_OK: {
+                    finish();
+                } break;
+                case RequestStatus.STATUS_ERROR_TEXT: {
+                    errorTV.setText(getBundle().getInt("error_text"));
+                } break;
+                case RequestStatus.STATUS_INTERNET_ERROR: {
+                    errorTV.setText(R.string.global_errors_internet_connection_error_text);
+                } break;
+                case RequestStatus.STATUS_SERVER_ERROR: {
+                    errorTV.setText(R.string.global_errors_server_error_text);
+                } break;
+                case RequestStatus.STATUS_EMPTY_FIELDS: {
+                    errorTV.setText(R.string.global_errors_empty_fields_error_text);
+                } break;
+            }
         }
 
         @Override
         public void sendRequest() {
             if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
-                bundle.putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
+                getBundle().putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
                 return;
             }
 
             if (!RequestEngine.isConnectedToInternet(AddMerchandiserActivity.this)) {
-                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
+                getBundle().putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
                 return;
             }
 
@@ -114,28 +106,28 @@ public class AddMerchandiserActivity extends AppCompatActivity {
                     String message = JsonEngine.getStringFromJson(response, "message");
                     switch (message) {
                         case "Success": {
-                            bundle.putInt("status", RequestStatus.STATUS_OK);
+                            getBundle().putInt("status", RequestStatus.STATUS_OK);
                         } break;
                         case "Merchandiser with this name is already exist": {
-                            BundleEngine.putError(bundle, R.string.add_merchandiser_activity_merchandiser_exist_with_name_error_text);
+                            BundleEngine.putError(getBundle(), R.string.add_merchandiser_activity_merchandiser_exist_with_name_error_text);
                         } break;
                         case "Merchandiser with this email is already exist": {
-                            BundleEngine.putError(bundle, R.string.add_merchandiser_activity_merchandiser_exist_with_email_error_text);
+                            BundleEngine.putError(getBundle(), R.string.add_merchandiser_activity_merchandiser_exist_with_email_error_text);
                         } break;
                         case "Password is unreliable": {
-                            BundleEngine.putError(bundle, R.string.add_merchandiser_activity_password_is_unreliable_error_text);
+                            BundleEngine.putError(getBundle(), R.string.add_merchandiser_activity_password_is_unreliable_error_text);
                         } break;
                         case "Email is incorrect": {
-                            BundleEngine.putError(bundle, R.string.add_merchandiser_activity_incorrect_email_error_text);
+                            BundleEngine.putError(getBundle(), R.string.add_merchandiser_activity_incorrect_email_error_text);
                         } break;
                         default: {
-                            bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+                            getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
                         }
                     }
                 } else
-                    bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+                    getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             } catch (IOException e) {
-                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+                getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             }
         }
     }

@@ -25,13 +25,17 @@
     <string name="company_fragment.employees_quantity.text">Merchandisers in company: %1$d</string>
     <string name="company_fragment.operators_quantity.text">Operators in company: %1$d</string>
     <string name="company_fragment.requests_quantity.text">Requests today: %1$d</string>
+    <string name="company_fragment.shops_quantity.text">Shops in company: %1$d</string>
     <string name="company_fragment.about_merchandisers_btn.text">Details</string>
     <string name="company_fragment.about_operators_btn.text">Details</string>
     <string name="company_fragment.about_requests_btn.text">Details</string>
     <string name="company_fragment.about_shops_btn.text">Details</string>
+    <string name="company_fragment.add_shop_et.hint">New shop</string>
     <string name="company_fragment.add_merchandiser_btn.description" translatable="false">Add merchandiser</string>
     <string name="company_fragment.add_shop_btn.description" translatable="false">Add shop</string>
     <string name="company_fragment.merchandiser.description" translatable="false">Merchandiser</string>
+    <!-- Errors -->
+    <string name="company_fragment.shop_exist.error">Shop is already exist</string>
     <!-- Company Fragment -->
 
     <!-- Merchandiser Fragment -->

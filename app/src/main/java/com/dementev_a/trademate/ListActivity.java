@@ -15,16 +15,14 @@ import com.dementev_a.trademate.widgets.WidgetsEngine;
 
 
 public class ListActivity extends AppCompatActivity {
-    private ListView listView;
-    private TextView headerTV, errorTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        headerTV = findViewById(R.id.list_activity_header_tv);
-        listView = findViewById(R.id.list_activity_list);
-        errorTV = findViewById(R.id.list_activity_error_tv);
+        TextView headerTV = findViewById(R.id.list_activity_header_tv);
+        ListView listView = findViewById(R.id.list_activity_list);
+        TextView errorTV = findViewById(R.id.list_activity_error_tv);
 
         String type = getIntent().getStringExtra("type");
         switch (type) {

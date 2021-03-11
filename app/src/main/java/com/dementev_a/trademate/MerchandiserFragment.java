@@ -19,14 +19,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MerchandiserFragment extends Fragment implements View.OnClickListener {
-    private View view;
-    private TextView merchandiserNameTV, requestsQuantityTV;
-//    private GraphView graphView;
-    private FloatingActionButton addRequestBtn;
-    private Button aboutRequestsBtn;
     private OperatorJson[] operators;
     private RequestJson[] requests;
-    private int requestsQuantity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,24 +32,20 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
 
-        view = inflater.inflate(R.layout.fragment_merchandiser, container, false);
-        merchandiserNameTV = view.findViewById(R.id.merchandiser_fragment_merchandiser_name);
-        addRequestBtn = view.findViewById(R.id.merchandiser_fragment_add_request_btn);
+        View view = inflater.inflate(R.layout.fragment_merchandiser, container, false);
+        TextView merchandiserNameTV = view.findViewById(R.id.merchandiser_fragment_merchandiser_name);
+        FloatingActionButton addRequestBtn = view.findViewById(R.id.merchandiser_fragment_add_request_btn);
         addRequestBtn.setOnClickListener(this);
-        aboutRequestsBtn = view.findViewById(R.id.merchandiser_fragment_about_requests_btn);
+        Button aboutRequestsBtn = view.findViewById(R.id.merchandiser_fragment_about_requests_btn);
         aboutRequestsBtn.setOnClickListener(this);
-        requestsQuantityTV = view.findViewById(R.id.merchandiser_fragment_requests_quantity);
-//        graphView = view.findViewById(R.id.merchandiser_fragment_graph);
+        TextView requestsQuantityTV = view.findViewById(R.id.merchandiser_fragment_requests_quantity);
 
         merchandiserNameTV.setText(bundle.getString("merchandiserName"));
-        requestsQuantity = bundle.getInt("total_requests");
+        int requestsQuantity = bundle.getInt("total_requests");
         String requestsQuantityText = getString(R.string.merchandiser_fragment_requests_quantity_text);
         requestsQuantityTV.setText(String.format(requestsQuantityText, requestsQuantity));
         operators = (OperatorJson[]) bundle.getParcelableArray("operators");
         requests = (RequestJson[]) bundle.getParcelableArray("requests");
-
-//        SharedPreferencesEngine spe = new SharedPreferencesEngine(getContext(), getString(R.string.shared_preferences_user));
-//        new ConcurrentSetGraph(spe).execute();
 
         return view;
     }
@@ -77,60 +67,4 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
             } break;
         }
     }
-
-
-//    private class ConcurrentSetGraph implements AsyncRequest {
-//        private final Bundle bundle;
-//        private final SharedPreferencesEngine spe;
-//
-//        protected ConcurrentSetGraph(SharedPreferencesEngine spe) {
-//            bundle = new Bundle();
-//            this.spe = spe;
-//        }
-//
-//        @Override
-//        public void execute() {
-//            Executor executor = Executors.newSingleThreadExecutor();
-//            Handler handler = new Handler(Looper.getMainLooper());
-//            executor.execute(() -> {
-//                sendRequest();
-//                handler.post(() -> {
-//                    graphView.setTitle("Количество заявок");
-//
-//                    DataPoint[] dataPoints = new DataPoint[3];
-//                    for (int i = 0; i < 3; i++) {
-//                        Date date = Date.from(LocalDate.parse(bundle.getString("date_"+(i+1))).atStartOfDay()
-//                                .atZone(ZoneId.systemDefault())
-//                                .toInstant());
-//
-//                        dataPoints[2-i] = new DataPoint(
-//                                date,
-//                                bundle.getInt("total_"+(i+1))
-//                        );
-//                    }
-//                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
-//                    graphView.addSeries(series);
-//
-//                    graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-//                    graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
-//                });
-//            });
-//        }
-//
-//        @Override
-//        public void sendRequest() {
-//            Map<String, String> headers = new HashMap<>();
-//            headers.put("access_token", spe.getString("accessToken"));
-//
-//            Clock clock = Clock.systemUTC();
-//            LocalDate dateNow = LocalDate.now(clock);
-//            for (int i = 1; i <= 3; i++) {
-//                LocalDate requestDate = dateNow.minusDays(i-1);
-//                Bundle shortBundle = new Bundle();
-//                API.getRequestsForDate(shortBundle, headers, requestDate);
-//                bundle.putString("date_"+i, requestDate.toString());
-//                bundle.putInt("total_"+i, shortBundle.getInt("total_requests"));
-//            }
-//        }
-//    }
 }

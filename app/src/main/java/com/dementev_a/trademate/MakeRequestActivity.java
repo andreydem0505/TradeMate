@@ -100,50 +100,41 @@ public class MakeRequestActivity extends AppCompatActivity {
     }
 
 
-    private class ConcurrentSendEmail implements AsyncRequest {
-        private final Bundle bundle;
+    private class ConcurrentSendEmail extends AsyncRequest {
 
         protected ConcurrentSendEmail() {
-            bundle = new Bundle();
+            super();
         }
 
         @Override
-        public void execute() {
-            Executor executor = Executors.newSingleThreadExecutor();
-            Handler handler = new Handler(Looper.getMainLooper());
-            executor.execute(() -> {
-                sendRequest();
-                handler.post(() -> {
-                    progressBar.setVisibility(ProgressBar.INVISIBLE);
-                    int status = bundle.getInt("status");
-                    switch (status) {
-                        case RequestStatus.STATUS_OK: {
-                            finish();
-                        } break;
-                        case RequestStatus.STATUS_INTERNET_ERROR: {
-                            errorTV.setText(R.string.global_errors_internet_connection_error_text);
-                        } break;
-                        case RequestStatus.STATUS_SERVER_ERROR: {
-                            errorTV.setText(R.string.global_errors_server_error_text);
-                        } break;
-                        case RequestStatus.STATUS_EMPTY_FIELDS: {
-                            errorTV.setText(R.string.global_errors_empty_fields_error_text);
-                        } break;
-                    }
-                });
-            });
+        public void UIWork() {
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            int status = getBundle().getInt("status");
+            switch (status) {
+                case RequestStatus.STATUS_OK: {
+                    finish();
+                } break;
+                case RequestStatus.STATUS_INTERNET_ERROR: {
+                    errorTV.setText(R.string.global_errors_internet_connection_error_text);
+                } break;
+                case RequestStatus.STATUS_SERVER_ERROR: {
+                    errorTV.setText(R.string.global_errors_server_error_text);
+                } break;
+                case RequestStatus.STATUS_EMPTY_FIELDS: {
+                    errorTV.setText(R.string.global_errors_empty_fields_error_text);
+                } break;
+            }
         }
 
         @Override
         public void sendRequest() {
-
             if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(textET.getText())) {
-                bundle.putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
+                getBundle().putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
                 return;
             }
 
             if (!RequestEngine.isConnectedToInternet(MakeRequestActivity.this)) {
-                bundle.putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
+                getBundle().putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
                 return;
             }
 
@@ -170,14 +161,14 @@ public class MakeRequestActivity extends AppCompatActivity {
                 if (response != null) {
                     String message = JsonEngine.getStringFromJson(response, "message");
                     if ("Success".equals(message)) {
-                        bundle.putInt("status", RequestStatus.STATUS_OK);
+                        getBundle().putInt("status", RequestStatus.STATUS_OK);
                     } else {
-                        bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+                        getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
                     }
                 } else
-                    bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+                    getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             } catch (Exception e) {
-                bundle.putInt("status", RequestStatus.STATUS_SERVER_ERROR);
+                getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
             }
         }
     }

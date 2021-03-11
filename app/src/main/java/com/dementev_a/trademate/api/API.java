@@ -28,7 +28,9 @@ public class API {
             ADD_OPERATOR_URL = "/register/operator",
             ALL_OPERATORS_URL = "/operators",
             CREATE_REQUEST_URL = "/create/request",
-            GET_ALL_REQUESTS_URL = "/requests";
+            GET_ALL_REQUESTS_URL = "/requests",
+            GET_ALL_SHOPS_URL = "/shops",
+            ADD_SHOP_URL = "/create/shop";
 
 
     // using without error text
@@ -127,7 +129,7 @@ public class API {
     }
 
     public static void getShops(Bundle bundle, Map<String, String> headers) {
-        String url = API.MAIN_URL + API.ALL_MERCHANDISERS_URL;
+        String url = API.MAIN_URL + API.GET_ALL_SHOPS_URL;
         try {
             String response = RequestEngine.makeGetRequest(url, headers);
             String message = JsonEngine.getStringFromJson(response, "message");
