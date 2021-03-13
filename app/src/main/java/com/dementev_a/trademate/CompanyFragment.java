@@ -25,8 +25,10 @@ import com.dementev_a.trademate.requests.AsyncRequest;
 import com.dementev_a.trademate.requests.RequestEngine;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,6 +39,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
     private EditText addShopET;
     private ProgressBar addShopPB;
     private String companyName, accessToken, shopsQuantityText;
+    private String[] shops;
     private int shopsQuantity;
     private MerchandiserJson[] merchandisers;
     private OperatorJson[] operators;
@@ -57,6 +60,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         Button aboutMerchandisersBtn = view.findViewById(R.id.company_fragment_about_merchandisers_btn);
         Button aboutOperatorsBtn = view.findViewById(R.id.company_fragment_about_operators_btn);
         Button aboutRequestsBtn = view.findViewById(R.id.company_fragment_about_requests_btn);
+        Button aboutShopsBtn = view.findViewById(R.id.company_fragment_about_shops_btn);
         FloatingActionButton addMerchandiserBtn = view.findViewById(R.id.company_fragment_add_merchandiser_btn);
         FloatingActionButton addOperatorBtn = view.findViewById(R.id.company_fragment_add_operator_btn);
         FloatingActionButton addShopBtn = view.findViewById(R.id.company_fragment_add_shop_btn);
@@ -72,6 +76,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         addMerchandiserBtn.setOnClickListener(this);
         addOperatorBtn.setOnClickListener(this);
         addShopBtn.setOnClickListener(this);
+        aboutShopsBtn.setOnClickListener(this);
 
         Bundle bundle = getArguments();
         companyName = bundle.getString("companyName");
@@ -83,6 +88,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         merchandisers = (MerchandiserJson[]) bundle.getParcelableArray("merchandisers");
         operators = (OperatorJson[]) bundle.getParcelableArray("operators");
         requests = (RequestJson[]) bundle.getParcelableArray("requests");
+        shops = bundle.getStringArray("shops");
 
         companyNameTV.setText(companyName);
         String employeesQuantityText = getString(R.string.company_fragment_employees_quantity_text);
@@ -132,9 +138,15 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             } break;
             case R.id.company_fragment_add_shop_btn: {
-                addShopET.setText("");
+                addShopErrorTV.setText("");
                 addShopPB.setVisibility(ProgressBar.VISIBLE);
                 new ConcurrentAddShop().execute();
+            } break;
+            case R.id.company_fragment_about_shops_btn: {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("type", "shops");
+                intent.putExtra("shops", shops);
+                startActivity(intent);
             } break;
         }
     }

@@ -34,6 +34,7 @@
     <string name="company_fragment.add_merchandiser_btn.description" translatable="false">Add merchandiser</string>
     <string name="company_fragment.add_shop_btn.description" translatable="false">Add shop</string>
     <string name="company_fragment.merchandiser.description" translatable="false">Merchandiser</string>
+    <string name="company_fragment.shop.description" translatable="false">Shop</string>
     <!-- Errors -->
     <string name="company_fragment.shop_exist.error">Shop is already exist</string>
     <!-- Company Fragment -->
@@ -48,9 +49,11 @@
     <string name="list_activity.header_merchandisers.text">Merchandisers of %1$s</string>
     <string name="list_activity.header_operators.text">Operators of %1$s</string>
     <string name="list_activity.header_requests.text">Requests today</string>
+    <string name="list_activity.header_shops.text">Shops</string>
     <string name="list_activity.error_tv_merchandisers.text">No merchandisers yet</string>
     <string name="list_activity.error_tv_operators.text">No operators yet</string>
     <string name="list_activity.error_tv_requests.text">No requests yet</string>
+    <string name="list_activity.error_tv_shops.text">No shops yet</string>
     <!-- List Activity -->
 
     <!-- About Request Activity -->

@@ -71,6 +71,15 @@ public class ListActivity extends AppCompatActivity {
                 } else
                     errorTV.setText(R.string.list_activity_error_tv_operators_text);
             } break;
+            case "shops": {
+                headerTV.setText(R.string.list_activity_header_shops_text);
+                String[] shops = getIntent().getStringArrayExtra("shops");
+                if (shops.length > 0) {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shops);
+                    listView.setAdapter(adapter);
+                } else
+                    errorTV.setText(R.string.list_activity_error_tv_shops_text);
+            } break;
         }
     }
 }
