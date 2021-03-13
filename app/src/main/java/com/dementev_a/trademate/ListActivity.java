@@ -15,6 +15,7 @@ import com.dementev_a.trademate.widgets.WidgetsEngine;
 
 
 public class ListActivity extends AppCompatActivity {
+    private int lastOperatorNameEdit = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,12 @@ public class ListActivity extends AppCompatActivity {
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayNames);
                     listView.setAdapter(adapter);
+                    listView.setOnItemClickListener((parent, view, position, id) -> {
+                        arrayNames[lastOperatorNameEdit] = arrayNames[lastOperatorNameEdit].replaceAll("\n.+", "");
+                        arrayNames[position] = arrayNames[position] + "\n" + arrayOfOperatorJson[position].getEmail();
+                        lastOperatorNameEdit = position;
+                        adapter.notifyDataSetChanged();
+                    });
                 } else
                     errorTV.setText(R.string.list_activity_error_tv_operators_text);
             } break;
