@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.speech.RecognizerIntent;
 import android.text.TextUtils;
 import android.view.View;

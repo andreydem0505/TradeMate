@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.requests.AsyncRequest;
@@ -19,8 +17,6 @@ import com.dementev_a.trademate.requests.RequestEngine;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity {
