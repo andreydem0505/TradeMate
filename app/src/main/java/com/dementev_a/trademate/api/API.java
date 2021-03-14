@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
-import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.requests.RequestEngine;
 import com.dementev_a.trademate.requests.RequestStatus;
@@ -43,8 +42,7 @@ public class API {
                 int total = JsonEngine.getIntegerFromJson(response, "total");
                 bundle.putInt("total_operators", total);
 
-                OperatorJson[] operatorsArray = JsonEngine.getOperatorsArrayFromJson(response, "operators");
-                bundle.putParcelableArray("operators", operatorsArray);
+                bundle.putAll(JsonEngine.getOperatorsArrayFromJson(response, "operators"));
 
                 bundle.putInt("status", RequestStatus.STATUS_OK);
             } else {

@@ -1,5 +1,7 @@
 package com.dementev_a.trademate.json;
 
+import android.os.Bundle;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -27,15 +29,20 @@ public class JsonEngine {
         return merchandisersArray;
     }
 
-    public static OperatorJson[] getOperatorsArrayFromJson(String json, String arg) {
+    public static Bundle getOperatorsArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
-        OperatorJson[] operatorsArray = new OperatorJson[array.size()];
+        String[] names = new String[array.size()];
+        String[] emails = new String[array.size()];
         for (int i = 0; i < array.size(); i++) {
             jo = array.get(i).getAsJsonObject();
-            operatorsArray[i] = new OperatorJson(jo.get("name").getAsString(), jo.get("email").getAsString());
+            names[i] = jo.get("name").getAsString();
+            emails[i] = jo.get("email").getAsString();
         }
-        return operatorsArray;
+        Bundle bundle = new Bundle();
+        bundle.putStringArray("namesOfOperators", names);
+        bundle.putStringArray("emailsOfOperators", emails);
+        return bundle;
     }
 
     public static RequestJson[] getRequestsArrayFromJson(String json, String arg) {

@@ -19,16 +19,13 @@ import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
-import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.requests.AsyncRequest;
 import com.dementev_a.trademate.requests.RequestEngine;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.internal.bind.util.ISO8601Utils;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,10 +36,9 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
     private EditText addShopET;
     private ProgressBar addShopPB;
     private String companyName, accessToken, shopsQuantityText;
-    private String[] shops;
+    private String[] shops, namesOfOperators, emailsOfOperators;
     private int shopsQuantity;
     private MerchandiserJson[] merchandisers;
-    private OperatorJson[] operators;
     private RequestJson[] requests;
 
     @Override
@@ -86,7 +82,8 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         int requestsQuantity = bundle.getInt("total_requests");
         shopsQuantity = bundle.getInt("total_shops");
         merchandisers = (MerchandiserJson[]) bundle.getParcelableArray("merchandisers");
-        operators = (OperatorJson[]) bundle.getParcelableArray("operators");
+        namesOfOperators = bundle.getStringArray("namesOfOperators");
+        emailsOfOperators = bundle.getStringArray("emailsOfOperators");
         requests = (RequestJson[]) bundle.getParcelableArray("requests");
         shops = bundle.getStringArray("shops");
 
@@ -128,7 +125,8 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra("type", "operators");
                 intent.putExtra("companyName", companyName);
-                intent.putExtra("operators", operators);
+                intent.putExtra("namesOfOperators", namesOfOperators);
+                intent.putExtra("emailsOfOperators", emailsOfOperators);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_about_requests_btn: {

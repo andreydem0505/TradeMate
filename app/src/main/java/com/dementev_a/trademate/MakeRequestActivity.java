@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Parcelable;
 import android.speech.RecognizerIntent;
 import android.text.TextUtils;
@@ -23,7 +21,6 @@ import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.requests.AsyncRequest;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.json.JsonEngine;
-import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.messages.EmailSending;
 import com.dementev_a.trademate.messages.MessageSender;
 import com.dementev_a.trademate.messages.StrategyMessage;
@@ -35,8 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class MakeRequestActivity extends AppCompatActivity {
     private Spinner spinner;
@@ -56,11 +51,11 @@ public class MakeRequestActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.make_request_activity_progress_bar);
         errorTV = findViewById(R.id.make_request_activity_error_tv);
 
-        Parcelable[] operators = getIntent().getParcelableArrayExtra("operators");
+        String[] namesOfOperators = getIntent().getStringArrayExtra("namesOfOperators");
+        String[] emailsOfOperators = getIntent().getStringArrayExtra("emailsOfOperators");
         operatorsMap = new HashMap<>();
-        for (Parcelable operator : operators) {
-            OperatorJson operatorJson = (OperatorJson) operator;
-            operatorsMap.put(operatorJson.getName(), operatorJson.getEmail());
+        for (int i = 0; i < namesOfOperators.length; i++) {
+            operatorsMap.put(namesOfOperators[i], emailsOfOperators[i]);
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, operatorsMap.keySet().toArray(new String[0]));

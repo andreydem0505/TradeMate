@@ -13,13 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.json.RequestJson;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MerchandiserFragment extends Fragment implements View.OnClickListener {
-    private OperatorJson[] operators;
+    private String[] namesOfOperators, emailsOfOperators;
     private RequestJson[] requests;
 
     @Override
@@ -44,7 +43,8 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         int requestsQuantity = bundle.getInt("total_requests");
         String requestsQuantityText = getString(R.string.merchandiser_fragment_requests_quantity_text);
         requestsQuantityTV.setText(String.format(requestsQuantityText, requestsQuantity));
-        operators = (OperatorJson[]) bundle.getParcelableArray("operators");
+        namesOfOperators = bundle.getStringArray("namesOfOperators");
+        emailsOfOperators = bundle.getStringArray("emailsOfOperators");
         requests = (RequestJson[]) bundle.getParcelableArray("requests");
 
         return view;
@@ -56,7 +56,8 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         switch(v.getId()) {
             case R.id.merchandiser_fragment_add_request_btn: {
                 Intent intent = new Intent(getContext(), MakeRequestActivity.class);
-                intent.putExtra("operators", operators);
+                intent.putExtra("namesOfOperators", namesOfOperators);
+                intent.putExtra("emailsOfOperators", emailsOfOperators);
                 startActivity(intent);
             } break;
             case R.id.merchandiser_fragment_about_requests_btn: {

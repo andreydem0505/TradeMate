@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.json.MerchandiserJson;
-import com.dementev_a.trademate.json.OperatorJson;
 import com.dementev_a.trademate.widgets.WidgetsEngine;
 
 
@@ -58,20 +57,14 @@ public class ListActivity extends AppCompatActivity {
             case "operators": {
                 String header = getString(R.string.list_activity_header_operators_text);
                 headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
-                Parcelable[] operators = getIntent().getParcelableArrayExtra("operators");
-                if (operators.length > 0) {
-                    OperatorJson[] arrayOfOperatorJson = new OperatorJson[operators.length];
-                    String[] arrayNames = new String[operators.length];
-                    for (int i = 0; i < operators.length; i++) {
-                        OperatorJson operatorJson = (OperatorJson) operators[i];
-                        arrayOfOperatorJson[i] = operatorJson;
-                        arrayNames[i] = operatorJson.getName();
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayNames);
+                String[] names = getIntent().getStringArrayExtra("namesOfOperators");
+                String[] emails = getIntent().getStringArrayExtra("emailsOfOperators");
+                if (names.length > 0) {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener((parent, view, position, id) -> {
-                        arrayNames[lastOperatorNameEdit] = arrayNames[lastOperatorNameEdit].replaceAll("\n.+", "");
-                        arrayNames[position] = arrayNames[position] + "\n" + arrayOfOperatorJson[position].getEmail();
+                        names[lastOperatorNameEdit] = names[lastOperatorNameEdit].replaceAll("\n.+", "");
+                        names[position] = names[position] + "\n" + emails[position];
                         lastOperatorNameEdit = position;
                         adapter.notifyDataSetChanged();
                     });
