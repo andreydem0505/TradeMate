@@ -52,6 +52,7 @@ public class MakeRequestActivity extends AppCompatActivity {
 
         String[] namesOfOperators = getIntent().getStringArrayExtra("namesOfOperators");
         String[] emailsOfOperators = getIntent().getStringArrayExtra("emailsOfOperators");
+        String[] shops = getIntent().getStringArrayExtra("shops");
         operatorsMap = new HashMap<>();
         for (int i = 0; i < namesOfOperators.length; i++) {
             operatorsMap.put(namesOfOperators[i], emailsOfOperators[i]);

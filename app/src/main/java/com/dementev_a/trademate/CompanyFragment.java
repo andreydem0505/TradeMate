@@ -28,7 +28,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CompanyFragment extends Fragment implements View.OnClickListener {
@@ -204,6 +207,9 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                         case "Success": {
                             getBundle().putInt("status", RequestStatus.STATUS_OK);
                             shopsQuantity++;
+                            List<String> list = new ArrayList<>(Arrays.asList(shops));
+                            list.add(name);
+                            shops = list.toArray(new String[0]);
                         } break;
                         case "Such shop is already exist": {
                             BundleEngine.putError(getBundle(), R.string.company_fragment_shop_exist_error);

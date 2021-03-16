@@ -18,7 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MerchandiserFragment extends Fragment implements View.OnClickListener {
-    private String[] namesOfOperators, emailsOfOperators;
+    private String[] namesOfOperators, emailsOfOperators, shops;
     private RequestJson[] requests;
 
     @Override
@@ -46,6 +46,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         namesOfOperators = bundle.getStringArray("namesOfOperators");
         emailsOfOperators = bundle.getStringArray("emailsOfOperators");
         requests = (RequestJson[]) bundle.getParcelableArray("requests");
+        shops = bundle.getStringArray("shops");
 
         return view;
     }
@@ -58,6 +59,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
                 Intent intent = new Intent(getContext(), MakeRequestActivity.class);
                 intent.putExtra("namesOfOperators", namesOfOperators);
                 intent.putExtra("emailsOfOperators", emailsOfOperators);
+                intent.putExtra("shops", shops);
                 startActivity(intent);
             } break;
             case R.id.merchandiser_fragment_about_requests_btn: {

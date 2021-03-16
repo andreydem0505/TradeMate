@@ -180,6 +180,11 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
             API.getRequestsToday(getBundle(), headers);
+
+            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
+                return;
+
+            API.getShops(getBundle(), headers);
         }
     }
 }
