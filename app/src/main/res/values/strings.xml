@@ -71,12 +71,15 @@
 
     <!-- Make Request Activity -->
     <string name="make_request_activity.header.text">Make a request</string>
-    <string name="make_request_activity.name_et.hint">Name</string>
+    <string name="make_request_activity.name_et.hint">Shop</string>
     <string name="make_request_activity.speak_btn.description" translatable="false">Speak</string>
     <string name="make_request_activity.text_et.hint">Text</string>
     <string name="make_request_activity.make_btn.text">Send</string>
     <string name="make_request_activity.choose_operator_tv.text">Receiver:</string>
+    <string name="make_request_activity.letter_merchandiser.text">From: %1$s</string>
+    <!-- Errors -->
     <string name="make_request_activity.text_was_not_recognised_error.text">Text was not recognised</string>
+    <string name="make_request_activity.shop_was_not_found_error.text">Choose a shop from the list</string>
     <!-- Make Request Activity -->
 
     <!-- Start Using Activity -->

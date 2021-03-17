@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MerchandiserFragment extends Fragment implements View.OnClickListener {
+    private String merchandiserName;
     private String[] namesOfOperators, emailsOfOperators, shops;
     private RequestJson[] requests;
 
@@ -39,7 +40,8 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         aboutRequestsBtn.setOnClickListener(this);
         TextView requestsQuantityTV = view.findViewById(R.id.merchandiser_fragment_requests_quantity);
 
-        merchandiserNameTV.setText(bundle.getString("merchandiserName"));
+        merchandiserName = bundle.getString("merchandiserName");
+        merchandiserNameTV.setText(merchandiserName);
         int requestsQuantity = bundle.getInt("total_requests");
         String requestsQuantityText = getString(R.string.merchandiser_fragment_requests_quantity_text);
         requestsQuantityTV.setText(String.format(requestsQuantityText, requestsQuantity));
@@ -60,6 +62,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
                 intent.putExtra("namesOfOperators", namesOfOperators);
                 intent.putExtra("emailsOfOperators", emailsOfOperators);
                 intent.putExtra("shops", shops);
+                intent.putExtra("merchandiserName", merchandiserName);
                 startActivity(intent);
             } break;
             case R.id.merchandiser_fragment_about_requests_btn: {

@@ -10,6 +10,7 @@ import android.speech.RecognizerIntent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.requests.AsyncRequest;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.json.JsonEngine;
@@ -28,16 +30,20 @@ import com.dementev_a.trademate.requests.RequestEngine;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class MakeRequestActivity extends AppCompatActivity {
     private Spinner spinner;
-    private EditText nameET, textET;
+    private AutoCompleteTextView nameET;
+    private EditText textET;
     private ProgressBar progressBar;
     private TextView errorTV;
     private Map<String, String> operatorsMap;
+    private String[] shops;
+    private String merchandiserName;
     private static final int RESULT_SPEECH = 1;
 
     @Override
@@ -50,9 +56,12 @@ public class MakeRequestActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.make_request_activity_progress_bar);
         errorTV = findViewById(R.id.make_request_activity_error_tv);
 
+        merchandiserName = getIntent().getStringExtra("merchandiserName");
         String[] namesOfOperators = getIntent().getStringArrayExtra("namesOfOperators");
         String[] emailsOfOperators = getIntent().getStringArrayExtra("emailsOfOperators");
-        String[] shops = getIntent().getStringArrayExtra("shops");
+        shops = getIntent().getStringArrayExtra("shops");
+        Arrays.sort(shops);
+        nameET.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, shops));
         operatorsMap = new HashMap<>();
         for (int i = 0; i < namesOfOperators.length; i++) {
             operatorsMap.put(namesOfOperators[i], emailsOfOperators[i]);
@@ -118,6 +127,9 @@ public class MakeRequestActivity extends AppCompatActivity {
                 case RequestStatus.STATUS_EMPTY_FIELDS: {
                     errorTV.setText(R.string.global_errors_empty_fields_error_text);
                 } break;
+                case RequestStatus.STATUS_ERROR_TEXT: {
+                    errorTV.setText(getBundle().getInt("error_text"));
+                } break;
             }
         }
 
@@ -134,21 +146,26 @@ public class MakeRequestActivity extends AppCompatActivity {
             }
 
             try {
-                String subject = nameET.getText().toString();
+                String shop = nameET.getText().toString();
                 String text = textET.getText().toString();
                 String operator = spinner.getSelectedItem().toString();
+
+                if (Arrays.binarySearch(shops, shop) < 0) {
+                    BundleEngine.putError(getBundle(), R.string.make_request_activity_shop_was_not_found_error_text);
+                    return;
+                }
 
                 String to = operatorsMap.get(operator);
                 MessageSender sender = new MessageSender();
                 sender.setMethod(new EmailSending());
-                sender.send(new StrategyMessage(to, subject, text));
+                sender.send(new StrategyMessage(to, shop, text, String.format(getString(R.string.make_request_activity_letter_merchandiser_text), merchandiserName)));
 
                 String url = API.MAIN_URL + API.CREATE_REQUEST_URL;
                 String json = String.format("{\"subject\": \"%s\"," +
                                 "\"text\": \"%s\"," +
                                 "\"operator\": \"%s\"," +
                                 "\"dateTime\": \"%s\"}",
-                        subject, text.replaceAll("\n", "\r\n"), operator, LocalDateTime.now().toString());
+                        shop, text.replaceAll("\n", "\r\n"), operator, LocalDateTime.now().toString());
                 String accessToken = new SharedPreferencesEngine(MakeRequestActivity.this, getString(R.string.shared_preferences_user)).getString("accessToken");
                 Map<String, String> headers = new HashMap<>();
                 headers.put("access_token", accessToken);

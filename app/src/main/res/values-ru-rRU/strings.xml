@@ -56,11 +56,14 @@
 
     <!-- Make Request Activity -->
     <string name="make_request_activity.header.text">Создать заявку</string>
-    <string name="make_request_activity.name_et.hint">Название</string>
+    <string name="make_request_activity.name_et.hint">Магазин</string>
     <string name="make_request_activity.text_et.hint">Текст</string>
     <string name="make_request_activity.make_btn.text">Отправить</string>
     <string name="make_request_activity.choose_operator_tv.text">Получатель:</string>
-    <string name="make_request_activity.text_was_not_recognised_error.text">Текст не распознан</string>
+    <string name="make_request_activity.letter_merchandiser.text">От: %1$s</string>
+    <!-- Errors -->
+        <string name="make_request_activity.text_was_not_recognised_error.text">Текст не распознан</string>
+        <string name="make_request_activity.shop_was_not_found_error.text">Выберите магазин из списка</string>
     <!-- Make Request Activity -->
 
     <!-- Start Using Activity -->
