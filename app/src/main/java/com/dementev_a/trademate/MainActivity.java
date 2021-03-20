@@ -22,12 +22,14 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
+    private SharedPreferencesEngine spe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
+        spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         update(true);
     }
 
@@ -37,17 +39,16 @@ public class MainActivity extends AppCompatActivity {
         update(false);
     }
 
-    private void update(boolean restart) {
-        SharedPreferencesEngine spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
-        if (spe.count() == 0) {
-            if (restart) {
+    private void update(boolean progress) {
+        if (spe.count() == 0) { // user has not a role
+            if (progress) {
                 transaction = fragmentManager.beginTransaction();
                 Fragment descriptionFragment = new DescriptionFragment();
                 transaction.replace(R.id.fragment, descriptionFragment);
                 transaction.commit();
             }
-        } else {
-            if (restart) {
+        } else { // user has a role
+            if (progress) {
                 transaction = fragmentManager.beginTransaction();
                 Fragment progressFragment = new ProgressFragment();
                 transaction.replace(R.id.fragment, progressFragment);
@@ -73,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void UIWork() {
-            transaction = fragmentManager.beginTransaction();
             int status = getBundle().getInt("status");
             if (status == RequestStatus.STATUS_OK) {
+                transaction = fragmentManager.beginTransaction();
                 Fragment companyFragment = new CompanyFragment();
                 companyFragment.setArguments(getBundle());
                 transaction.replace(R.id.fragment, companyFragment);
@@ -88,12 +89,13 @@ public class MainActivity extends AppCompatActivity {
                         getBundle().putString("error", getString(R.string.global_errors_internet_connection_error_text));
                     } break;
                 }
+                transaction = fragmentManager.beginTransaction();
                 ErrorFragment errorFragment = new ErrorFragment();
                 errorFragment.setArguments(getBundle());
                 transaction.replace(R.id.fragment, errorFragment);
             }
-            getBundle().remove("status");
             transaction.commit();
+            getBundle().remove("status");
         }
 
         @Override
@@ -139,9 +141,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void UIWork() {
-            transaction = fragmentManager.beginTransaction();
             int status = getBundle().getInt("status");
             if (status == RequestStatus.STATUS_OK) {
+                transaction = fragmentManager.beginTransaction();
                 Fragment merchandiserFragment = new MerchandiserFragment();
                 merchandiserFragment.setArguments(getBundle());
                 transaction.replace(R.id.fragment, merchandiserFragment);
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                         getBundle().putString("error", getString(R.string.global_errors_internet_connection_error_text));
                     } break;
                 }
+                transaction = fragmentManager.beginTransaction();
                 ErrorFragment errorFragment = new ErrorFragment();
                 errorFragment.setArguments(getBundle());
                 transaction.replace(R.id.fragment, errorFragment);

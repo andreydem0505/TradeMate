@@ -41,8 +41,7 @@ public class MakeRequestActivity extends AppCompatActivity {
     private EditText textET;
     private ProgressBar progressBar;
     private TextView errorTV;
-    private Map<String, String> operatorsMap;
-    private String[] shops;
+    private String[] shops, namesOfOperators, emailsOfOperators;
     private String merchandiserName;
     private static final int RESULT_SPEECH = 1;
 
@@ -57,17 +56,12 @@ public class MakeRequestActivity extends AppCompatActivity {
         errorTV = findViewById(R.id.make_request_activity_error_tv);
 
         merchandiserName = getIntent().getStringExtra("merchandiserName");
-        String[] namesOfOperators = getIntent().getStringArrayExtra("namesOfOperators");
-        String[] emailsOfOperators = getIntent().getStringArrayExtra("emailsOfOperators");
+        namesOfOperators = getIntent().getStringArrayExtra("namesOfOperators");
+        emailsOfOperators = getIntent().getStringArrayExtra("emailsOfOperators");
         shops = getIntent().getStringArrayExtra("shops");
-        Arrays.sort(shops);
         nameET.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, shops));
-        operatorsMap = new HashMap<>();
-        for (int i = 0; i < namesOfOperators.length; i++) {
-            operatorsMap.put(namesOfOperators[i], emailsOfOperators[i]);
-        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, operatorsMap.keySet().toArray(new String[0]));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, namesOfOperators);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
@@ -148,24 +142,26 @@ public class MakeRequestActivity extends AppCompatActivity {
             try {
                 String shop = nameET.getText().toString();
                 String text = textET.getText().toString();
-                String operator = spinner.getSelectedItem().toString();
+                int operatorPosition = spinner.getSelectedItemPosition();
 
                 if (Arrays.binarySearch(shops, shop) < 0) {
                     BundleEngine.putError(getBundle(), R.string.make_request_activity_shop_was_not_found_error_text);
                     return;
                 }
 
-                String to = operatorsMap.get(operator);
+                String operatorName = namesOfOperators[operatorPosition];
+                String operatorEmail = emailsOfOperators[operatorPosition];
+                System.out.println(operatorName + " " + operatorEmail);
                 MessageSender sender = new MessageSender();
                 sender.setMethod(new EmailSending());
-                sender.send(new StrategyMessage(to, shop, text, String.format(getString(R.string.make_request_activity_letter_merchandiser_text), merchandiserName)));
+                sender.send(new StrategyMessage(operatorEmail, shop, text, String.format(getString(R.string.make_request_activity_letter_merchandiser_text), merchandiserName)));
 
                 String url = API.MAIN_URL + API.CREATE_REQUEST_URL;
                 String json = String.format("{\"subject\": \"%s\"," +
                                 "\"text\": \"%s\"," +
                                 "\"operator\": \"%s\"," +
                                 "\"dateTime\": \"%s\"}",
-                        shop, text.replaceAll("\n", "\r\n"), operator, LocalDateTime.now().toString());
+                        shop, text.replaceAll("\n", "\r\n"), operatorName, LocalDateTime.now().toString());
                 String accessToken = new SharedPreferencesEngine(MakeRequestActivity.this, getString(R.string.shared_preferences_user)).getString("accessToken");
                 Map<String, String> headers = new HashMap<>();
                 headers.put("access_token", accessToken);
