@@ -7,7 +7,7 @@ import android.os.Looper;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class AsyncRequest {
+public abstract class AsyncRequest {
     private final Bundle bundle;
 
     public AsyncRequest() {
@@ -23,9 +23,9 @@ public class AsyncRequest {
         });
     }
 
-    public void sendRequest() {}
+    public abstract void sendRequest();
 
-    public void UIWork() {}
+    public abstract void UIWork();
 
     public Bundle getBundle() {
         return bundle;

@@ -105,10 +105,8 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
                 return;
             }
 
-            Map<String, String> headers = new HashMap<>();
-            headers.put("access_token", spe.getString("accessToken"));
-
-            API.getRequestsToday(getBundle(), headers, merchandiserName);
+            API api = new API();
+            api.getRequestsToday(getBundle(), spe.getString("accessToken"), merchandiserName);
         }
     }
 }

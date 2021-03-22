@@ -105,28 +105,29 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            String accessToken = spe.getString("accessToken");
+
             getBundle().putString("companyName", spe.getString("name"));
-            getBundle().putString("accessToken", spe.getString("accessToken"));
+            getBundle().putString("accessToken", accessToken);
 
-            Map<String, String> headers = new HashMap<>();
-            headers.put("access_token", spe.getString("accessToken"));
+            API api = new API();
 
-            API.getMerchandisers(getBundle(), headers);
-
-            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
-                return;
-
-            API.getOperators(getBundle(), headers);
+            api.getMerchandisers(getBundle(), accessToken);
 
             if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
                 return;
 
-            API.getRequestsToday(getBundle(), headers);
+            api.getOperators(getBundle(), accessToken);
 
             if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
                 return;
 
-            API.getShops(getBundle(), headers);
+            api.getRequestsToday(getBundle(), accessToken);
+
+            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
+                return;
+
+            api.getShops(getBundle(), accessToken);
         }
     }
 
@@ -174,20 +175,21 @@ public class MainActivity extends AppCompatActivity {
 
             getBundle().putString("merchandiserName", spe.getString("name"));
 
-            Map<String, String> headers = new HashMap<>();
-            headers.put("access_token", spe.getString("accessToken"));
+            String accessToken = spe.getString("accessToken");
 
-            API.getOperators(getBundle(), headers);
+            API api = new API();
 
-            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
-                return;
-
-            API.getRequestsToday(getBundle(), headers);
+            api.getOperators(getBundle(), accessToken);
 
             if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
                 return;
 
-            API.getShops(getBundle(), headers);
+            api.getRequestsToday(getBundle(), accessToken);
+
+            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
+                return;
+
+            api.getShops(getBundle(), accessToken);
         }
     }
 }
