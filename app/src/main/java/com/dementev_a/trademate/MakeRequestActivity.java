@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
-import com.dementev_a.trademate.requests.AsyncRequest;
+import com.dementev_a.trademate.requests.DataReceiver;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.messages.EmailSending;
@@ -98,7 +98,7 @@ public class MakeRequestActivity extends AppCompatActivity {
     }
 
 
-    private class ConcurrentSendEmail extends AsyncRequest {
+    private class ConcurrentSendEmail extends DataReceiver {
 
         protected ConcurrentSendEmail() {
             super();
@@ -128,7 +128,7 @@ public class MakeRequestActivity extends AppCompatActivity {
         }
 
         @Override
-        public void sendRequest() {
+        public void sendRequests() {
             if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(textET.getText())) {
                 getBundle().putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
                 return;

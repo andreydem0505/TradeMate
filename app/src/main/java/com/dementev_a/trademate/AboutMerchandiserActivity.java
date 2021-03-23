@@ -3,8 +3,6 @@ package com.dementev_a.trademate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -12,16 +10,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.requests.AsyncRequest;
+import com.dementev_a.trademate.requests.DataReceiver;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
 import com.dementev_a.trademate.widgets.WidgetsEngine;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class AboutMerchandiserActivity extends AppCompatActivity {
     private TextView headerTV, emailTV, passwordTV, errorTV;
@@ -73,7 +66,7 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
     }
 
 
-    private class ConcurrentSetRequest extends AsyncRequest {
+    private class ConcurrentSetRequest extends DataReceiver {
         private final SharedPreferencesEngine spe;
 
         protected ConcurrentSetRequest(SharedPreferencesEngine spe) {
@@ -99,7 +92,7 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
         }
 
         @Override
-        public void sendRequest() {
+        public void sendRequests() {
             if (!RequestEngine.isConnectedToInternet(AboutMerchandiserActivity.this)) {
                 getBundle().putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
                 return;

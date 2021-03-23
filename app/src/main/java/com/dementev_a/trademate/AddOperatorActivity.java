@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.requests.AsyncRequest;
+import com.dementev_a.trademate.requests.DataReceiver;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
@@ -43,7 +43,7 @@ public class AddOperatorActivity extends AppCompatActivity {
     }
 
 
-    private class ConcurrentAddOperator extends AsyncRequest {
+    private class ConcurrentAddOperator extends DataReceiver {
 
         protected ConcurrentAddOperator() {
             super();
@@ -73,7 +73,7 @@ public class AddOperatorActivity extends AppCompatActivity {
         }
 
         @Override
-        public void sendRequest() {
+        public void sendRequests() {
             if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText())) {
                 getBundle().putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
                 return;

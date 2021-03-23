@@ -12,6 +12,12 @@ import java.util.Set;
 public class SharedPreferencesEngine {
     private final SharedPreferences sp;
 
+    public static final String
+        TYPE_KEY = "type",
+        NAME_KEY = "name",
+        EMAIL_KEY = "email",
+        ACCESS_TOKEN_KEY = "accessToken";
+
     public SharedPreferencesEngine(@NotNull Context context, String source) {
         sp = context.getSharedPreferences(source, Context.MODE_PRIVATE);
     }
@@ -27,10 +33,10 @@ public class SharedPreferencesEngine {
 
     public void saveUser(String type, String name, String email, String accessToken) {
         Map<String, String> map = new HashMap<>();
-        map.put("type", type);
-        map.put("name", name);
-        map.put("email", email);
-        map.put("accessToken", accessToken);
+        map.put(TYPE_KEY, type);
+        map.put(NAME_KEY, name);
+        map.put(EMAIL_KEY, email);
+        map.put(ACCESS_TOKEN_KEY, accessToken);
         addManyStrings(map);
     }
 

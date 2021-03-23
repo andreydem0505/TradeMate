@@ -9,8 +9,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.requests.AsyncRequest;
-import com.dementev_a.trademate.widgets.AfterRequest;
 
 
 public class SignUpCompanyActivity extends AppCompatActivity {
@@ -31,31 +29,11 @@ public class SignUpCompanyActivity extends AppCompatActivity {
 
     public void onSignUpClickBtn(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        new ConcurrentSignUpCompany().execute();
-    }
-
-
-    private class ConcurrentSignUpCompany extends AsyncRequest {
-
-        protected ConcurrentSignUpCompany() {
-            super();
-        }
-
-        @Override
-        public void UIWork() {
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-            new AfterRequest(getBundle(), errorTV) {
-                @Override
-                public void ok() {
-                    finish();
-                }
-            }.execute();
-        }
-
-        @Override
-        public void sendRequest() {
-            API api = new API();
-            api.signUpCompany(getBaseContext(), getBundle(), nameET, emailET, passwordET);
-        }
+        new API().new SignUpCompany() {
+            @Override
+            public void responseOk() {
+                finish();
+            }
+        }.execute(this, nameET, emailET, passwordET, progressBar, errorTV);
     }
 }

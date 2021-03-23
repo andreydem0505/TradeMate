@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.requests.AsyncRequest;
+import com.dementev_a.trademate.requests.DataReceiver;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
@@ -44,7 +44,7 @@ public class AddMerchandiserActivity extends AppCompatActivity {
     }
 
 
-    private class ConcurrentAddMerchandiser extends AsyncRequest {
+    private class ConcurrentAddMerchandiser extends DataReceiver {
 
         protected ConcurrentAddMerchandiser() {
             super();
@@ -74,7 +74,7 @@ public class AddMerchandiserActivity extends AppCompatActivity {
         }
 
         @Override
-        public void sendRequest() {
+        public void sendRequests() {
             if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
                 getBundle().putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
                 return;

@@ -20,7 +20,7 @@ import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
-import com.dementev_a.trademate.requests.AsyncRequest;
+import com.dementev_a.trademate.requests.DataReceiver;
 import com.dementev_a.trademate.requests.RequestEngine;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -152,7 +152,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private class ConcurrentAddShop extends AsyncRequest {
+    private class ConcurrentAddShop extends DataReceiver {
 
         protected ConcurrentAddShop() {
             super();
@@ -182,7 +182,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         }
 
         @Override
-        public void sendRequest() {
+        public void sendRequests() {
             if (TextUtils.isEmpty(addShopET.getText())) {
                 getBundle().putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
                 return;
