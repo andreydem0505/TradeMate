@@ -3,7 +3,6 @@ package com.dementev_a.trademate.requests;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 
 import com.dementev_a.trademate.api.API;
@@ -55,7 +54,6 @@ public class RequestSender {
             public void onResponse(@NotNull Call call, @NotNull Response response) {
                 try {
                     stringResponse = response.body().string();
-                    System.out.println(stringResponse);
                     String message = JsonEngine.getStringFromJson(stringResponse, "message");
                     if (message.equals(API.SUCCESS_RESPONSE)) {
                         successMessage();

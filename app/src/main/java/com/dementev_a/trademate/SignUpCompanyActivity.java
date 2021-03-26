@@ -11,11 +11,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.requests.RequestErrors;
-import com.dementev_a.trademate.requests.RequestStatus;
+import com.dementev_a.trademate.widgets.ReactOnStatus;
 
 
 public class SignUpCompanyActivity extends AppCompatActivity {
@@ -45,18 +43,12 @@ public class SignUpCompanyActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             progressBar.setVisibility(ProgressBar.INVISIBLE);
             Bundle bundle = msg.getData();
-            int status = bundle.getInt(API.STATUS_KEY_BUNDLE);
-            if (status == RequestStatus.STATUS_OK) {
-                finish();
-            } else if (status == RequestStatus.STATUS_ERROR_TEXT) {
-                try {
-                    errorTV.setText(bundle.getInt(API.ERROR_TEXT_KEY_BUNDLE));
-                } catch (NullPointerException e) {
-                    errorTV.setText(R.string.global_errors_server_error_text);
+            new ReactOnStatus(bundle, errorTV) {
+                @Override
+                public void success() {
+                    finish();
                 }
-            } else {
-                errorTV.setText(RequestErrors.globalErrors.get(status));
-            }
+            }.execute();
         }
     };
 }

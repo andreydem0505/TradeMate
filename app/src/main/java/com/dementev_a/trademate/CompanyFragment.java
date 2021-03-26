@@ -28,6 +28,7 @@ import com.dementev_a.trademate.requests.DataReceiver;
 import com.dementev_a.trademate.requests.RequestEngine;
 import com.dementev_a.trademate.requests.RequestErrors;
 import com.dementev_a.trademate.requests.RequestStatus;
+import com.dementev_a.trademate.widgets.ReactOnStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -105,7 +106,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
 //        shopsQuantityText = getString(R.string.company_fragment_shops_quantity_text);
 //        shopsQuantityTV.setText(String.format(shopsQuantityText, shopsQuantity));
         API api = new API(getContext());
-//        api.getMerchandisers(handler, accessToken);
+        api.getMerchandisers(handler, accessToken);
         api.getOperators(handler, accessToken);
         return view;
     }
@@ -114,26 +115,26 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
-            int status = bundle.getInt(API.STATUS_KEY_BUNDLE);
-            if (status == RequestStatus.STATUS_OK) {
-                switch (msg.what) {
-                    case API.GET_OPERATORS_HANDLER_NUMBER: {
-                        int operatorsQuantity = bundle.getInt("total_operators");
-                        namesOfOperators = bundle.getStringArray("namesOfOperators");
-                        emailsOfOperators = bundle.getStringArray("emailsOfOperators");
-                        String operatorsQuantityText = getString(R.string.company_fragment_operators_quantity_text);
-                        operatorsQuantityTV.setText(String.format(operatorsQuantityText, operatorsQuantity));
-                    } break;
-                    case API.GET_MERCHANDISERS_HANDLER_NUMBER: {
-                        int merchandisersQuantity = bundle.getInt("total_merchandisers");
-                        merchandisers = (MerchandiserJson[]) bundle.getParcelableArray("merchandisers");
-                        String employeesQuantityText = getString(R.string.company_fragment_employees_quantity_text);
-                        employeesQuantityTV.setText(String.format(employeesQuantityText, merchandisersQuantity));
-                    } break;
+            new ReactOnStatus(bundle, getContext()) {
+                @Override
+                public void success() {
+                    switch (msg.what) {
+                        case API.GET_OPERATORS_HANDLER_NUMBER: {
+                            int operatorsQuantity = bundle.getInt("total_operators");
+                            namesOfOperators = bundle.getStringArray("namesOfOperators");
+                            emailsOfOperators = bundle.getStringArray("emailsOfOperators");
+                            String operatorsQuantityText = getString(R.string.company_fragment_operators_quantity_text);
+                            operatorsQuantityTV.setText(String.format(operatorsQuantityText, operatorsQuantity));
+                        } break;
+                        case API.GET_MERCHANDISERS_HANDLER_NUMBER: {
+                            int merchandisersQuantity = bundle.getInt("total_merchandisers");
+                            merchandisers = (MerchandiserJson[]) bundle.getParcelableArray("merchandisers");
+                            String employeesQuantityText = getString(R.string.company_fragment_employees_quantity_text);
+                            employeesQuantityTV.setText(String.format(employeesQuantityText, merchandisersQuantity));
+                        } break;
+                    }
                 }
-            } else {
-                Toast.makeText(getContext(), RequestErrors.globalErrors.get(status), Toast.LENGTH_LONG).show();
-            }
+            }.execute();
         }
     };
 
