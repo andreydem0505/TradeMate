@@ -15,6 +15,8 @@ import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestEngine;
 
+import org.jetbrains.annotations.NotNull;
+
 
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fragmentManager = getSupportFragmentManager();
         spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         update(true);
     }
@@ -39,85 +40,110 @@ public class MainActivity extends AppCompatActivity {
     private void update(boolean progress) {
         if (spe.count() == 0) { // user has not a role
             if (progress) {
+                fragmentManager = getSupportFragmentManager();
                 transaction = fragmentManager.beginTransaction();
                 Fragment descriptionFragment = new DescriptionFragment();
                 transaction.replace(R.id.fragment, descriptionFragment);
-                transaction.commit();
+                transaction.commitAllowingStateLoss();
             }
         } else { // user has a role
-            if (progress) {
-                transaction = fragmentManager.beginTransaction();
-                Fragment progressFragment = new ProgressFragment();
-                transaction.replace(R.id.fragment, progressFragment);
-                transaction.commit();
-            }
             String type = spe.getString("type");
             if (type.equals(getString(R.string.shared_preferences_type_company))) {
-                new SetCompanyFragment(spe).execute();
+                fragmentManager = getSupportFragmentManager();
+                transaction = fragmentManager.beginTransaction();
+                Bundle bundle = new Bundle();
+                System.out.println(spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY));
+                bundle.putString("companyName", spe.getString(SharedPreferencesEngine.NAME_KEY));
+                bundle.putString("accessToken", spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY));
+                Fragment companyFragment = new CompanyFragment();
+                companyFragment.setArguments(bundle);
+                transaction.replace(R.id.fragment, companyFragment);
+                transaction.commitAllowingStateLoss();
             } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
                 new ConcurrentSetMerchandiserFragment(spe).execute();
             }
         }
+//        if (spe.count() == 0) { // user has not a role
+//            if (progress) {
+//                transaction = fragmentManager.beginTransaction();
+//                Fragment descriptionFragment = new DescriptionFragment();
+//                transaction.replace(R.id.fragment, descriptionFragment);
+//                transaction.commit();
+//            }
+//        } else { // user has a role
+//            if (progress) {
+//                transaction = fragmentManager.beginTransaction();
+//                Fragment progressFragment = new ProgressFragment();
+//                transaction.replace(R.id.fragment, progressFragment);
+//                transaction.commit();
+//            }
+//            String type = spe.getString("type");
+//            if (type.equals(getString(R.string.shared_preferences_type_company))) {
+//                new SetCompanyFragment(spe).execute();
+//            } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
+//                new ConcurrentSetMerchandiserFragment(spe).execute();
+//            }
+//        }
     }
 
 
-    private class SetCompanyFragment extends DataReceiver {
-        private final SharedPreferencesEngine spe;
-
-        protected SetCompanyFragment(SharedPreferencesEngine spe) {
-            super();
-            this.spe = spe;
-        }
-
-        @Override
-        public void UIWork() {
-            int status = getBundle().getInt(API.STATUS_KEY_BUNDLE);
-            if (status == RequestStatus.STATUS_OK) {
-                transaction = fragmentManager.beginTransaction();
-                Fragment companyFragment = new CompanyFragment();
-                companyFragment.setArguments(getBundle());
-                transaction.replace(R.id.fragment, companyFragment);
-            } else {
-                transaction = fragmentManager.beginTransaction();
-                ErrorFragment errorFragment = new ErrorFragment();
-                errorFragment.setArguments(getBundle());
-                transaction.replace(R.id.fragment, errorFragment);
-            }
-            transaction.commit();
-        }
-
-        @Override
-        public void sendRequests() {
-            if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
-                getBundle().putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_INTERNET_ERROR);
-                return;
-            }
-
-            String accessToken = spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY);
-
-            getBundle().putString("companyName", spe.getString(SharedPreferencesEngine.NAME_KEY));
-            getBundle().putString("accessToken", accessToken);
-
-            API api = new API();
-
-            api.getMerchandisers(getBundle(), accessToken);
-
-            if (getBundle().getInt(API.STATUS_KEY_BUNDLE) != RequestStatus.STATUS_OK)
-                return;
-
-            api.getOperators(getBundle(), accessToken);
-
-            if (getBundle().getInt(API.STATUS_KEY_BUNDLE) != RequestStatus.STATUS_OK)
-                return;
-
-            api.getRequestsToday(getBundle(), accessToken);
-
-            if (getBundle().getInt(API.STATUS_KEY_BUNDLE) != RequestStatus.STATUS_OK)
-                return;
-
-            api.getShops(getBundle(), accessToken);
-        }
-    }
+//    private class SetCompanyFragment extends DataReceiver {
+//        private final SharedPreferencesEngine spe;
+//
+//        protected SetCompanyFragment(SharedPreferencesEngine spe) {
+//            super();
+//            this.spe = spe;
+//        }
+//
+//        @Override
+//        public void UIWork() {
+//            int status = getBundle().getInt(API.STATUS_KEY_BUNDLE);
+//            if (status == RequestStatus.STATUS_OK) {
+//                transaction = fragmentManager.beginTransaction();
+//                Fragment companyFragment = new CompanyFragment();
+//                companyFragment.setArguments(getBundle());
+//                transaction.replace(R.id.fragment, companyFragment);
+//            } else {
+//                transaction = fragmentManager.beginTransaction();
+//                ErrorFragment errorFragment = new ErrorFragment();
+//                errorFragment.setArguments(getBundle());
+//                transaction.replace(R.id.fragment, errorFragment);
+//            }
+//            transaction.commit();
+//        }
+//
+//        @Override
+//        public void sendRequests() {
+//            if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
+//                getBundle().putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_INTERNET_ERROR);
+//                return;
+//            }
+//
+//            String accessToken = spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY);
+//
+//            getBundle().putString("companyName", spe.getString(SharedPreferencesEngine.NAME_KEY));
+//            getBundle().putString("accessToken", accessToken);
+//
+//            API api = new API();
+//
+//            api.getMerchandisers(getBundle(), accessToken);
+//
+//            if (getBundle().getInt(API.STATUS_KEY_BUNDLE) != RequestStatus.STATUS_OK)
+//                return;
+//
+//            api.getOperators(getBundle(), accessToken);
+//
+//            if (getBundle().getInt(API.STATUS_KEY_BUNDLE) != RequestStatus.STATUS_OK)
+//                return;
+//
+//            api.getRequestsToday(getBundle(), accessToken);
+//
+//            if (getBundle().getInt(API.STATUS_KEY_BUNDLE) != RequestStatus.STATUS_OK)
+//                return;
+//
+//            api.getShops(getBundle(), accessToken);
+//        }
+//    }
 
 
     private class ConcurrentSetMerchandiserFragment extends DataReceiver {
@@ -156,28 +182,28 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void sendRequests() {
-            if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
-                getBundle().putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
-                return;
-            }
-
-            getBundle().putString("merchandiserName", spe.getString("name"));
-
-            String accessToken = spe.getString("accessToken");
-
-            API api = new API();
-
-            api.getOperators(getBundle(), accessToken);
-
-            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
-                return;
-
-            api.getRequestsToday(getBundle(), accessToken);
-
-            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
-                return;
-
-            api.getShops(getBundle(), accessToken);
+//            if (!RequestEngine.isConnectedToInternet(MainActivity.this)) {
+//                getBundle().putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
+//                return;
+//            }
+//
+//            getBundle().putString("merchandiserName", spe.getString("name"));
+//
+//            String accessToken = spe.getString("accessToken");
+//
+//            API api = new API();
+//
+//            api.getOperators(getBundle(), accessToken);
+//
+//            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
+//                return;
+//
+//            api.getRequestsToday(getBundle(), accessToken);
+//
+//            if (getBundle().getInt("status") != RequestStatus.STATUS_OK)
+//                return;
+//
+//            api.getShops(getBundle(), accessToken);
         }
     }
 }

@@ -6,6 +6,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
@@ -22,6 +26,7 @@ import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.requests.DataReceiver;
 import com.dementev_a.trademate.requests.RequestEngine;
+import com.dementev_a.trademate.requests.RequestErrors;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CompanyFragment extends Fragment implements View.OnClickListener {
-    private TextView shopsQuantityTV, addShopErrorTV;
+    private TextView shopsQuantityTV, addShopErrorTV, operatorsQuantityTV, employeesQuantityTV;
     private EditText addShopET;
     private ProgressBar addShopPB;
     private String companyName, accessToken, shopsQuantityText;
@@ -54,8 +59,8 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_company, container, false);
         TextView companyNameTV = view.findViewById(R.id.company_fragment_company_name);
-        TextView employeesQuantityTV = view.findViewById(R.id.company_fragment_merchandisers_quantity);
-        TextView operatorsQuantityTV = view.findViewById(R.id.company_fragment_operators_quantity);
+        employeesQuantityTV = view.findViewById(R.id.company_fragment_merchandisers_quantity);
+        operatorsQuantityTV = view.findViewById(R.id.company_fragment_operators_quantity);
         Button aboutMerchandisersBtn = view.findViewById(R.id.company_fragment_about_merchandisers_btn);
         Button aboutOperatorsBtn = view.findViewById(R.id.company_fragment_about_operators_btn);
         Button aboutRequestsBtn = view.findViewById(R.id.company_fragment_about_requests_btn);
@@ -80,28 +85,57 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         Bundle bundle = getArguments();
         companyName = bundle.getString("companyName");
         accessToken = bundle.getString("accessToken");
-        int merchandisersQuantity = bundle.getInt("total_merchandisers");
-        int operatorsQuantity = bundle.getInt("total_operators");
-        int requestsQuantity = bundle.getInt("total_requests");
-        shopsQuantity = bundle.getInt("total_shops");
-        merchandisers = (MerchandiserJson[]) bundle.getParcelableArray("merchandisers");
-        namesOfOperators = bundle.getStringArray("namesOfOperators");
-        emailsOfOperators = bundle.getStringArray("emailsOfOperators");
-        requests = (RequestJson[]) bundle.getParcelableArray("requests");
-        shops = bundle.getStringArray("shops");
+//        int merchandisersQuantity = bundle.getInt("total_merchandisers");
+//        int operatorsQuantity = bundle.getInt("total_operators");
+//        int requestsQuantity = bundle.getInt("total_requests");
+//        shopsQuantity = bundle.getInt("total_shops");
+//        merchandisers = (MerchandiserJson[]) bundle.getParcelableArray("merchandisers");
+//        namesOfOperators = bundle.getStringArray("namesOfOperators");
+//        emailsOfOperators = bundle.getStringArray("emailsOfOperators");
+//        requests = (RequestJson[]) bundle.getParcelableArray("requests");
+//        shops = bundle.getStringArray("shops");
 
         companyNameTV.setText(companyName);
-        String employeesQuantityText = getString(R.string.company_fragment_employees_quantity_text);
-        employeesQuantityTV.setText(String.format(employeesQuantityText, merchandisersQuantity));
-        String operatorsQuantityText = getString(R.string.company_fragment_operators_quantity_text);
-        operatorsQuantityTV.setText(String.format(operatorsQuantityText, operatorsQuantity));
-        String requestsQuantityText = getString(R.string.company_fragment_requests_quantity_text);
-        requestsQuantityTV.setText(String.format(requestsQuantityText, requestsQuantity));
-        shopsQuantityText = getString(R.string.company_fragment_shops_quantity_text);
-        shopsQuantityTV.setText(String.format(shopsQuantityText, shopsQuantity));
-
+//        String employeesQuantityText = getString(R.string.company_fragment_employees_quantity_text);
+//        employeesQuantityTV.setText(String.format(employeesQuantityText, merchandisersQuantity));
+//        String operatorsQuantityText = getString(R.string.company_fragment_operators_quantity_text);
+//        operatorsQuantityTV.setText(String.format(operatorsQuantityText, operatorsQuantity));
+//        String requestsQuantityText = getString(R.string.company_fragment_requests_quantity_text);
+//        requestsQuantityTV.setText(String.format(requestsQuantityText, requestsQuantity));
+//        shopsQuantityText = getString(R.string.company_fragment_shops_quantity_text);
+//        shopsQuantityTV.setText(String.format(shopsQuantityText, shopsQuantity));
+        API api = new API(getContext());
+//        api.getMerchandisers(handler, accessToken);
+        api.getOperators(handler, accessToken);
         return view;
     }
+
+    Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            int status = bundle.getInt(API.STATUS_KEY_BUNDLE);
+            if (status == RequestStatus.STATUS_OK) {
+                switch (msg.what) {
+                    case API.GET_OPERATORS_HANDLER_NUMBER: {
+                        int operatorsQuantity = bundle.getInt("total_operators");
+                        namesOfOperators = bundle.getStringArray("namesOfOperators");
+                        emailsOfOperators = bundle.getStringArray("emailsOfOperators");
+                        String operatorsQuantityText = getString(R.string.company_fragment_operators_quantity_text);
+                        operatorsQuantityTV.setText(String.format(operatorsQuantityText, operatorsQuantity));
+                    } break;
+                    case API.GET_MERCHANDISERS_HANDLER_NUMBER: {
+                        int merchandisersQuantity = bundle.getInt("total_merchandisers");
+                        merchandisers = (MerchandiserJson[]) bundle.getParcelableArray("merchandisers");
+                        String employeesQuantityText = getString(R.string.company_fragment_employees_quantity_text);
+                        employeesQuantityTV.setText(String.format(employeesQuantityText, merchandisersQuantity));
+                    } break;
+                }
+            } else {
+                Toast.makeText(getContext(), RequestErrors.globalErrors.get(status), Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 
     @SuppressLint("NonConstantResourceId")
     @Override

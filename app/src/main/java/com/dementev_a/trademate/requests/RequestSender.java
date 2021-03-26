@@ -1,8 +1,10 @@
 package com.dementev_a.trademate.requests;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
@@ -18,21 +20,31 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public abstract class RequestSender {
-    private final OkHttpClient client;
-    private final Request request;
-    private final Bundle bundle;
-    private final Handler handler;
+public class RequestSender {
+    private Context context;
+    private OkHttpClient client;
+    private Request request;
+    private Bundle bundle;
+    private Handler handler;
+    private int handleNumber;
     private String stringResponse;
 
-    public RequestSender(OkHttpClient client, Request request, Bundle bundle) {
+    public RequestSender() {}
+
+    public RequestSender(Context context, OkHttpClient client, Request request, Handler handler, int handleNumber) {
+        this.context = context;
         this.client = client;
         this.request = request;
-        this.bundle = bundle;
-        handler = new Handler(Looper.getMainLooper());
+        this.bundle = new Bundle();
+        this.handler = handler;
+        this.handleNumber = handleNumber;
     }
 
     private void duringRequest() {
+        if (!RequestEngine.isConnectedToInternet(context)) {
+            getBundle().putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_INTERNET_ERROR);
+            sendHandlerMessage(bundle, handler);
+        }
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -43,6 +55,7 @@ public abstract class RequestSender {
             public void onResponse(@NotNull Call call, @NotNull Response response) {
                 try {
                     stringResponse = response.body().string();
+                    System.out.println(stringResponse);
                     String message = JsonEngine.getStringFromJson(stringResponse, "message");
                     if (message.equals(API.SUCCESS_RESPONSE)) {
                         successMessage();
@@ -55,14 +68,19 @@ public abstract class RequestSender {
                 } catch (IOException e) {
                     bundle.putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
                 }
-                handler.post(() -> UIWork());
+                sendHandlerMessage(bundle, handler);
             }
         });
     }
 
-    public abstract void successMessage();
+    public void successMessage() {}
 
-    public void UIWork() {}
+    public void sendHandlerMessage(Bundle bundle, Handler handler) {
+        Message message = Message.obtain();
+        message.what = handleNumber;
+        message.setData(bundle);
+        handler.sendMessage(message);
+    }
 
     public void execute() {
         duringRequest();
@@ -74,5 +92,9 @@ public abstract class RequestSender {
 
     public Bundle getBundle() {
         return bundle;
+    }
+
+    public void setBundle(Bundle bundle) {
+        this.bundle = bundle;
     }
 }

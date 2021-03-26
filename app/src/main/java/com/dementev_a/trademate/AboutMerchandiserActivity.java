@@ -98,8 +98,8 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
                 return;
             }
 
-            API api = new API();
-            api.getRequestsToday(getBundle(), spe.getString("accessToken"), merchandiserName);
+//            API api = new API();
+//            api.getRequestsToday(getBundle(), spe.getString("accessToken"), merchandiserName);
         }
     }
 }

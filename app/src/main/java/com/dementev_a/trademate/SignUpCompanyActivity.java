@@ -1,14 +1,21 @@
 package com.dementev_a.trademate;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.requests.RequestErrors;
+import com.dementev_a.trademate.requests.RequestStatus;
 
 
 public class SignUpCompanyActivity extends AppCompatActivity {
@@ -29,11 +36,27 @@ public class SignUpCompanyActivity extends AppCompatActivity {
 
     public void onSignUpClickBtn(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        new API().new SignUpCompany() {
-            @Override
-            public void responseOk() {
-                finish();
-            }
-        }.execute(this, nameET, emailET, passwordET, progressBar, errorTV);
+        API api = new API(this);
+        api.signUpCompany(handler, nameET, emailET, passwordET);
     }
+
+    Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            Bundle bundle = msg.getData();
+            int status = bundle.getInt(API.STATUS_KEY_BUNDLE);
+            if (status == RequestStatus.STATUS_OK) {
+                finish();
+            } else if (status == RequestStatus.STATUS_ERROR_TEXT) {
+                try {
+                    errorTV.setText(bundle.getInt(API.ERROR_TEXT_KEY_BUNDLE));
+                } catch (NullPointerException e) {
+                    errorTV.setText(R.string.global_errors_server_error_text);
+                }
+            } else {
+                errorTV.setText(RequestErrors.globalErrors.get(status));
+            }
+        }
+    };
 }
