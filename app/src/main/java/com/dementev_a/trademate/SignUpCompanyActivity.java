@@ -34,8 +34,8 @@ public class SignUpCompanyActivity extends AppCompatActivity {
 
     public void onSignUpClickBtn(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        API api = new API(this);
-        api.signUpCompany(handler, nameET, emailET, passwordET);
+        API api = new API(this, handler);
+        api.signUpCompany(nameET, emailET, passwordET);
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {

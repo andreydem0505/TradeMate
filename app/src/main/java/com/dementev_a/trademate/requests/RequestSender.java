@@ -41,13 +41,14 @@ public class RequestSender {
 
     private void duringRequest() {
         if (!RequestEngine.isConnectedToInternet(context)) {
-            getBundle().putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_INTERNET_ERROR);
+            getBundle().putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_INTERNET_ERROR);
             sendHandlerMessage(bundle, handler);
+            return;
         }
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                bundle.putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+                bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             }
 
             @Override
@@ -57,14 +58,14 @@ public class RequestSender {
                     String message = JsonEngine.getStringFromJson(stringResponse, "message");
                     if (message.equals(API.SUCCESS_RESPONSE)) {
                         successMessage();
-                        bundle.putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_OK);
+                        bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_OK);
                     } else if (RequestErrors.errors.containsKey(message)) {
                         BundleEngine.putError(bundle, RequestErrors.errors.get(message));
                     } else {
-                        bundle.putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+                        bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
                     }
                 } catch (IOException e) {
-                    bundle.putInt(API.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+                    bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
                 }
                 sendHandlerMessage(bundle, handler);
             }

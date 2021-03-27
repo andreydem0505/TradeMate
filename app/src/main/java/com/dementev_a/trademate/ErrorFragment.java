@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.bundle.BundleEngine;
 
 public class ErrorFragment extends Fragment {
     private View view;
@@ -30,7 +31,7 @@ public class ErrorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        errorText = getArguments().getString(API.ERROR_TEXT_KEY_BUNDLE);
+        errorText = getArguments().getString(BundleEngine.ERROR_TEXT_KEY_BUNDLE);
         view = inflater.inflate(R.layout.fragment_error, container, false);
         errorTV = view.findViewById(R.id.error_fragment_error_tv);
         return view;

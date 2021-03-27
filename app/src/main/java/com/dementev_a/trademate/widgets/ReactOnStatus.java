@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.requests.RequestErrors;
 import com.dementev_a.trademate.requests.RequestStatus;
 
@@ -31,14 +31,14 @@ public abstract class ReactOnStatus {
     }
 
     public void execute() {
-        int status = bundle.getInt(API.STATUS_KEY_BUNDLE);
+        int status = bundle.getInt(BundleEngine.STATUS_KEY_BUNDLE);
         if (status == RequestStatus.STATUS_OK) {
             success();
         } else if (status == RequestStatus.STATUS_ERROR_TEXT) {
             if (widget == TEXT_VIEW_WIDGET) {
-                errorTV.setText(bundle.getInt(API.ERROR_TEXT_KEY_BUNDLE));
+                errorTV.setText(bundle.getInt(BundleEngine.ERROR_TEXT_KEY_BUNDLE));
             } else if (widget == TOAST_WIDGET) {
-                Toast.makeText(context, bundle.getInt(API.ERROR_TEXT_KEY_BUNDLE), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, bundle.getInt(BundleEngine.ERROR_TEXT_KEY_BUNDLE), Toast.LENGTH_SHORT).show();
             }
         } else {
             if (widget == TEXT_VIEW_WIDGET) {

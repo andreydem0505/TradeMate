@@ -2,6 +2,7 @@ package com.dementev_a.trademate.json;
 
 import android.os.Bundle;
 
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -40,8 +41,8 @@ public class JsonEngine {
             emails[i] = jo.get("email").getAsString();
         }
         Bundle bundle = new Bundle();
-        bundle.putStringArray("namesOfOperators", names);
-        bundle.putStringArray("emailsOfOperators", emails);
+        bundle.putStringArray(BundleEngine.NAMES_OF_OPERATORS_KEY_BUNDLE, names);
+        bundle.putStringArray(BundleEngine.EMAILS_OF_OPERATORS_KEY_BUNDLE, emails);
         return bundle;
     }
 

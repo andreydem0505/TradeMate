@@ -5,16 +5,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.dementev_a.trademate.R;
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
-import com.dementev_a.trademate.requests.RequestEngine;
-import com.dementev_a.trademate.requests.RequestErrors;
 import com.dementev_a.trademate.requests.RequestSender;
 import com.dementev_a.trademate.requests.RequestStatus;
 
@@ -45,11 +42,6 @@ public class API {
             ADD_SHOP_URL = "/create/shop";
 
     public static final String
-            STATUS_KEY_BUNDLE = "status",
-            ERROR_TEXT_KEY_BUNDLE = "error_text",
-            TOTAL_OPERATORS_KEY_BUNDLE = "total_operators",
-            TOTAL_MERCHANDISERS_KEY_BUNDLE = "total_merchandisers",
-            MERCHANDISERS_KEY_BUNDLE = "merchandisers",
             SUCCESS_RESPONSE = "Success";
 
     private final String
@@ -58,18 +50,22 @@ public class API {
     public static final int
         GET_OPERATORS_HANDLER_NUMBER = 1,
         GET_MERCHANDISERS_HANDLER_NUMBER = 2,
-        SIGN_UP_COMPANY_HANDLER_NUMBER = 3;
+        SIGN_UP_COMPANY_HANDLER_NUMBER = 3,
+        GET_REQUESTS_HANDLER_NUMBER = 4,
+        GET_SHOPS_HANDLER_NUMBER = 5;
 
     private final OkHttpClient client;
     private final Context context;
+    private final Handler handler;
 
-    public API(Context context) {
+    public API(Context context, Handler handler) {
         client = new OkHttpClient();
         this.context = context;
+        this.handler = handler;
     }
 
 
-    public void getOperators(Handler handler, String accessToken) {
+    public void getOperators(String accessToken) {
         Request request = new Request.Builder()
                 .url(MAIN_URL + ALL_OPERATORS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
@@ -78,13 +74,13 @@ public class API {
             @Override
             public void successMessage() {
                 int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
-                getBundle().putInt(TOTAL_OPERATORS_KEY_BUNDLE, total);
+                getBundle().putInt(BundleEngine.TOTAL_OPERATORS_KEY_BUNDLE, total);
                 getBundle().putAll(JsonEngine.getOperatorsArrayFromJson(getStringResponse(), "operators"));
             }
         }.execute();
     }
 
-    public void getMerchandisers(Handler handler, String accessToken) {
+    public void getMerchandisers(String accessToken) {
         Request request = new Request.Builder()
                 .url(MAIN_URL + ALL_MERCHANDISERS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
@@ -93,56 +89,57 @@ public class API {
             @Override
             public void successMessage() {
                 int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
-                getBundle().putInt(TOTAL_MERCHANDISERS_KEY_BUNDLE, total);
+                getBundle().putInt(BundleEngine.TOTAL_MERCHANDISERS_KEY_BUNDLE, total);
                 MerchandiserJson[] merchandisersArray = JsonEngine.getMerchandisersArrayFromJson(getStringResponse(), "merchandisers");
-                getBundle().putParcelableArray(MERCHANDISERS_KEY_BUNDLE, merchandisersArray);
+                getBundle().putParcelableArray(BundleEngine.MERCHANDISERS_KEY_BUNDLE, merchandisersArray);
             }
         }.execute();
     }
 
-//    public void getRequestsToday(Bundle bundle, String accessToken, @NotNull String... merchandiser) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        Clock clock = Clock.systemUTC();
-//        LocalDate localDate = LocalDate.now(clock);
-//        String formattedDate = localDate.format(formatter);
-//        String url = MAIN_URL + GET_ALL_REQUESTS_URL + "?date=" + formattedDate;
-//        if (merchandiser.length > 0)
-//            url += "&name=" + merchandiser[0];
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
-//                .build();
-//        new RequestSender(client, request, bundle) {
-//            @Override
-//            public void successMessage() {
-//                int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
-//                getBundle().putInt("total_requests", total);
-//                RequestJson[] requestsArray = JsonEngine.getRequestsArrayFromJson(getStringResponse(), "requests");
-//                getBundle().putParcelableArray("requests", requestsArray);
-//            }
-//        }.execute();
-//    }
-//
-//    public void getShops(Bundle bundle, String accessToken) {
-//        Request request = new Request.Builder()
-//                .url(MAIN_URL + GET_ALL_SHOPS_URL)
-//                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
-//                .build();
-//        new RequestSender(client, request, bundle) {
-//            @Override
-//            public void successMessage() {
-//                int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
-//                getBundle().putInt("total_shops", total);
-//                getBundle().putStringArray("shops", JsonEngine.getShopsArrayFromJson(getStringResponse(), "shops"));
-//            }
-//        }.execute();
-//    }
+    public void getRequestsToday(String accessToken, @NotNull String... merchandiser) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Clock clock = Clock.systemUTC();
+        LocalDate localDate = LocalDate.now(clock);
+        String formattedDate = localDate.format(formatter);
+        String url = MAIN_URL + GET_ALL_REQUESTS_URL + "?date=" + formattedDate;
+        if (merchandiser.length > 0)
+            url += "&name=" + merchandiser[0];
+        Request request = new Request.Builder()
+                .url(url)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .build();
+        new RequestSender(context, client, request, handler, GET_REQUESTS_HANDLER_NUMBER) {
+            @Override
+            public void successMessage() {
+                int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
+                getBundle().putInt(BundleEngine.TOTAL_REQUESTS_KEY_BUNDLE, total);
+                RequestJson[] requestsArray = JsonEngine.getRequestsArrayFromJson(getStringResponse(), "requests");
+                getBundle().putParcelableArray(BundleEngine.REQUESTS_KEY_BUNDLE, requestsArray);
+            }
+        }.execute();
+    }
 
-    public void signUpCompany(Handler handler, EditText nameET, EditText emailET, EditText passwordET) {
+    public void getShops(String accessToken) {
+        Request request = new Request.Builder()
+                .url(MAIN_URL + GET_ALL_SHOPS_URL)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .build();
+        new RequestSender(context, client, request, handler, GET_SHOPS_HANDLER_NUMBER) {
+            @Override
+            public void successMessage() {
+                int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
+                getBundle().putInt(BundleEngine.TOTAL_SHOPS_KEY_BUNDLE, total);
+                getBundle().putStringArray(BundleEngine.SHOPS_KEY_BUNDLE, JsonEngine.getShopsArrayFromJson(getStringResponse(), "shops"));
+            }
+        }.execute();
+    }
+
+    public void signUpCompany(EditText nameET, EditText emailET, EditText passwordET) {
         Bundle bundle = new Bundle();
         if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
-            bundle.putInt(STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
             new RequestSender().sendHandlerMessage(bundle, handler);
+            return;
         }
         String name = nameET.getText().toString();
         String email = emailET.getText().toString();

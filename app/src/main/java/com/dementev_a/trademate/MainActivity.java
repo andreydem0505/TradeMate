@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 
 import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.requests.DataReceiver;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
@@ -19,73 +20,51 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class MainActivity extends AppCompatActivity {
+    private final int
+            NONE = 0,
+            DESCRIPTION_STATE = 1,
+            USER_STATE = 2;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private SharedPreferencesEngine spe;
+    private int state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
-        update(true);
+        state = NONE;
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        update(false);
-    }
-
-    private void update(boolean progress) {
+    protected void onResume() {
+        super.onResume();
         if (spe.count() == 0) { // user has not a role
-            if (progress) {
-                fragmentManager = getSupportFragmentManager();
-                transaction = fragmentManager.beginTransaction();
-                Fragment descriptionFragment = new DescriptionFragment();
-                transaction.replace(R.id.fragment, descriptionFragment);
-                transaction.commitAllowingStateLoss();
-            }
-        } else { // user has a role
+            fragmentManager = getSupportFragmentManager();
+            transaction = fragmentManager.beginTransaction();
+            Fragment descriptionFragment = new DescriptionFragment();
+            transaction.replace(R.id.fragment, descriptionFragment);
+            transaction.commitAllowingStateLoss();
+            state = DESCRIPTION_STATE;
+        } else if (state != USER_STATE) { // user has a role
             String type = spe.getString("type");
             if (type.equals(getString(R.string.shared_preferences_type_company))) {
                 fragmentManager = getSupportFragmentManager();
                 transaction = fragmentManager.beginTransaction();
                 Bundle bundle = new Bundle();
-                System.out.println(spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY));
-                bundle.putString("companyName", spe.getString(SharedPreferencesEngine.NAME_KEY));
-                bundle.putString("accessToken", spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY));
+                bundle.putString(BundleEngine.COMPANY_NAME_KEY_BUNDLE, spe.getString(SharedPreferencesEngine.NAME_KEY));
+                bundle.putString(BundleEngine.ACCESS_TOKEN_KEY_BUNDLE, spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY));
                 Fragment companyFragment = new CompanyFragment();
                 companyFragment.setArguments(bundle);
                 transaction.replace(R.id.fragment, companyFragment);
                 transaction.commitAllowingStateLoss();
+                state = USER_STATE;
             } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
                 new ConcurrentSetMerchandiserFragment(spe).execute();
             }
         }
-//        if (spe.count() == 0) { // user has not a role
-//            if (progress) {
-//                transaction = fragmentManager.beginTransaction();
-//                Fragment descriptionFragment = new DescriptionFragment();
-//                transaction.replace(R.id.fragment, descriptionFragment);
-//                transaction.commit();
-//            }
-//        } else { // user has a role
-//            if (progress) {
-//                transaction = fragmentManager.beginTransaction();
-//                Fragment progressFragment = new ProgressFragment();
-//                transaction.replace(R.id.fragment, progressFragment);
-//                transaction.commit();
-//            }
-//            String type = spe.getString("type");
-//            if (type.equals(getString(R.string.shared_preferences_type_company))) {
-//                new SetCompanyFragment(spe).execute();
-//            } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
-//                new ConcurrentSetMerchandiserFragment(spe).execute();
-//            }
-//        }
     }
-
 
 //    private class SetCompanyFragment extends DataReceiver {
 //        private final SharedPreferencesEngine spe;
