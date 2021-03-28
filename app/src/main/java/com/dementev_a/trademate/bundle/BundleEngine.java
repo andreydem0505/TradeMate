@@ -20,7 +20,8 @@ public class BundleEngine {
             NAMES_OF_OPERATORS_KEY_BUNDLE = "namesOfOperators",
             EMAILS_OF_OPERATORS_KEY_BUNDLE = "emailsOfOperators",
             COMPANY_NAME_KEY_BUNDLE = "companyName",
-            ACCESS_TOKEN_KEY_BUNDLE = "accessToken";
+            ACCESS_TOKEN_KEY_BUNDLE = "accessToken",
+            SHOP_NAME_KEY_BUNDLE = "shopName";
 
     public static void putError(@NotNull Bundle bundle, int id) {
         bundle.putInt("status", RequestStatus.STATUS_ERROR_TEXT);

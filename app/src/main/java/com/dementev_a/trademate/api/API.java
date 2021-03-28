@@ -52,7 +52,8 @@ public class API {
         GET_MERCHANDISERS_HANDLER_NUMBER = 2,
         SIGN_UP_COMPANY_HANDLER_NUMBER = 3,
         GET_REQUESTS_HANDLER_NUMBER = 4,
-        GET_SHOPS_HANDLER_NUMBER = 5;
+        GET_SHOPS_HANDLER_NUMBER = 5,
+        ADD_SHOP_HANDLER_NUMBER = 6;
 
     private final OkHttpClient client;
     private final Context context;
@@ -138,7 +139,7 @@ public class API {
         Bundle bundle = new Bundle();
         if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler);
+            new RequestSender().sendHandlerMessage(bundle, handler, SIGN_UP_COMPANY_HANDLER_NUMBER);
             return;
         }
         String name = nameET.getText().toString();
@@ -159,6 +160,29 @@ public class API {
                 String accessToken = JsonEngine.getStringFromJson(getStringResponse(), "accessToken");
                 SharedPreferencesEngine spe = new SharedPreferencesEngine(context, context.getString(R.string.shared_preferences_user));
                 spe.saveUser(context.getString(R.string.shared_preferences_type_company), name, email, accessToken);
+            }
+        }.execute();
+    }
+
+    public void addShop(String accessToken, EditText nameET) {
+        Bundle bundle = new Bundle();
+        if (TextUtils.isEmpty(nameET.getText())) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+            new RequestSender().sendHandlerMessage(bundle, handler, ADD_SHOP_HANDLER_NUMBER);
+            return;
+        }
+        String name = nameET.getText().toString();
+        String json = String.format("{\"name\": \"%s\"}", name);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+        Request request = new Request.Builder()
+                .url(MAIN_URL + ADD_SHOP_URL)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .post(body)
+                .build();
+        new RequestSender(context, client, request, handler, ADD_SHOP_HANDLER_NUMBER){
+            @Override
+            public void successMessage() {
+                getBundle().putString(BundleEngine.SHOP_NAME_KEY_BUNDLE, name);
             }
         }.execute();
     }

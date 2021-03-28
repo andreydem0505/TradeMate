@@ -61,6 +61,10 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <Button
                     android:id="@+id/company_fragment.about_merchandisers_btn"
                     android:layout_width="wrap_content"
@@ -68,6 +72,15 @@
                     android:layout_marginStart="5dp"
                     android:text="@string/company_fragment.about_merchandisers_btn.text"
                     android:backgroundTint="@color/color_3B70CD" />
+
+                <ProgressBar
+                    android:id="@+id/company_fragment.panel_1_progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX=".8"
+                    android:scaleY=".8"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -109,11 +122,19 @@
                         android:layout_gravity="center"
                         android:backgroundTint="@color/panel_background"
                         android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         app:fabCustomSize="38dp"
                         app:maxImageSize="20dp"
                         app:tint="@color/black"
                         app:srcCompat="@android:drawable/ic_input_add"
                         android:contentDescription="@string/company_fragment.add_merchandiser_btn.description" />
+
+                    <ProgressBar
+                        android:id="@+id/company_fragment.panel_2_progress_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX=".8"
+                        android:scaleY=".8"/>
 
                 </LinearLayout>
 
@@ -138,6 +159,10 @@
                     android:textSize="@dimen/company_fragment.usual.text_size"
                     android:text="Заявок сегодня: 0" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <Button
                     android:id="@+id/company_fragment.about_requests_btn"
                     android:layout_width="wrap_content"
@@ -145,6 +170,15 @@
                     android:layout_marginStart="5dp"
                     android:text="@string/company_fragment.about_requests_btn.text"
                     android:backgroundTint="@color/blue" />
+
+                <ProgressBar
+                    android:id="@+id/company_fragment.panel_3_progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX=".8"
+                    android:scaleY=".8"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -191,10 +225,9 @@
                         android:backgroundTint="@color/color_3B70CD" />
 
                     <ProgressBar
-                        android:id="@+id/company_fragment.add_shop_progress_bar"
+                        android:id="@+id/company_fragment.panel_4_progress_bar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="invisible"
                         android:scaleX=".8"
                         android:scaleY=".8"/>
 
@@ -228,15 +261,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/company_fragment.add_shop_error_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/company_fragment.panel_4"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

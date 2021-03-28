@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,35 +19,29 @@ import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
-import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
-import com.dementev_a.trademate.requests.DataReceiver;
-import com.dementev_a.trademate.requests.RequestEngine;
-import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CompanyFragment extends Fragment implements View.OnClickListener {
-    private TextView shopsQuantityTV, addShopErrorTV, operatorsQuantityTV, employeesQuantityTV, requestsQuantityTV;
+    private TextView shopsQuantityTV, operatorsQuantityTV, employeesQuantityTV, requestsQuantityTV;
     private Button aboutOperatorsBtn, aboutMerchandisersBtn, aboutRequestsBtn, aboutShopsBtn;
     private FloatingActionButton addOperatorBtn, addMerchandiserBtn, addShopBtn;
     private EditText addShopET;
-    private ProgressBar addShopPB;
+    private ProgressBar PB1, PB2, PB3, PB4;
     private String companyName, accessToken, shopsQuantityText;
     private String[] shops, namesOfOperators, emailsOfOperators;
     private int shopsQuantity;
     private MerchandiserJson[] merchandisers;
     private RequestJson[] requests;
+    private API api;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,8 +65,10 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         requestsQuantityTV = view.findViewById(R.id.company_fragment_requests_quantity);
         shopsQuantityTV = view.findViewById(R.id.company_fragment_shops_quantity);
         addShopET = view.findViewById(R.id.company_fragment_add_shop_et);
-        addShopErrorTV = view.findViewById(R.id.company_fragment_add_shop_error_tv);
-        addShopPB = view.findViewById(R.id.company_fragment_add_shop_progress_bar);
+        PB1 = view.findViewById(R.id.company_fragment_panel_1_progress_bar);
+        PB2 = view.findViewById(R.id.company_fragment_panel_2_progress_bar);
+        PB3 = view.findViewById(R.id.company_fragment_panel_3_progress_bar);
+        PB4 = view.findViewById(R.id.company_fragment_panel_4_progress_bar);
 
         Bundle bundle = getArguments();
         companyName = bundle.getString(BundleEngine.COMPANY_NAME_KEY_BUNDLE);
@@ -87,7 +82,11 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        API api = new API(getContext(), handler);
+        PB1.setVisibility(ProgressBar.VISIBLE);
+        PB2.setVisibility(ProgressBar.VISIBLE);
+        PB3.setVisibility(ProgressBar.VISIBLE);
+        PB4.setVisibility(ProgressBar.VISIBLE);
+        api = new API(getContext(), handler);
         api.getMerchandisers(accessToken);
         api.getOperators(accessToken);
         api.getRequestsToday(accessToken);
@@ -110,6 +109,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                             operatorsQuantityTV.setText(String.format(operatorsQuantityText, operatorsQuantity));
                             aboutOperatorsBtn.setOnClickListener(CompanyFragment.this);
                             addOperatorBtn.setOnClickListener(CompanyFragment.this);
+                            PB2.setVisibility(ProgressBar.INVISIBLE);
                         } break;
                         case API.GET_MERCHANDISERS_HANDLER_NUMBER: {
                             int merchandisersQuantity = bundle.getInt(BundleEngine.TOTAL_MERCHANDISERS_KEY_BUNDLE);
@@ -118,6 +118,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                             employeesQuantityTV.setText(String.format(employeesQuantityText, merchandisersQuantity));
                             aboutMerchandisersBtn.setOnClickListener(CompanyFragment.this);
                             addMerchandiserBtn.setOnClickListener(CompanyFragment.this);
+                            PB1.setVisibility(ProgressBar.INVISIBLE);
                         } break;
                         case API.GET_REQUESTS_HANDLER_NUMBER: {
                             int requestsQuantity = bundle.getInt(BundleEngine.TOTAL_REQUESTS_KEY_BUNDLE);
@@ -125,6 +126,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                             String requestsQuantityText = getString(R.string.company_fragment_requests_quantity_text);
                             requestsQuantityTV.setText(String.format(requestsQuantityText, requestsQuantity));
                             aboutRequestsBtn.setOnClickListener(CompanyFragment.this);
+                            PB3.setVisibility(ProgressBar.INVISIBLE);
                         } break;
                         case API.GET_SHOPS_HANDLER_NUMBER: {
                             shopsQuantity = bundle.getInt(BundleEngine.TOTAL_SHOPS_KEY_BUNDLE);
@@ -133,6 +135,16 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                             shopsQuantityTV.setText(String.format(shopsQuantityText, shopsQuantity));
                             addShopBtn.setOnClickListener(CompanyFragment.this);
                             aboutShopsBtn.setOnClickListener(CompanyFragment.this);
+                            PB4.setVisibility(ProgressBar.INVISIBLE);
+                        } break;
+                        case API.ADD_SHOP_HANDLER_NUMBER: {
+                            shopsQuantity++;
+                            shopsQuantityTV.setText(String.format(shopsQuantityText, shopsQuantity));
+                            List<String> list = new ArrayList<>(Arrays.asList(shops));
+                            list.add(bundle.getString(BundleEngine.SHOP_NAME_KEY_BUNDLE));
+                            shops = list.toArray(new String[0]);
+                            PB4.setVisibility(ProgressBar.INVISIBLE);
+                            addShopET.setText("");
                         } break;
                     }
                 }
@@ -176,9 +188,8 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             } break;
             case R.id.company_fragment_add_shop_btn: {
-                addShopErrorTV.setText("");
-                addShopPB.setVisibility(ProgressBar.VISIBLE);
-                new ConcurrentAddShop().execute();
+                PB4.setVisibility(ProgressBar.VISIBLE);
+                api.addShop(accessToken, addShopET);
             } break;
             case R.id.company_fragment_about_shops_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
@@ -186,80 +197,6 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                 intent.putExtra("shops", shops);
                 startActivity(intent);
             } break;
-        }
-    }
-
-    private class ConcurrentAddShop extends DataReceiver {
-
-        protected ConcurrentAddShop() {
-            super();
-        }
-
-        @Override
-        public void UIWork() {
-            int status = getBundle().getInt("status");
-            switch (status) {
-                case RequestStatus.STATUS_OK: {
-                    shopsQuantityTV.setText(String.format(shopsQuantityText, shopsQuantity));
-                } break;
-                case RequestStatus.STATUS_ERROR_TEXT: {
-                    addShopErrorTV.setText(getBundle().getInt("error_text"));
-                } break;
-                case RequestStatus.STATUS_INTERNET_ERROR: {
-                    addShopErrorTV.setText(R.string.global_errors_internet_connection_error_text);
-                } break;
-                case RequestStatus.STATUS_SERVER_ERROR: {
-                    addShopErrorTV.setText(R.string.global_errors_server_error_text);
-                } break;
-                case RequestStatus.STATUS_EMPTY_FIELDS: {
-                    addShopErrorTV.setText(R.string.global_errors_empty_fields_error_text);
-                } break;
-            }
-            addShopPB.setVisibility(ProgressBar.INVISIBLE);
-        }
-
-        @Override
-        public void sendRequests() {
-            if (TextUtils.isEmpty(addShopET.getText())) {
-                getBundle().putInt("status", RequestStatus.STATUS_EMPTY_FIELDS);
-                return;
-            }
-
-            if (!RequestEngine.isConnectedToInternet(requireContext())) {
-                getBundle().putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
-                return;
-            }
-
-            String name = addShopET.getText().toString();
-
-            String url = API.MAIN_URL + API.ADD_SHOP_URL;
-            String json = String.format("{\"name\": \"%s\"}", name);
-            try {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("access_token", accessToken);
-                String response = RequestEngine.makePostRequestWithJson(url, json, headers);
-                if (response != null) {
-                    String message = JsonEngine.getStringFromJson(response, "message");
-                    switch (message) {
-                        case "Success": {
-                            getBundle().putInt("status", RequestStatus.STATUS_OK);
-                            shopsQuantity++;
-                            List<String> list = new ArrayList<>(Arrays.asList(shops));
-                            list.add(name);
-                            shops = list.toArray(new String[0]);
-                        } break;
-                        case "Such shop is already exist": {
-                            BundleEngine.putError(getBundle(), R.string.company_fragment_shop_exist_error);
-                        } break;
-                        default: {
-                            getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
-                        }
-                    }
-                } else
-                    getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
-            } catch (IOException e) {
-                getBundle().putInt("status", RequestStatus.STATUS_SERVER_ERROR);
-            }
         }
     }
 }

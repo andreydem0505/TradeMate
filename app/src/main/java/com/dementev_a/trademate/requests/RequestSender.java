@@ -42,7 +42,7 @@ public class RequestSender {
     private void duringRequest() {
         if (!RequestEngine.isConnectedToInternet(context)) {
             getBundle().putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_INTERNET_ERROR);
-            sendHandlerMessage(bundle, handler);
+            sendHandlerMessage(bundle, handler, handleNumber);
             return;
         }
         client.newCall(request).enqueue(new Callback() {
@@ -67,14 +67,14 @@ public class RequestSender {
                 } catch (IOException e) {
                     bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
                 }
-                sendHandlerMessage(bundle, handler);
+                sendHandlerMessage(bundle, handler, handleNumber);
             }
         });
     }
 
     public void successMessage() {}
 
-    public void sendHandlerMessage(Bundle bundle, Handler handler) {
+    public void sendHandlerMessage(Bundle bundle, Handler handler, int handleNumber) {
         Message message = Message.obtain();
         message.what = handleNumber;
         message.setData(bundle);
