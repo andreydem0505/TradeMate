@@ -5,6 +5,8 @@
     <string name="global_errors.server_error.text">An error on the server</string>
     <string name="global_errors.internet_connection_error.text">Internet isn`t connected</string>
     <string name="global_errors.empty_fields_error.text">You have to fill all fields</string>
+    <string name="global_errors.password_is_unreliable_error.text">Password is unreliable</string>
+    <string name="global_errors.email_is_incorrect_error.text">Email is incorrect</string>
     <!-- Global errors -->
 
     <!-- Shared Preferences -->
@@ -96,10 +98,8 @@
     <string name="sign_up_company_activity.password_et.hint">Password</string>
     <string name="sign_up_company_activity.sign_up_btn.text">Sign up</string>
     <!-- Errors -->
-    <string name="sign_up_company_activity.password_is_unreliable_error.text">Password is unreliable</string>
     <string name="sign_up_company_activity.company_with_this_name_exist_error.text">Such company is already exist</string>
     <string name="sign_up_company_activity.company_with_this_email_exist_error.text">Company with this email is already exist</string>
-    <string name="sign_up_company_activity.incorrect_email_error.text">Email is incorrect</string>
     <!-- Sign Up Company Activity -->
 
     <!-- Log In Company Activity -->
@@ -119,10 +119,8 @@
     <string name="add_merchandiser_activity.password_et.hint">Password</string>
     <string name="add_merchandiser_activity.compute_btn.text">Sign up</string>
     <!-- Errors -->
-    <string name="add_merchandiser_activity.password_is_unreliable_error.text">Password is unreliable</string>
     <string name="add_merchandiser_activity.merchandiser_exist_with_name_error.text">Merchandiser with this name is already exist</string>
     <string name="add_merchandiser_activity.merchandiser_exist_with_email_error.text">Merchandiser with this email is already exist</string>
-    <string name="add_merchandiser_activity.incorrect_email_error.text">Email is incorrect</string>
     <!-- Add Merchandiser Activity -->
 
     <!-- Log In Merchandiser Activity -->
@@ -143,6 +141,5 @@
     <!-- Errors -->
     <string name="add_operator_activity.operator_with_name_exist_error.text">Operator with this name is already exist</string>
     <string name="add_operator_activity.operator_with_email_exist_error.text">Operator with this email is already exist</string>
-    <string name="add_operator_activity.incorrect_email_error.text">Email is incorrect</string>
     <!-- Add Operator Activity -->
 </resources>

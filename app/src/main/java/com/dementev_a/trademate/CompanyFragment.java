@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
+import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
@@ -158,12 +159,12 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.company_fragment_add_merchandiser_btn: {
                 Intent intent = new Intent(getContext(), AddMerchandiserActivity.class);
-                intent.putExtra("accessToken", accessToken);
+                intent.putExtra(IntentConstants.ACCESS_TOKEN_INTENT_NUMBER, accessToken);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_add_operator_btn: {
                 Intent intent = new Intent(getContext(), AddOperatorActivity.class);
-                intent.putExtra("accessToken", accessToken);
+                intent.putExtra(IntentConstants.ACCESS_TOKEN_INTENT_NUMBER, accessToken);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_about_merchandisers_btn: {
