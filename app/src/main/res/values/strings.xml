@@ -17,6 +17,8 @@
     <!-- types -->
     <!-- Shared Preferences -->
 
+    <string name="default.text">No data</string>
+
     <!-- Description Fragment -->
     <string name="description_fragment.logo_description.description" translatable="false">Logo</string>
     <string name="description_fragment.description.text">TradeMate - assistant with your job. It is a kit with useful functions and clear interface all in one to help you with your duties. Let`s get started!</string>

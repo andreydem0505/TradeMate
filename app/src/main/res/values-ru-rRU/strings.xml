@@ -9,6 +9,8 @@
     <string name="global_errors.email_is_incorrect_error.text">Email некорректен</string>
     <!-- Global errors -->
 
+    <string name="default.text">Неизвестно</string>
+
     <!-- Description Fragment -->
     <string name="description_fragment.description.text">TradeMate - помощник в вашей работе. Это набор полезных функций, связанных с понятным интерфейсом. Давайте начнём!</string>
     <string name="description_fragment.description_btn.text">Начать</string>

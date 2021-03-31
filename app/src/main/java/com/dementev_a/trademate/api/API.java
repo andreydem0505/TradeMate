@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.EditText;
 
+import com.dementev_a.trademate.LogInMerchandiserActivity;
 import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
@@ -56,7 +57,8 @@ public class API {
         ADD_SHOP_HANDLER_NUMBER = 6,
         LOG_IN_COMPANY_HANDLER_NUMBER = 7,
         ADD_MERCHANDISER_HANDLER_NUMBER = 8,
-        ADD_OPERATOR_HANDLER_NUMBER = 9;
+        ADD_OPERATOR_HANDLER_NUMBER = 9,
+        LOG_IN_MERCHANDISER_HANDLER_NUMBER = 10;
 
     private final OkHttpClient client;
     private final Context context;
@@ -260,5 +262,33 @@ public class API {
                 .post(body)
                 .build();
         new RequestSender(context, client, request, handler, ADD_OPERATOR_HANDLER_NUMBER).execute();
+    }
+
+    public void logInMerchandiser(EditText emailET, EditText passwordET) {
+        Bundle bundle = new Bundle();
+        if (TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(emailET.getText())) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+            new RequestSender().sendHandlerMessage(bundle, handler, LOG_IN_MERCHANDISER_HANDLER_NUMBER);
+            return;
+        }
+        String email = emailET.getText().toString();
+        String password = passwordET.getText().toString();
+        String json = String.format("{\"email\": \"%s\"," +
+                "\"password\": \"%s\"" +
+                "}", email, password);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+        Request request = new Request.Builder()
+                .url(MAIN_URL + AUTH_MERCHANDISER_URL)
+                .post(body)
+                .build();
+        new RequestSender(context, client, request, handler, LOG_IN_MERCHANDISER_HANDLER_NUMBER) {
+            @Override
+            public void successMessage() {
+                String name = JsonEngine.getStringFromJson(getStringResponse(), "name");
+                String accessToken = JsonEngine.getStringFromJson(getStringResponse(), "accessToken");
+                SharedPreferencesEngine spe = new SharedPreferencesEngine(context, context.getString(R.string.shared_preferences_user));
+                spe.saveUser(context.getString(R.string.shared_preferences_type_merchandiser), name, email, accessToken);
+            }
+        }.execute();
     }
 }

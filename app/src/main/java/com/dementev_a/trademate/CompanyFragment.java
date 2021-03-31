@@ -76,6 +76,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         accessToken = bundle.getString(BundleEngine.ACCESS_TOKEN_KEY_BUNDLE);
 
         companyNameTV.setText(companyName);
+        api = new API(getContext(), handler);
 
         return view;
     }
@@ -87,7 +88,6 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         PB2.setVisibility(ProgressBar.VISIBLE);
         PB3.setVisibility(ProgressBar.VISIBLE);
         PB4.setVisibility(ProgressBar.VISIBLE);
-        api = new API(getContext(), handler);
         api.getMerchandisers(accessToken);
         api.getOperators(accessToken);
         api.getRequestsToday(accessToken);

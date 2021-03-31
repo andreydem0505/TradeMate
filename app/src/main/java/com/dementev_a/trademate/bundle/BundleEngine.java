@@ -20,6 +20,7 @@ public class BundleEngine {
             NAMES_OF_OPERATORS_KEY_BUNDLE = "namesOfOperators",
             EMAILS_OF_OPERATORS_KEY_BUNDLE = "emailsOfOperators",
             COMPANY_NAME_KEY_BUNDLE = "companyName",
+            MERCHANDISER_NAME_KEY_BUNDLE = "merchandiserName",
             ACCESS_TOKEN_KEY_BUNDLE = "accessToken",
             SHOP_NAME_KEY_BUNDLE = "shopName";
 

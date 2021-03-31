@@ -23,7 +23,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="@color/black"
                 android:textSize="@dimen/company_fragment.company_name.text_size"
-                android:text="Google"
+                android:text="@string/default.text"
                 android:paddingBottom="30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/company_fragment.usual.text_size"
                         android:layout_weight="1"
-                        android:text="Мерчендайзеров в компании: 0" />
+                        android:text="@string/default.text" />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/company_fragment.usual.text_size"
-                    android:text="Операторов в компании: 0" />
+                    android:text="@string/default.text" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/company_fragment.usual.text_size"
-                    android:text="Заявок сегодня: 0" />
+                    android:text="@string/default.text" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -198,11 +198,11 @@
 
                     <TextView
                         android:id="@+id/company_fragment.shops_quantity"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/company_fragment.usual.text_size"
                         android:layout_weight="1"
-                        android:text="Торговых точек: 0" />
+                        android:text="@string/default.text" />
 
                     <ImageView
                         android:layout_width="20dp"
