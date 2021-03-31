@@ -6,21 +6,27 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.EditText;
 
-import com.dementev_a.trademate.LogInMerchandiserActivity;
 import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
+import com.dementev_a.trademate.messages.EmailSending;
+import com.dementev_a.trademate.messages.MessageSender;
+import com.dementev_a.trademate.messages.StrategyMessage;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestSender;
 import com.dementev_a.trademate.requests.RequestStatus;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.Clock;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -58,7 +64,8 @@ public class API {
         LOG_IN_COMPANY_HANDLER_NUMBER = 7,
         ADD_MERCHANDISER_HANDLER_NUMBER = 8,
         ADD_OPERATOR_HANDLER_NUMBER = 9,
-        LOG_IN_MERCHANDISER_HANDLER_NUMBER = 10;
+        LOG_IN_MERCHANDISER_HANDLER_NUMBER = 10,
+        SEND_EMAIL_HANDLER_NUMBER = 11;
 
     private final OkHttpClient client;
     private final Context context;
@@ -150,11 +157,17 @@ public class API {
         String name = nameET.getText().toString();
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
-        String json = String.format("{\"name\": \"%s\"," +
-                "\"password\": \"%s\"," +
-                "\"email\": \"%s\"" +
-                "}", name, password, email);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", name);
+            jsonObject.put("password", password);
+            jsonObject.put("email", email);
+        } catch (JSONException e) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, SIGN_UP_COMPANY_HANDLER_NUMBER);
+            return;
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
                 .url(MAIN_URL + SIGN_UP_COMPANY_URL)
                 .post(body)
@@ -177,8 +190,15 @@ public class API {
             return;
         }
         String name = nameET.getText().toString();
-        String json = String.format("{\"name\": \"%s\"}", name);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", name);
+        } catch (JSONException e) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, ADD_SHOP_HANDLER_NUMBER);
+            return;
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
                 .url(MAIN_URL + ADD_SHOP_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
@@ -201,10 +221,16 @@ public class API {
         }
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
-        String json = String.format("{\"email\": \"%s\"," +
-                "\"password\": \"%s\"" +
-                "}", email, password);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("email", email);
+            jsonObject.put("password", password);
+        } catch (JSONException e) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, LOG_IN_COMPANY_HANDLER_NUMBER);
+            return;
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
                 .url(MAIN_URL + AUTH_COMPANY_URL)
                 .post(body)
@@ -230,11 +256,17 @@ public class API {
         String name = nameET.getText().toString();
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
-        String json = String.format("{\"name\": \"%s\"," +
-                "\"password\": \"%s\"," +
-                "\"email\": \"%s\"" +
-                "}", name, password, email);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", name);
+            jsonObject.put("password", password);
+            jsonObject.put("email", email);
+        } catch (JSONException e) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, ADD_MERCHANDISER_HANDLER_NUMBER);
+            return;
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
                 .url(MAIN_URL + ADD_MERCHANDISER_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
@@ -252,10 +284,16 @@ public class API {
         }
         String name = nameET.getText().toString();
         String email = emailET.getText().toString();
-        String json = String.format("{\"name\": \"%s\"," +
-                "\"email\": \"%s\"" +
-                "}", name, email);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", name);
+            jsonObject.put("email", email);
+        } catch (JSONException e) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, ADD_OPERATOR_HANDLER_NUMBER);
+            return;
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
                 .url(MAIN_URL + ADD_OPERATOR_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
@@ -273,10 +311,16 @@ public class API {
         }
         String email = emailET.getText().toString();
         String password = passwordET.getText().toString();
-        String json = String.format("{\"email\": \"%s\"," +
-                "\"password\": \"%s\"" +
-                "}", email, password);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("email", email);
+            jsonObject.put("password", password);
+        } catch (JSONException e) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, LOG_IN_MERCHANDISER_HANDLER_NUMBER);
+            return;
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
                 .url(MAIN_URL + AUTH_MERCHANDISER_URL)
                 .post(body)
@@ -288,6 +332,49 @@ public class API {
                 String accessToken = JsonEngine.getStringFromJson(getStringResponse(), "accessToken");
                 SharedPreferencesEngine spe = new SharedPreferencesEngine(context, context.getString(R.string.shared_preferences_user));
                 spe.saveUser(context.getString(R.string.shared_preferences_type_merchandiser), name, email, accessToken);
+            }
+        }.execute();
+    }
+
+    public void sendEmail(String accessToken, EditText nameET, EditText textET, String merchandiserName, int operatorPosition, String[] shops, String[] namesOfOperators, String[] emailsOfOperators) {
+        Bundle bundle = new Bundle();
+        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(textET.getText())) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+            new RequestSender().sendHandlerMessage(bundle, handler, SEND_EMAIL_HANDLER_NUMBER);
+            return;
+        }
+        String shop = nameET.getText().toString();
+        String text = textET.getText().toString();
+        if (Arrays.binarySearch(shops, shop) < 0) {
+            BundleEngine.putError(bundle, R.string.make_request_activity_shop_was_not_found_error_text);
+            new RequestSender().sendHandlerMessage(bundle, handler, SEND_EMAIL_HANDLER_NUMBER);
+            return;
+        }
+        String operatorName = namesOfOperators[operatorPosition];
+        String operatorEmail = emailsOfOperators[operatorPosition];
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("subject", shop);
+            jsonObject.put("text", text);
+            jsonObject.put("operator", operatorName);
+            jsonObject.put("dateTime", LocalDateTime.now().toString());
+        } catch (JSONException e) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, SEND_EMAIL_HANDLER_NUMBER);
+            return;
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        Request request = new Request.Builder()
+                .url(MAIN_URL + CREATE_REQUEST_URL)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .post(body)
+                .build();
+        new RequestSender(context, client, request, handler, SEND_EMAIL_HANDLER_NUMBER) {
+            @Override
+            public void successMessage() {
+                MessageSender sender = new MessageSender();
+                sender.setMethod(new EmailSending());
+                sender.send(new StrategyMessage(operatorEmail, shop, text, String.format(context.getString(R.string.make_request_activity_letter_merchandiser_text), merchandiserName)));
             }
         }.execute();
     }

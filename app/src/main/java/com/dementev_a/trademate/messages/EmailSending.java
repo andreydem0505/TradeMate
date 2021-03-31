@@ -27,7 +27,7 @@ public class EmailSending implements SendingMethod {
             mimeMessage.setSubject(message.subject);
             mimeMessage.setText(message.text + "\n" + message.merchandiser);
             Transport transport = session.getTransport("smtp");
-            transport.connect(host, from, "xxx");
+            transport.connect(host, from, "11112005dima");
             transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
             transport.close();
         } catch (MessagingException e) {

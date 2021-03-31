@@ -25,13 +25,13 @@ public class ListActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.list_activity_list);
         TextView errorTV = findViewById(R.id.list_activity_error_tv);
 
-        String type = getIntent().getStringExtra("type");
+        int type = getIntent().getIntExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.DEFAULT_DATA_TYPE);
         switch (type) {
-            case "requests": {
+            case IntentConstants.REQUESTS_DATA_TYPE: {
                 headerTV.setText(R.string.list_activity_header_requests_text);
                 WidgetsEngine.setRequestsOnListView(getIntent().getParcelableArrayExtra("requests"), listView, this, errorTV);
             } break;
-            case "merchandisers": {
+            case IntentConstants.MERCHANDISERS_DATA_TYPE: {
                 String header = getString(R.string.list_activity_header_merchandisers_text);
                 headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
                 Parcelable[] merchandisers = getIntent().getParcelableArrayExtra("merchandisers");
@@ -55,7 +55,7 @@ public class ListActivity extends AppCompatActivity {
                 } else
                     errorTV.setText(R.string.list_activity_error_tv_merchandisers_text);
             } break;
-            case "operators": {
+            case IntentConstants.OPERATORS_DATA_TYPE: {
                 String header = getString(R.string.list_activity_header_operators_text);
                 headerTV.setText(String.format(header, getIntent().getStringExtra("companyName")));
                 String[] names = getIntent().getStringArrayExtra("namesOfOperators");
@@ -72,7 +72,7 @@ public class ListActivity extends AppCompatActivity {
                 } else
                     errorTV.setText(R.string.list_activity_error_tv_operators_text);
             } break;
-            case "shops": {
+            case IntentConstants.SHOPS_DATA_TYPE: {
                 headerTV.setText(R.string.list_activity_header_shops_text);
                 String[] shops = getIntent().getStringArrayExtra("shops");
                 if (shops.length > 0) {

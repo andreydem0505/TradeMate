@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
+import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -93,12 +94,13 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         switch(v.getId()) {
             case R.id.merchandiser_fragment_add_request_btn: {
                 Intent intent = new Intent(getContext(), MakeRequestActivity.class);
-                intent.putExtra("merchandiserName", merchandiserName);
+                intent.putExtra(IntentConstants.NAME_OF_MERCHANDISER_INTENT_KEY, merchandiserName);
+                intent.putExtra(IntentConstants.ACCESS_TOKEN_INTENT_KEY, accessToken);
                 startActivity(intent);
             } break;
             case R.id.merchandiser_fragment_about_requests_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
-                intent.putExtra("type", "requests");
+                intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.REQUESTS_DATA_TYPE);
                 intent.putExtra("requests", requests);
                 startActivity(intent);
             } break;

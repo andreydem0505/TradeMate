@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
             NONE = 0,
             DESCRIPTION_STATE = 1,
             USER_STATE = 2;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction transaction;
     private SharedPreferencesEngine spe;
     private int state;
 
@@ -33,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        fragmentManager = getSupportFragmentManager();
-        transaction = fragmentManager.beginTransaction();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (spe.count() == 0) { // user has not a role
             Fragment descriptionFragment = new DescriptionFragment();
             transaction.replace(R.id.fragment, descriptionFragment);

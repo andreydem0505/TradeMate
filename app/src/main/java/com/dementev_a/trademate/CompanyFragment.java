@@ -169,14 +169,14 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
             } break;
             case R.id.company_fragment_about_merchandisers_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
-                intent.putExtra("type", "merchandisers");
+                intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.MERCHANDISERS_DATA_TYPE);
                 intent.putExtra("companyName", companyName);
                 intent.putExtra("merchandisers", merchandisers);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_about_operators_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
-                intent.putExtra("type", "operators");
+                intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.OPERATORS_DATA_TYPE);
                 intent.putExtra("companyName", companyName);
                 intent.putExtra("namesOfOperators", namesOfOperators);
                 intent.putExtra("emailsOfOperators", emailsOfOperators);
@@ -184,7 +184,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
             } break;
             case R.id.company_fragment_about_requests_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
-                intent.putExtra("type", "requests");
+                intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.REQUESTS_DATA_TYPE);
                 intent.putExtra("requests", requests);
                 startActivity(intent);
             } break;
@@ -194,7 +194,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
             } break;
             case R.id.company_fragment_about_shops_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
-                intent.putExtra("type", "shops");
+                intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.SHOPS_DATA_TYPE);
                 intent.putExtra("shops", shops);
                 startActivity(intent);
             } break;
