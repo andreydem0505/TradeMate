@@ -31,7 +31,7 @@ public class AddMerchandiserActivity extends AppCompatActivity {
         passwordET = findViewById(R.id.add_merchandiser_activity_password_et);
         progressBar = findViewById(R.id.add_merchandiser_activity_progress_bar);
         errorTV = findViewById(R.id.add_merchandiser_activity_error_tv);
-        accessToken = getIntent().getStringExtra(IntentConstants.ACCESS_TOKEN_INTENT_NUMBER);
+        accessToken = getIntent().getStringExtra(IntentConstants.ACCESS_TOKEN_INTENT_KEY);
     }
 
     public void onAddMerchandiserClickBtn(View v) {

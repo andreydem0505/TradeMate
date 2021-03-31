@@ -159,12 +159,12 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.company_fragment_add_merchandiser_btn: {
                 Intent intent = new Intent(getContext(), AddMerchandiserActivity.class);
-                intent.putExtra(IntentConstants.ACCESS_TOKEN_INTENT_NUMBER, accessToken);
+                intent.putExtra(IntentConstants.ACCESS_TOKEN_INTENT_KEY, accessToken);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_add_operator_btn: {
                 Intent intent = new Intent(getContext(), AddOperatorActivity.class);
-                intent.putExtra(IntentConstants.ACCESS_TOKEN_INTENT_NUMBER, accessToken);
+                intent.putExtra(IntentConstants.ACCESS_TOKEN_INTENT_KEY, accessToken);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_about_merchandisers_btn: {

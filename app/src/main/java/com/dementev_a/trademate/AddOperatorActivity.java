@@ -30,7 +30,7 @@ public class AddOperatorActivity extends AppCompatActivity {
         emailET = findViewById(R.id.add_operator_activity_email_et);
         progressBar = findViewById(R.id.add_operator_activity_progress_bar);
         errorTV = findViewById(R.id.add_operator_activity_error_tv);
-        accessToken = getIntent().getStringExtra(IntentConstants.ACCESS_TOKEN_INTENT_NUMBER);
+        accessToken = getIntent().getStringExtra(IntentConstants.ACCESS_TOKEN_INTENT_KEY);
     }
 
     public void onAddClickBtn(View v) {

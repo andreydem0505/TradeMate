@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.widgets.WidgetsEngine;
 
@@ -46,9 +47,9 @@ public class ListActivity extends AppCompatActivity {
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener((parent, view, position, id) -> {
                         Intent intent = new Intent(this, AboutMerchandiserActivity.class);
-                        intent.putExtra("name", arrayOfMerchandiserJson[position].getName());
-                        intent.putExtra("email", arrayOfMerchandiserJson[position].getEmail());
-                        intent.putExtra("password", arrayOfMerchandiserJson[position].getPassword());
+                        intent.putExtra(IntentConstants.NAME_OF_MERCHANDISER_INTENT_KEY, arrayOfMerchandiserJson[position].getName());
+                        intent.putExtra(IntentConstants.EMAIL_OF_MERCHANDISER_INTENT_KEY, arrayOfMerchandiserJson[position].getEmail());
+                        intent.putExtra(IntentConstants.PASSWORD_OF_MERCHANDISER_INTENT_KEY, arrayOfMerchandiserJson[position].getPassword());
                         startActivity(intent);
                     });
                 } else

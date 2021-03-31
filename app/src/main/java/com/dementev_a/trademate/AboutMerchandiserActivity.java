@@ -1,8 +1,12 @@
 package com.dementev_a.trademate;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -10,40 +14,49 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
-import com.dementev_a.trademate.requests.DataReceiver;
-import com.dementev_a.trademate.requests.RequestStatus;
+import com.dementev_a.trademate.bundle.BundleEngine;
+import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
-import com.dementev_a.trademate.requests.RequestEngine;
+import com.dementev_a.trademate.widgets.ReactOnStatus;
 import com.dementev_a.trademate.widgets.WidgetsEngine;
 
 public class AboutMerchandiserActivity extends AppCompatActivity {
-    private TextView headerTV, emailTV, passwordTV, errorTV;
+    private TextView passwordTV, errorTV;
     private Button passwordBtn;
     private ListView listView;
     private ProgressBar progressBar;
     private boolean passwordIsShowed;
-    private String password, merchandiserName;
+    private String password, merchandiserName, accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_merchandiser);
-        headerTV = findViewById(R.id.about_merchandiser_activity_header_tv);
-        emailTV = findViewById(R.id.about_merchandiser_activity_email_tv);
+        TextView headerTV = findViewById(R.id.about_merchandiser_activity_header_tv);
+        TextView emailTV = findViewById(R.id.about_merchandiser_activity_email_tv);
         passwordTV = findViewById(R.id.about_merchandiser_activity_password_tv);
         passwordBtn = findViewById(R.id.about_merchandiser_activity_password_btn);
         listView = findViewById(R.id.about_merchandiser_activity_list_view);
         progressBar = findViewById(R.id.about_merchandiser_activity_progress_bar);
         errorTV = findViewById(R.id.about_merchandiser_activity_error_tv);
 
-        new ConcurrentSetRequest(new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user))).execute();
-        merchandiserName = getIntent().getStringExtra("name");
+        accessToken = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user)).getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY);
+        merchandiserName = getIntent().getStringExtra(IntentConstants.NAME_OF_MERCHANDISER_INTENT_KEY);
         headerTV.setText(merchandiserName);
         String emailText = getString(R.string.about_merchandiser_activity_email_tv_text);
-        emailTV.setText(String.format(emailText, getIntent().getStringExtra("email")));
-        password = getIntent().getStringExtra("password");
+        emailTV.setText(String.format(emailText, getIntent().getStringExtra(IntentConstants.EMAIL_OF_MERCHANDISER_INTENT_KEY)));
+        password = getIntent().getStringExtra(IntentConstants.PASSWORD_OF_MERCHANDISER_INTENT_KEY);
         passwordIsShowed = false;
         showPassword();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        errorTV.setText("");
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+        API api = new API(this, handler);
+        api.getRequestsToday(accessToken, merchandiserName);
     }
 
     private void showPassword() {
@@ -65,41 +78,17 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
         showPassword();
     }
 
-
-    private class ConcurrentSetRequest extends DataReceiver {
-        private final SharedPreferencesEngine spe;
-
-        protected ConcurrentSetRequest(SharedPreferencesEngine spe) {
-            super();
-            this.spe = spe;
-        }
-
+    Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
-        public void UIWork() {
-            int status = getBundle().getInt("status");
-            switch (status) {
-                case RequestStatus.STATUS_OK: {
-                    WidgetsEngine.setRequestsOnListView(getBundle().getParcelableArray("requests"), listView, AboutMerchandiserActivity.this, errorTV);
-                } break;
-                case RequestStatus.STATUS_SERVER_ERROR: {
-                    errorTV.setText(R.string.global_errors_server_error_text);
-                } break;
-                case RequestStatus.STATUS_INTERNET_ERROR: {
-                    errorTV.setText(R.string.global_errors_internet_connection_error_text);
-                } break;
-            }
+        public void handleMessage(@NonNull Message msg) {
             progressBar.setVisibility(ProgressBar.INVISIBLE);
+            Bundle bundle = msg.getData();
+            new ReactOnStatus(bundle, errorTV) {
+                @Override
+                public void success() {
+                    WidgetsEngine.setRequestsOnListView(bundle.getParcelableArray(BundleEngine.REQUESTS_KEY_BUNDLE), listView, AboutMerchandiserActivity.this, errorTV);
+                }
+            }.execute();
         }
-
-        @Override
-        public void sendRequests() {
-            if (!RequestEngine.isConnectedToInternet(AboutMerchandiserActivity.this)) {
-                getBundle().putInt("status", RequestStatus.STATUS_INTERNET_ERROR);
-                return;
-            }
-
-//            API api = new API();
-//            api.getRequestsToday(getBundle(), spe.getString("accessToken"), merchandiserName);
-        }
-    }
+    };
 }
