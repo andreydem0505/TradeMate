@@ -101,7 +101,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
             case R.id.merchandiser_fragment_about_requests_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.REQUESTS_DATA_TYPE);
-                intent.putExtra("requests", requests);
+                intent.putExtra(IntentConstants.REQUESTS_INTENT_KEY, requests);
                 startActivity(intent);
             } break;
         }

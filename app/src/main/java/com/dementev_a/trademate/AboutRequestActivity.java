@@ -6,31 +6,32 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.dementev_a.trademate.intent.IntentConstants;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 
 public class AboutRequestActivity extends AppCompatActivity {
-    private TextView headerTV, textTV, receiverTV, senderTV, textTime;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_request);
-        headerTV = findViewById(R.id.about_request_activity_header);
-        textTV = findViewById(R.id.about_request_activity_text);
-        receiverTV = findViewById(R.id.about_request_activity_receiver);
-        senderTV = findViewById(R.id.about_request_activity_sender);
-        textTime = findViewById(R.id.about_request_activity_time);
+        TextView headerTV = findViewById(R.id.about_request_activity_header);
+        TextView textTV = findViewById(R.id.about_request_activity_text);
+        TextView receiverTV = findViewById(R.id.about_request_activity_receiver);
+        TextView senderTV = findViewById(R.id.about_request_activity_sender);
+        TextView textTime = findViewById(R.id.about_request_activity_time);
 
-        headerTV.setText(getIntent().getStringExtra("subject"));
-        textTV.setText(getIntent().getStringExtra("text"));
+        headerTV.setText(getIntent().getStringExtra(IntentConstants.SUBJECT_EMAIL_INTENT_KEY));
+        textTV.setText(getIntent().getStringExtra(IntentConstants.TEXT_EMAIL_INTENT_KEY));
         String senderText = getString(R.string.about_request_activity_sender_text);
-        senderTV.setText(String.format(senderText, getIntent().getStringExtra("sender")));
+        senderTV.setText(String.format(senderText, getIntent().getStringExtra(IntentConstants.SENDER_EMAIL_INTENT_KEY)));
         String receiverText = getString(R.string.about_request_activity_receiver_text);
-        receiverTV.setText(String.format(receiverText, getIntent().getStringExtra("receiver")));
-        String dateTimeString = getIntent().getStringExtra("dateTime");
+        receiverTV.setText(String.format(receiverText, getIntent().getStringExtra(IntentConstants.RECEIVER_EMAIL_INTENT_KEY)));
+        String dateTimeString = getIntent().getStringExtra(IntentConstants.DATE_TIME_EMAIL_INTENT_KEY);
         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
         textTime.setText(formatTime(dateTime.getHour()) + ":" + formatTime(dateTime.getMinute()));
     }

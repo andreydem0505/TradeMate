@@ -170,22 +170,22 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
             case R.id.company_fragment_about_merchandisers_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.MERCHANDISERS_DATA_TYPE);
-                intent.putExtra("companyName", companyName);
-                intent.putExtra("merchandisers", merchandisers);
+                intent.putExtra(IntentConstants.COMPANY_NAME_INTENT_KEY, companyName);
+                intent.putExtra(IntentConstants.MERCHANDISERS_INTENT_KEY, merchandisers);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_about_operators_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.OPERATORS_DATA_TYPE);
-                intent.putExtra("companyName", companyName);
-                intent.putExtra("namesOfOperators", namesOfOperators);
-                intent.putExtra("emailsOfOperators", emailsOfOperators);
+                intent.putExtra(IntentConstants.COMPANY_NAME_INTENT_KEY, companyName);
+                intent.putExtra(IntentConstants.NAMES_OF_OPERATORS_INTENT_KEY, namesOfOperators);
+                intent.putExtra(IntentConstants.EMAILS_OF_OPERATORS_INTENT_KEY, emailsOfOperators);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_about_requests_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.REQUESTS_DATA_TYPE);
-                intent.putExtra("requests", requests);
+                intent.putExtra(IntentConstants.REQUESTS_INTENT_KEY, requests);
                 startActivity(intent);
             } break;
             case R.id.company_fragment_add_shop_btn: {
@@ -195,7 +195,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
             case R.id.company_fragment_about_shops_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.SHOPS_DATA_TYPE);
-                intent.putExtra("shops", shops);
+                intent.putExtra(IntentConstants.SHOPS_INTENT_KEY, shops);
                 startActivity(intent);
             } break;
         }

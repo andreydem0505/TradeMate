@@ -5,6 +5,17 @@ public class IntentConstants {
             ACCESS_TOKEN_INTENT_KEY = "accessToken",
             NAME_OF_MERCHANDISER_INTENT_KEY = "merchandiserName",
             EMAIL_OF_MERCHANDISER_INTENT_KEY = "merchandiserEmail",
+            MERCHANDISERS_INTENT_KEY = "merchandisers",
+            REQUESTS_INTENT_KEY = "requests",
+            SHOPS_INTENT_KEY = "shops",
+            COMPANY_NAME_INTENT_KEY = "companyName",
+            SUBJECT_EMAIL_INTENT_KEY = "subject",
+            TEXT_EMAIL_INTENT_KEY = "text",
+            RECEIVER_EMAIL_INTENT_KEY = "receiver",
+            SENDER_EMAIL_INTENT_KEY = "sender",
+            DATE_TIME_EMAIL_INTENT_KEY = "dateTime",
+            NAMES_OF_OPERATORS_INTENT_KEY = "namesOfOperators",
+            EMAILS_OF_OPERATORS_INTENT_KEY = "emailsOfOperators",
             PASSWORD_OF_MERCHANDISER_INTENT_KEY = "merchandiserPassword",
             TYPE_INTENT_KEY = "type";
 
