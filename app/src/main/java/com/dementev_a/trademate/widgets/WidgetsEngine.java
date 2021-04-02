@@ -16,8 +16,6 @@ import com.dementev_a.trademate.json.RequestJson;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class WidgetsEngine {
     public static void setRequestsOnListView(@NotNull Parcelable[] requests, ListView listView, Context context, TextView errorTV) {
         if (requests.length > 0) {

@@ -60,6 +60,7 @@ public class MakeRequestActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
             new ReactOnStatus(bundle, errorTV) {
                 @Override
                 public void success() {
@@ -70,7 +71,6 @@ public class MakeRequestActivity extends AppCompatActivity {
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(MakeRequestActivity.this, android.R.layout.simple_spinner_item, namesOfOperators);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinner.setAdapter(adapter);
-                            progressBar.setVisibility(ProgressBar.INVISIBLE);
                         } break;
                         case API.GET_SHOPS_HANDLER_NUMBER: {
                             shops = bundle.getStringArray(BundleEngine.SHOPS_KEY_BUNDLE);
