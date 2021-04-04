@@ -19,6 +19,16 @@ public class JsonEngine {
         return jo.get(arg).getAsInt();
     }
 
+    public static String[] getStringArrayFromJson(String json, String arg) {
+        JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
+        JsonArray array = jo.get(arg).getAsJsonArray();
+        String[] result = new String[array.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = array.get(i).getAsString();
+        }
+        return result;
+    }
+
     public static MerchandiserJson[] getMerchandisersArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
@@ -55,15 +65,5 @@ public class JsonEngine {
             requestsArray[i] = new RequestJson(jo.get("subject").getAsString(), jo.get("text").getAsString(), jo.get("operator").getAsString(), jo.get("from").getAsString(), jo.get("dateTime").getAsString());
         }
         return requestsArray;
-    }
-
-    public static String[] getShopsArrayFromJson(String json, String arg) {
-        JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
-        JsonArray array = jo.get(arg).getAsJsonArray();
-        String[] result = new String[array.size()];
-        for (int i = 0; i < array.size(); i++) {
-            result[i] = array.get(i).getAsJsonObject().get("name").getAsString();
-        }
-        return result;
     }
 }

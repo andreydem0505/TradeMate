@@ -46,7 +46,8 @@ public class API {
             CREATE_REQUEST_URL = "/create/request",
             GET_ALL_REQUESTS_URL = "/requests",
             GET_ALL_SHOPS_URL = "/shops",
-            ADD_SHOP_URL = "/create/shop";
+            ADD_SHOP_URL = "/create/shop",
+            GET_PHOTO_REPORTS_URL = "/photo_reports";
 
     public static final String
             SUCCESS_RESPONSE = "Success";
@@ -65,7 +66,8 @@ public class API {
         ADD_MERCHANDISER_HANDLER_NUMBER = 8,
         ADD_OPERATOR_HANDLER_NUMBER = 9,
         LOG_IN_MERCHANDISER_HANDLER_NUMBER = 10,
-        SEND_EMAIL_HANDLER_NUMBER = 11;
+        SEND_EMAIL_HANDLER_NUMBER = 11,
+        GET_PHOTO_REPORTS_HANDLER_NUMBER = 12;
 
     private final OkHttpClient client;
     private final Context context;
@@ -142,7 +144,7 @@ public class API {
             public void successMessage() {
                 int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
                 getBundle().putInt(BundleEngine.TOTAL_SHOPS_KEY_BUNDLE, total);
-                getBundle().putStringArray(BundleEngine.SHOPS_KEY_BUNDLE, JsonEngine.getShopsArrayFromJson(getStringResponse(), "shops"));
+                getBundle().putStringArray(BundleEngine.SHOPS_KEY_BUNDLE, JsonEngine.getStringArrayFromJson(getStringResponse(), "shops"));
             }
         }.execute();
     }
@@ -375,6 +377,21 @@ public class API {
                 MessageSender sender = new MessageSender();
                 sender.setMethod(new EmailSending());
                 sender.send(new StrategyMessage(operatorEmail, shop, text, String.format(context.getString(R.string.make_request_activity_letter_merchandiser_text), merchandiserName)));
+            }
+        }.execute();
+    }
+
+    public void getPhotoReports(String accessToken) {
+        Request request = new Request.Builder()
+                .url(MAIN_URL + GET_PHOTO_REPORTS_URL)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .build();
+        new RequestSender(context, client, request, handler, GET_PHOTO_REPORTS_HANDLER_NUMBER) {
+            @Override
+            public void successMessage() {
+                int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
+                getBundle().putInt(BundleEngine.TOTAL_PHOTO_REPORTS_KEY_BUNDLE, total);
+                getBundle().putStringArray(BundleEngine.PHOTO_REPORTS_KEY_BUNDLE, JsonEngine.getStringArrayFromJson(getStringResponse(), "reports"));
             }
         }.execute();
     }

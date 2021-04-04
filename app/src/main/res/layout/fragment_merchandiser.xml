@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/merchandiser_fragment.usual.text_size"
-                    android:text="Всего фотоотчётов: 9"/>
+                    android:text="@string/default.text"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:textColor="@color/black"
-                        android:text="Смотреть"
+                        android:text="@string/merchandiser_fragment.about_photo_reports_btn.text"
                         android:backgroundTint="@color/panel_background"/>
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -105,11 +105,19 @@
                         android:layout_gravity="center"
                         android:backgroundTint="@color/panel_background"
                         android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         app:fabCustomSize="38dp"
                         app:maxImageSize="20dp"
                         app:tint="@color/black"
                         app:srcCompat="@android:drawable/ic_input_add"
                         android:contentDescription="@string/merchandiser_fragment.add_photo_report_btn.description" />
+
+                    <ProgressBar
+                        android:id="@+id/merchandiser_fragment.panel_2_progress_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX=".8"
+                        android:scaleY=".8"/>
 
                 </LinearLayout>
 

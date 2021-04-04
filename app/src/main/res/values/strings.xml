@@ -45,8 +45,10 @@
 
     <!-- Merchandiser Fragment -->
     <string name="merchandiser_fragment.about_requests_btn.text">Details</string>
+    <string name="merchandiser_fragment.about_photo_reports_btn.text">Details</string>
     <string name="merchandiser_fragment.add_request_btn.description" translatable="false">Add request</string>
     <string name="merchandiser_fragment.requests_quantity.text">Requests today: %1$d</string>
+    <string name="merchandiser_fragment.photo_reports_quantity.text">All photo reports: %1$d</string>
     <string name="merchandiser_fragment.add_photo_report_btn.description" translatable="false">Add photo report</string>
     <!-- Merchandiser Fragment -->
 

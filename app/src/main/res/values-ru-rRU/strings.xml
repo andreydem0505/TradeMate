@@ -32,7 +32,9 @@
 
     <!-- Merchandiser Fragment -->
     <string name="merchandiser_fragment.about_requests_btn.text">Подробнее</string>
+    <string name="merchandiser_fragment.about_photo_reports_btn.text">Смотреть</string>
     <string name="merchandiser_fragment.requests_quantity.text">Заявок сегодня: %1$d</string>
+    <string name="merchandiser_fragment.photo_reports_quantity.text">Все фотоотчёты: %1$d</string>
     <!-- Merchandiser Fragment -->
 
     <!-- List Activity -->
