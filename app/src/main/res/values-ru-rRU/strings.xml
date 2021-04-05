@@ -35,6 +35,7 @@
     <string name="merchandiser_fragment.about_photo_reports_btn.text">Смотреть</string>
     <string name="merchandiser_fragment.requests_quantity.text">Заявок сегодня: %1$d</string>
     <string name="merchandiser_fragment.photo_reports_quantity.text">Все фотоотчёты: %1$d</string>
+    <string name="merchandiser_fragment.add_photo_report_et.hint">Новый фотоотчёт</string>
     <!-- Merchandiser Fragment -->
 
     <!-- List Activity -->
@@ -42,10 +43,12 @@
     <string name="list_activity.header_operators.text">Операторы %1$s</string>
     <string name="list_activity.header_requests.text">Заявки сегодня</string>
     <string name="list_activity.header_shops.text">Торговые точки</string>
+    <string name="list_activity.header_photo_reports.text">Ваши фотоотчёты</string>
     <string name="list_activity.error_tv_merchandisers.text">Пока нет мерчендайзеров</string>
     <string name="list_activity.error_tv_operators.text">Пока нет операторов</string>
     <string name="list_activity.error_tv_requests.text">Пока нет заявок</string>
     <string name="list_activity.error_tv_shops.text">Пока нет торговых точек</string>
+    <string name="list_activity.error_tv_photo_reports.text">Пока нет фотоотчётов</string>
     <!-- List Activity -->
 
     <!-- About Request Activity -->

@@ -50,6 +50,7 @@
     <string name="merchandiser_fragment.requests_quantity.text">Requests today: %1$d</string>
     <string name="merchandiser_fragment.photo_reports_quantity.text">All photo reports: %1$d</string>
     <string name="merchandiser_fragment.add_photo_report_btn.description" translatable="false">Add photo report</string>
+    <string name="merchandiser_fragment.add_photo_report_et.hint">New photo report</string>
     <!-- Merchandiser Fragment -->
 
     <!-- List Activity -->
@@ -57,10 +58,12 @@
     <string name="list_activity.header_operators.text">Operators of %1$s</string>
     <string name="list_activity.header_requests.text">Requests today</string>
     <string name="list_activity.header_shops.text">Shops</string>
+    <string name="list_activity.header_photo_reports.text">Your photo reports</string>
     <string name="list_activity.error_tv_merchandisers.text">No merchandisers yet</string>
     <string name="list_activity.error_tv_operators.text">No operators yet</string>
     <string name="list_activity.error_tv_requests.text">No requests yet</string>
     <string name="list_activity.error_tv_shops.text">No shops yet</string>
+    <string name="list_activity.error_tv_photo_reports.text">No photo reports yet</string>
     <!-- List Activity -->
 
     <!-- About Request Activity -->

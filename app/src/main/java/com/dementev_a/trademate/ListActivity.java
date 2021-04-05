@@ -43,6 +43,10 @@ public class ListActivity extends AppCompatActivity {
                 headerTV.setText(R.string.list_activity_header_shops_text);
                 WidgetsEngine.setShopsOnListView(getIntent().getStringArrayExtra(IntentConstants.SHOPS_INTENT_KEY), listView, this, errorTV);
             } break;
+            case IntentConstants.PHOTO_REPORTS_DATA_TYPE: {
+                headerTV.setText(R.string.list_activity_header_photo_reports_text);
+                WidgetsEngine.setPhotoReportsOnListView(getIntent().getStringArrayExtra(IntentConstants.PHOTO_REPORTS_INTENT_KEY), listView, this, errorTV);
+            } break;
         }
     }
 }

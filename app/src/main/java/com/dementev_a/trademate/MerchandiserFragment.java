@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,10 +27,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MerchandiserFragment extends Fragment implements View.OnClickListener {
     private TextView requestsQuantityTV, photoReportsQuantityTV;
+    private EditText addPhotoReportET;
     private ProgressBar PB1, PB2;
-    private Button aboutRequestsBtn, aboutPhotoReports;
+    private Button aboutRequestsBtn, aboutPhotoReportsBtn;
     private FloatingActionButton addRequestBtn, addPhotoReportBtn;
     private String merchandiserName, accessToken;
+    private String[] reports;
     private RequestJson[] requests;
     private API api;
 
@@ -45,10 +48,11 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         TextView merchandiserNameTV = view.findViewById(R.id.merchandiser_fragment_merchandiser_name);
         addRequestBtn = view.findViewById(R.id.merchandiser_fragment_add_request_btn);
         aboutRequestsBtn = view.findViewById(R.id.merchandiser_fragment_about_requests_btn);
-        aboutPhotoReports = view.findViewById(R.id.merchandiser_fragment_about_photo_reports_btn);
-        addPhotoReportBtn = view.findViewById(R.id.company_fragment_add_photo_report_btn);
+        aboutPhotoReportsBtn = view.findViewById(R.id.merchandiser_fragment_about_photo_reports_btn);
+        addPhotoReportBtn = view.findViewById(R.id.merchandiser_fragment_add_photo_report_btn);
         requestsQuantityTV = view.findViewById(R.id.merchandiser_fragment_requests_quantity);
         photoReportsQuantityTV = view.findViewById(R.id.merchandiser_fragment_photo_reports_quantity);
+        addPhotoReportET = view.findViewById(R.id.merchandiser_fragment_add_photo_report_et);
         PB1 = view.findViewById(R.id.merchandiser_fragment_panel_1_progress_bar);
         PB2 = view.findViewById(R.id.merchandiser_fragment_panel_2_progress_bar);
 
@@ -66,6 +70,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
     public void onResume() {
         super.onResume();
         PB1.setVisibility(ProgressBar.VISIBLE);
+        PB2.setVisibility(ProgressBar.VISIBLE);
         api.getRequestsToday(accessToken);
         api.getPhotoReports(accessToken);
     }
@@ -89,10 +94,10 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
                         } break;
                         case API.GET_PHOTO_REPORTS_HANDLER_NUMBER: {
                             int photoReportsQuantity = bundle.getInt(BundleEngine.TOTAL_PHOTO_REPORTS_KEY_BUNDLE);
-                            String[] reports = bundle.getStringArray(BundleEngine.PHOTO_REPORTS_KEY_BUNDLE);
+                            reports = bundle.getStringArray(BundleEngine.PHOTO_REPORTS_KEY_BUNDLE);
                             String photoReportsQuantityText = getString(R.string.merchandiser_fragment_photo_reports_quantity_text);
                             photoReportsQuantityTV.setText(String.format(photoReportsQuantityText, photoReportsQuantity));
-                            aboutRequestsBtn.setOnClickListener(MerchandiserFragment.this);
+                            aboutPhotoReportsBtn.setOnClickListener(MerchandiserFragment.this);
                             addPhotoReportBtn.setOnClickListener(MerchandiserFragment.this);
                             PB2.setVisibility(ProgressBar.INVISIBLE);
                         } break;
@@ -117,6 +122,15 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
                 intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.REQUESTS_DATA_TYPE);
                 intent.putExtra(IntentConstants.REQUESTS_INTENT_KEY, requests);
                 startActivity(intent);
+            } break;
+            case R.id.merchandiser_fragment_about_photo_reports_btn: {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.PHOTO_REPORTS_DATA_TYPE);
+                intent.putExtra(IntentConstants.PHOTO_REPORTS_INTENT_KEY, reports);
+                startActivity(intent);
+            } break;
+            case R.id.merchandiser_fragment_add_photo_report_btn: {
+                PB2.setVisibility(ProgressBar.VISIBLE);
             } break;
         }
     }

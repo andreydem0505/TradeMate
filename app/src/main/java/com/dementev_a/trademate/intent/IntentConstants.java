@@ -8,6 +8,7 @@ public class IntentConstants {
             MERCHANDISERS_INTENT_KEY = "merchandisers",
             REQUESTS_INTENT_KEY = "requests",
             SHOPS_INTENT_KEY = "shops",
+            PHOTO_REPORTS_INTENT_KEY = "photoReports",
             COMPANY_NAME_INTENT_KEY = "companyName",
             SUBJECT_EMAIL_INTENT_KEY = "subject",
             TEXT_EMAIL_INTENT_KEY = "text",
@@ -24,5 +25,6 @@ public class IntentConstants {
             REQUESTS_DATA_TYPE = 0,
             MERCHANDISERS_DATA_TYPE = 1,
             OPERATORS_DATA_TYPE = 2,
-            SHOPS_DATA_TYPE = 3;
+            SHOPS_DATA_TYPE = 3,
+            PHOTO_REPORTS_DATA_TYPE = 4;
 }

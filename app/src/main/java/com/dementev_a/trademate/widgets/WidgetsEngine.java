@@ -86,4 +86,12 @@ public class WidgetsEngine {
         } else
             errorTV.setText(R.string.list_activity_error_tv_shops_text);
     }
+
+    public static void setPhotoReportsOnListView(@NotNull String[] reports, ListView listView, Context context, TextView errorTV) {
+        if (reports.length > 0) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, reports);
+            listView.setAdapter(adapter);
+        } else
+            errorTV.setText(R.string.list_activity_error_tv_photo_reports_text);
+    }
 }
