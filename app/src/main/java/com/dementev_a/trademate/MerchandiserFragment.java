@@ -25,14 +25,19 @@ import com.dementev_a.trademate.json.RequestJson;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MerchandiserFragment extends Fragment implements View.OnClickListener {
     private TextView requestsQuantityTV, photoReportsQuantityTV;
     private EditText addPhotoReportET;
     private ProgressBar PB1, PB2;
     private Button aboutRequestsBtn, aboutPhotoReportsBtn;
     private FloatingActionButton addRequestBtn, addPhotoReportBtn;
-    private String merchandiserName, accessToken;
+    private String merchandiserName, accessToken, photoReportsQuantityText;
     private String[] reports;
+    private int photoReportsQuantity;
     private RequestJson[] requests;
     private API api;
 
@@ -93,13 +98,22 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
                             PB1.setVisibility(ProgressBar.INVISIBLE);
                         } break;
                         case API.GET_PHOTO_REPORTS_HANDLER_NUMBER: {
-                            int photoReportsQuantity = bundle.getInt(BundleEngine.TOTAL_PHOTO_REPORTS_KEY_BUNDLE);
+                            photoReportsQuantity = bundle.getInt(BundleEngine.TOTAL_PHOTO_REPORTS_KEY_BUNDLE);
                             reports = bundle.getStringArray(BundleEngine.PHOTO_REPORTS_KEY_BUNDLE);
-                            String photoReportsQuantityText = getString(R.string.merchandiser_fragment_photo_reports_quantity_text);
+                            photoReportsQuantityText = getString(R.string.merchandiser_fragment_photo_reports_quantity_text);
                             photoReportsQuantityTV.setText(String.format(photoReportsQuantityText, photoReportsQuantity));
                             aboutPhotoReportsBtn.setOnClickListener(MerchandiserFragment.this);
                             addPhotoReportBtn.setOnClickListener(MerchandiserFragment.this);
                             PB2.setVisibility(ProgressBar.INVISIBLE);
+                        } break;
+                        case API.ADD_PHOTO_REPORT_HANDLER_NUMBER: {
+                            photoReportsQuantity++;
+                            photoReportsQuantityTV.setText(String.format(photoReportsQuantityText, photoReportsQuantity));
+                            List<String> list = new ArrayList<>(Arrays.asList(reports));
+                            list.add(bundle.getString(BundleEngine.PHOTO_REPORT_NAME_KEY_BUNDLE));
+                            reports = list.toArray(new String[0]);
+                            PB2.setVisibility(ProgressBar.INVISIBLE);
+                            addPhotoReportET.setText("");
                         } break;
                     }
                 }
@@ -131,6 +145,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
             } break;
             case R.id.merchandiser_fragment_add_photo_report_btn: {
                 PB2.setVisibility(ProgressBar.VISIBLE);
+                api.addPhotoReport(accessToken, addPhotoReportET);
             } break;
         }
     }

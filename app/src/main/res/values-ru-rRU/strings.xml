@@ -27,7 +27,7 @@
     <string name="company_fragment.about_shops_btn.text">Подробнее</string>
     <string name="company_fragment.add_shop_et.hint">Новая точка</string>
     <!-- Errors -->
-    <string name="company_fragment.shop_exist.error">Торговая точка уже существует</string>
+        <string name="company_fragment.shop_exist.error">Торговая точка уже существует</string>
     <!-- Company Fragment -->
 
     <!-- Merchandiser Fragment -->
@@ -36,6 +36,8 @@
     <string name="merchandiser_fragment.requests_quantity.text">Заявок сегодня: %1$d</string>
     <string name="merchandiser_fragment.photo_reports_quantity.text">Все фотоотчёты: %1$d</string>
     <string name="merchandiser_fragment.add_photo_report_et.hint">Новый фотоотчёт</string>
+    <!-- Errors -->
+        <string name="merchandiser_fragment.photo_report_exist.error">Фотоотчёт уже существует</string>
     <!-- Merchandiser Fragment -->
 
     <!-- List Activity -->
@@ -127,4 +129,8 @@
         <string name="add_operator_activity.operator_with_name_exist_error.text">Оператор с таким именем уже существует</string>
         <string name="add_operator_activity.operator_with_email_exist_error.text">Оператор с таким email уже существует</string>
     <!-- Add Operator Activity -->
+
+    <!-- Photo Report Activity -->
+    <string name="photo_report_activity.error_tv_photos.text">Пока нет фотографий</string>
+    <!-- Photo Report Activity -->
 </resources>

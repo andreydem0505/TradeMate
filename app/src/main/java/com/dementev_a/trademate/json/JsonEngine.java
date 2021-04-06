@@ -66,4 +66,19 @@ public class JsonEngine {
         }
         return requestsArray;
     }
+
+    public static Bundle getPhotosFromJson(String json, String arg) {
+        JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
+        JsonArray array = jo.get(arg).getAsJsonArray();
+        Bundle bundle = new Bundle();
+        for (int i = 0; i < array.size(); i++) {
+            JsonArray photo = array.get(i).getAsJsonArray();
+            byte[] byteCode = new byte[photo.size()];
+            for (int j = 0; j < photo.size(); j++) {
+                byteCode[j] = photo.get(j).getAsByte();
+            }
+            bundle.putByteArray("photo" + i, byteCode);
+        }
+        return bundle;
+    }
 }

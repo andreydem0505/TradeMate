@@ -51,6 +51,8 @@
     <string name="merchandiser_fragment.photo_reports_quantity.text">All photo reports: %1$d</string>
     <string name="merchandiser_fragment.add_photo_report_btn.description" translatable="false">Add photo report</string>
     <string name="merchandiser_fragment.add_photo_report_et.hint">New photo report</string>
+    <!-- Errors -->
+    <string name="merchandiser_fragment.photo_report_exist.error">Photo report is already exist</string>
     <!-- Merchandiser Fragment -->
 
     <!-- List Activity -->
@@ -149,4 +151,8 @@
     <string name="add_operator_activity.operator_with_name_exist_error.text">Operator with this name is already exist</string>
     <string name="add_operator_activity.operator_with_email_exist_error.text">Operator with this email is already exist</string>
     <!-- Add Operator Activity -->
+
+    <!-- Photo Report Activity -->
+    <string name="photo_report_activity.error_tv_photos.text">No photos yet</string>
+    <!-- Photo Report Activity -->
 </resources>

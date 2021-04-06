@@ -15,6 +15,7 @@ public class BundleEngine {
             TOTAL_REQUESTS_KEY_BUNDLE = "total_requests",
             TOTAL_SHOPS_KEY_BUNDLE = "total_shops",
             TOTAL_PHOTO_REPORTS_KEY_BUNDLE = "total_photo_reports",
+            TOTAL_PHOTOS_KEY_BUNDLE = "total_photos",
             MERCHANDISERS_KEY_BUNDLE = "merchandisers",
             REQUESTS_KEY_BUNDLE = "requests",
             SHOPS_KEY_BUNDLE = "shops",
@@ -24,7 +25,8 @@ public class BundleEngine {
             COMPANY_NAME_KEY_BUNDLE = "companyName",
             MERCHANDISER_NAME_KEY_BUNDLE = "merchandiserName",
             ACCESS_TOKEN_KEY_BUNDLE = "accessToken",
-            SHOP_NAME_KEY_BUNDLE = "shopName";
+            SHOP_NAME_KEY_BUNDLE = "shopName",
+            PHOTO_REPORT_NAME_KEY_BUNDLE = "photoReportName";
 
     public static void putError(@NotNull Bundle bundle, int id) {
         bundle.putInt("status", RequestStatus.STATUS_ERROR_TEXT);

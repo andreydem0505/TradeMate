@@ -17,6 +17,8 @@ public class RequestErrors {
         errors.put("Company with this email is already exist", R.string.sign_up_company_activity_company_with_this_email_exist_error_text);
         // Company Fragment
         errors.put("Such shop is already exist", R.string.company_fragment_shop_exist_error);
+        // Merchandiser Fragment
+        errors.put("Photo report with this name is already exist", R.string.merchandiser_fragment_photo_report_exist_error);
         // Log In Company Activity
         errors.put( "Company with this email wasn't found", R.string.log_in_company_activity_company_was_not_found_error_text);
         errors.put("Password is incorrect", R.string.log_in_company_activity_wrong_password_error_text);

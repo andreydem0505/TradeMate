@@ -47,7 +47,9 @@ public class API {
             GET_ALL_REQUESTS_URL = "/requests",
             GET_ALL_SHOPS_URL = "/shops",
             ADD_SHOP_URL = "/create/shop",
-            GET_PHOTO_REPORTS_URL = "/photo_reports";
+            GET_PHOTO_REPORTS_URL = "/photo_reports",
+            ADD_PHOTO_REPORT_URL = "/create/photo_report",
+            GET_PHOTOS_OF_REPORT = "/photos";
 
     public static final String
             SUCCESS_RESPONSE = "Success";
@@ -67,7 +69,9 @@ public class API {
         ADD_OPERATOR_HANDLER_NUMBER = 9,
         LOG_IN_MERCHANDISER_HANDLER_NUMBER = 10,
         SEND_EMAIL_HANDLER_NUMBER = 11,
-        GET_PHOTO_REPORTS_HANDLER_NUMBER = 12;
+        GET_PHOTO_REPORTS_HANDLER_NUMBER = 12,
+        ADD_PHOTO_REPORT_HANDLER_NUMBER = 13,
+        GET_PHOTOS_OF_REPORT_HANDLER = 14;
 
     private final OkHttpClient client;
     private final Context context;
@@ -392,6 +396,51 @@ public class API {
                 int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
                 getBundle().putInt(BundleEngine.TOTAL_PHOTO_REPORTS_KEY_BUNDLE, total);
                 getBundle().putStringArray(BundleEngine.PHOTO_REPORTS_KEY_BUNDLE, JsonEngine.getStringArrayFromJson(getStringResponse(), "reports"));
+            }
+        }.execute();
+    }
+
+    public void addPhotoReport(String accessToken, EditText nameET) {
+        Bundle bundle = new Bundle();
+        if (TextUtils.isEmpty(nameET.getText())) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+            new RequestSender().sendHandlerMessage(bundle, handler, ADD_PHOTO_REPORT_HANDLER_NUMBER);
+            return;
+        }
+        String name = nameET.getText().toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", name);
+        } catch (JSONException e) {
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, ADD_PHOTO_REPORT_HANDLER_NUMBER);
+            return;
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        Request request = new Request.Builder()
+                .url(MAIN_URL + ADD_PHOTO_REPORT_URL)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .post(body)
+                .build();
+        new RequestSender(context, client, request, handler, ADD_PHOTO_REPORT_HANDLER_NUMBER) {
+            @Override
+            public void successMessage() {
+                getBundle().putString(BundleEngine.PHOTO_REPORT_NAME_KEY_BUNDLE, name);
+            }
+        }.execute();
+    }
+
+    public void getPhotosOfReport(String accessToken, String name) {
+        Request request = new Request.Builder()
+                .url(MAIN_URL + GET_PHOTOS_OF_REPORT + "?name=" + name)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .build();
+        new RequestSender(context, client, request, handler, GET_PHOTOS_OF_REPORT_HANDLER) {
+            @Override
+            public void successMessage() {
+                int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
+                getBundle().putInt(BundleEngine.TOTAL_PHOTOS_KEY_BUNDLE, total);
+                getBundle().putAll(JsonEngine.getPhotosFromJson(getStringResponse(), "bytes"));
             }
         }.execute();
     }

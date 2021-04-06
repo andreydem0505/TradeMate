@@ -18,6 +18,7 @@ public class IntentConstants {
             NAMES_OF_OPERATORS_INTENT_KEY = "namesOfOperators",
             EMAILS_OF_OPERATORS_INTENT_KEY = "emailsOfOperators",
             PASSWORD_OF_MERCHANDISER_INTENT_KEY = "merchandiserPassword",
+            PHOTO_REPORT_NAME_INTENT_KEY = "photoReportName",
             TYPE_INTENT_KEY = "type";
 
     public static final int

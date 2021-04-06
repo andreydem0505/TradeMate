@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.dementev_a.trademate.AboutMerchandiserActivity;
 import com.dementev_a.trademate.AboutRequestActivity;
+import com.dementev_a.trademate.PhotoReportActivity;
 import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.json.MerchandiserJson;
@@ -91,6 +92,11 @@ public class WidgetsEngine {
         if (reports.length > 0) {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, reports);
             listView.setAdapter(adapter);
+            listView.setOnItemClickListener((parent, view, position, id) -> {
+                Intent intent = new Intent(context, PhotoReportActivity.class);
+                intent.putExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY, reports[position]);
+                context.startActivity(intent);
+            });
         } else
             errorTV.setText(R.string.list_activity_error_tv_photo_reports_text);
     }
