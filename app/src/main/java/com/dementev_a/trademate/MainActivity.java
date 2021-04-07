@@ -8,11 +8,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 
 public class MainActivity extends AppCompatActivity {
+    private ImageView logo;
     private final int
             NONE = 0,
             DESCRIPTION_STATE = 1,
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        logo = findViewById(R.id.main_activity_logo);
         spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         state = NONE;
     }
@@ -56,5 +59,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         transaction.commitAllowingStateLoss();
+        logo.setVisibility(ImageView.INVISIBLE);
     }
 }
