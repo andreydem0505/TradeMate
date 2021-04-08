@@ -9,13 +9,6 @@
     <FrameLayout
         android:id="@+id/fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <ImageView
-        android:id="@+id/main_activity.logo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/trademate"
-        android:contentDescription="@string/app_name" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

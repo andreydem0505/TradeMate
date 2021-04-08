@@ -22,4 +22,9 @@
     <style name="Theme.TradeMate.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.TradeMate.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.TradeMate.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+         <item name="colorPrimaryDark">@android:color/white</item>
+    </style>
 </resources>
