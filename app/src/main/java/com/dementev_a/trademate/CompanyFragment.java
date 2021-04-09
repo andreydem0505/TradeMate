@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
+import com.dementev_a.trademate.requests.RequestSender;
+import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -190,7 +193,13 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
             } break;
             case R.id.company_fragment_add_shop_btn: {
                 PB4.setVisibility(ProgressBar.VISIBLE);
-                api.addShop(accessToken, addShopET);
+                if (TextUtils.isEmpty(addShopET.getText())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+                    new RequestSender().sendHandlerMessage(bundle, handler, API.ADD_SHOP_HANDLER_NUMBER);
+                } else {
+                    api.addShop(accessToken, addShopET.getText().toString());
+                }
             } break;
             case R.id.company_fragment_about_shops_btn: {
                 Intent intent = new Intent(getContext(), ListActivity.class);

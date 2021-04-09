@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import androidx.fragment.app.Fragment;
 
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 
 import com.dementev_a.trademate.bundle.BundleEngine;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_TradeMate);
+//        setTheme(R.style.Theme_TradeMate);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));

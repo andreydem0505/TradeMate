@@ -40,7 +40,7 @@ public class PhotoReportActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        api.getPhotoReports(accessToken);
+        api.getPhotosOfReport(accessToken, name);
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {

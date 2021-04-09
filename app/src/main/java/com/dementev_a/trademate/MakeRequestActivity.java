@@ -23,9 +23,12 @@ import android.widget.Toast;
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
+import com.dementev_a.trademate.requests.RequestSender;
+import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 public class MakeRequestActivity extends AppCompatActivity {
@@ -113,7 +116,23 @@ public class MakeRequestActivity extends AppCompatActivity {
 
     public void onSendBtnClick(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        API api = new API(this, handler);
-        api.sendEmail(accessToken, nameET, textET, merchandiserName, spinner.getSelectedItemPosition(), shops, namesOfOperators, emailsOfOperators);
+        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(textET.getText())) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+            new RequestSender().sendHandlerMessage(bundle, handler, API.SEND_EMAIL_HANDLER_NUMBER);
+        } else {
+            String shop = nameET.getText().toString();
+            if (Arrays.binarySearch(shops, shop) < 0) {
+                Bundle bundle = new Bundle();
+                BundleEngine.putError(bundle, R.string.make_request_activity_shop_was_not_found_error_text);
+                new RequestSender().sendHandlerMessage(bundle, handler, API.SEND_EMAIL_HANDLER_NUMBER);
+            } else {
+                int operatorPosition = spinner.getSelectedItemPosition();
+                String operatorName = namesOfOperators[operatorPosition];
+                String operatorEmail = emailsOfOperators[operatorPosition];
+                API api = new API(this, handler);
+                api.sendEmail(accessToken, nameET.getText().toString(), textET.getText().toString(), merchandiserName, operatorName, operatorEmail);
+            }
+        }
     }
 }

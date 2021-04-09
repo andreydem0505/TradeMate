@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.json.RequestJson;
+import com.dementev_a.trademate.requests.RequestSender;
+import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -145,7 +148,13 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
             } break;
             case R.id.merchandiser_fragment_add_photo_report_btn: {
                 PB2.setVisibility(ProgressBar.VISIBLE);
-                api.addPhotoReport(accessToken, addPhotoReportET);
+                if (TextUtils.isEmpty(addPhotoReportET.getText())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+                    new RequestSender().sendHandlerMessage(bundle, handler, API.ADD_PHOTO_REPORT_HANDLER_NUMBER);
+                } else {
+                    api.addPhotoReport(accessToken, addPhotoReportET.getText().toString());
+                }
             } break;
         }
     }

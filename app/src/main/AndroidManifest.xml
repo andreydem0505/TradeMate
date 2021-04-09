@@ -25,7 +25,7 @@
             android:name=".ChoiceActivity"
             android:noHistory="true" />
         <activity android:name=".SignUpCompanyActivity" />
-        <activity android:name=".MainActivity" android:theme="@style/Theme.TradeMate.Launcher">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

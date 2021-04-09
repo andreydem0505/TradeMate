@@ -3,8 +3,6 @@ package com.dementev_a.trademate.api;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
-import android.widget.EditText;
 
 import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.bundle.BundleEngine;
@@ -26,7 +24,6 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -153,22 +150,14 @@ public class API {
         }.execute();
     }
 
-    public void signUpCompany(EditText nameET, EditText emailET, EditText passwordET) {
-        Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
-            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler, SIGN_UP_COMPANY_HANDLER_NUMBER);
-            return;
-        }
-        String name = nameET.getText().toString();
-        String email = emailET.getText().toString();
-        String password = passwordET.getText().toString();
+    public void signUpCompany(String name, String email, String password) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", name);
             jsonObject.put("password", password);
             jsonObject.put("email", email);
         } catch (JSONException e) {
+            Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             new RequestSender().sendHandlerMessage(bundle, handler, SIGN_UP_COMPANY_HANDLER_NUMBER);
             return;
@@ -188,18 +177,12 @@ public class API {
         }.execute();
     }
 
-    public void addShop(String accessToken, EditText nameET) {
-        Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(nameET.getText())) {
-            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler, ADD_SHOP_HANDLER_NUMBER);
-            return;
-        }
-        String name = nameET.getText().toString();
+    public void addShop(String accessToken, String name) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", name);
         } catch (JSONException e) {
+            Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             new RequestSender().sendHandlerMessage(bundle, handler, ADD_SHOP_HANDLER_NUMBER);
             return;
@@ -218,20 +201,13 @@ public class API {
         }.execute();
     }
 
-    public void logInCompany(EditText emailET, EditText passwordET) {
-        Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
-            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler, LOG_IN_COMPANY_HANDLER_NUMBER);
-            return;
-        }
-        String email = emailET.getText().toString();
-        String password = passwordET.getText().toString();
+    public void logInCompany(String email, String password) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("email", email);
             jsonObject.put("password", password);
         } catch (JSONException e) {
+            Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             new RequestSender().sendHandlerMessage(bundle, handler, LOG_IN_COMPANY_HANDLER_NUMBER);
             return;
@@ -252,22 +228,14 @@ public class API {
         }.execute();
     }
 
-    public void addMerchandiser(String accessToken, EditText nameET, EditText emailET, EditText passwordET) {
-        Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
-            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler, ADD_MERCHANDISER_HANDLER_NUMBER);
-            return;
-        }
-        String name = nameET.getText().toString();
-        String email = emailET.getText().toString();
-        String password = passwordET.getText().toString();
+    public void addMerchandiser(String accessToken, String name, String email, String password) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", name);
             jsonObject.put("password", password);
             jsonObject.put("email", email);
         } catch (JSONException e) {
+            Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             new RequestSender().sendHandlerMessage(bundle, handler, ADD_MERCHANDISER_HANDLER_NUMBER);
             return;
@@ -281,20 +249,13 @@ public class API {
         new RequestSender(context, client, request, handler, ADD_MERCHANDISER_HANDLER_NUMBER).execute();
     }
 
-    public void addOperator(String accessToken, EditText nameET, EditText emailET) {
-        Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText())) {
-            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler, ADD_OPERATOR_HANDLER_NUMBER);
-            return;
-        }
-        String name = nameET.getText().toString();
-        String email = emailET.getText().toString();
+    public void addOperator(String accessToken, String name, String email) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", name);
             jsonObject.put("email", email);
         } catch (JSONException e) {
+            Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             new RequestSender().sendHandlerMessage(bundle, handler, ADD_OPERATOR_HANDLER_NUMBER);
             return;
@@ -308,20 +269,13 @@ public class API {
         new RequestSender(context, client, request, handler, ADD_OPERATOR_HANDLER_NUMBER).execute();
     }
 
-    public void logInMerchandiser(EditText emailET, EditText passwordET) {
-        Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(emailET.getText())) {
-            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler, LOG_IN_MERCHANDISER_HANDLER_NUMBER);
-            return;
-        }
-        String email = emailET.getText().toString();
-        String password = passwordET.getText().toString();
+    public void logInMerchandiser(String email, String password) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("email", email);
             jsonObject.put("password", password);
         } catch (JSONException e) {
+            Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             new RequestSender().sendHandlerMessage(bundle, handler, LOG_IN_MERCHANDISER_HANDLER_NUMBER);
             return;
@@ -342,22 +296,7 @@ public class API {
         }.execute();
     }
 
-    public void sendEmail(String accessToken, EditText nameET, EditText textET, String merchandiserName, int operatorPosition, String[] shops, String[] namesOfOperators, String[] emailsOfOperators) {
-        Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(textET.getText())) {
-            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler, SEND_EMAIL_HANDLER_NUMBER);
-            return;
-        }
-        String shop = nameET.getText().toString();
-        String text = textET.getText().toString();
-        if (Arrays.binarySearch(shops, shop) < 0) {
-            BundleEngine.putError(bundle, R.string.make_request_activity_shop_was_not_found_error_text);
-            new RequestSender().sendHandlerMessage(bundle, handler, SEND_EMAIL_HANDLER_NUMBER);
-            return;
-        }
-        String operatorName = namesOfOperators[operatorPosition];
-        String operatorEmail = emailsOfOperators[operatorPosition];
+    public void sendEmail(String accessToken, String shop, String text, String merchandiserName, String operatorName, String operatorEmail) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("subject", shop);
@@ -365,6 +304,7 @@ public class API {
             jsonObject.put("operator", operatorName);
             jsonObject.put("dateTime", LocalDateTime.now().toString());
         } catch (JSONException e) {
+            Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             new RequestSender().sendHandlerMessage(bundle, handler, SEND_EMAIL_HANDLER_NUMBER);
             return;
@@ -400,18 +340,12 @@ public class API {
         }.execute();
     }
 
-    public void addPhotoReport(String accessToken, EditText nameET) {
-        Bundle bundle = new Bundle();
-        if (TextUtils.isEmpty(nameET.getText())) {
-            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
-            new RequestSender().sendHandlerMessage(bundle, handler, ADD_PHOTO_REPORT_HANDLER_NUMBER);
-            return;
-        }
-        String name = nameET.getText().toString();
+    public void addPhotoReport(String accessToken, String name) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", name);
         } catch (JSONException e) {
+            Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
             new RequestSender().sendHandlerMessage(bundle, handler, ADD_PHOTO_REPORT_HANDLER_NUMBER);
             return;

@@ -7,13 +7,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
+import com.dementev_a.trademate.requests.RequestSender;
+import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 
 public class AddOperatorActivity extends AppCompatActivity {
@@ -35,8 +39,14 @@ public class AddOperatorActivity extends AppCompatActivity {
 
     public void onAddClickBtn(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        API api = new API(this, handler);
-        api.addOperator(accessToken, nameET, emailET);
+        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText())) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
+            new RequestSender().sendHandlerMessage(bundle, handler, API.ADD_OPERATOR_HANDLER_NUMBER);
+        } else {
+            API api = new API(this, handler);
+            api.addOperator(accessToken, nameET.getText().toString(), emailET.getText().toString());
+        }
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {
