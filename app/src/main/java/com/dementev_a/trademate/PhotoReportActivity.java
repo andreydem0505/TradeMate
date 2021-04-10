@@ -2,12 +2,16 @@ package com.dementev_a.trademate;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -24,7 +28,11 @@ import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class PhotoReportActivity extends AppCompatActivity {
     private ImageView photoIV;
@@ -32,6 +40,7 @@ public class PhotoReportActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private String name, accessToken;
     private API api;
+    private Uri currentPhotoUri;
     private static final int REQUEST_TAKE_PHOTO = 1;
 
     @Override
@@ -72,28 +81,44 @@ public class PhotoReportActivity extends AppCompatActivity {
         }
     };
 
-    public void onAddPhotoClickBtn(View v) {
-        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
-        } catch (ActivityNotFoundException e){
-            e.printStackTrace();
-        }
+    public void onAddPhotoClickBtn(View v) throws IOException {
+        saveFullImage();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap thumbnailBitmap = (Bitmap) extras.get("data");
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            thumbnailBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            thumbnailBitmap.recycle();
-            System.out.println(Arrays.toString(byteArray));
-            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            photoIV.setImageBitmap(bitmap);
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), currentPhotoUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//            byte[] byteArray = stream.toByteArray();
+//            bitmap.recycle();
+//            System.out.println(Arrays.toString(byteArray));
+//            bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            photoIV.setImageURI(currentPhotoUri);
         }
+    }
+
+    private void saveFullImage() throws IOException {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+        currentPhotoUri = FileProvider.getUriForFile(this,
+                "com.example.android.fileprovider",
+                image);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri);
+        startActivityForResult(intent, REQUEST_TAKE_PHOTO);
     }
 }
