@@ -154,5 +154,6 @@
 
     <!-- Photo Report Activity -->
     <string name="photo_report_activity.error_tv_photos.text">No photos yet</string>
+    <string name="photo_report_activity.add_photo_btn.description" translatable="false">Add photo</string>
     <!-- Photo Report Activity -->
 </resources>
