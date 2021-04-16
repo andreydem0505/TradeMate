@@ -9,6 +9,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,7 +17,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,17 +36,19 @@ import com.dementev_a.trademate.widgets.ReactOnStatus;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
 public class PhotoReportActivity extends AppCompatActivity {
-    private ImageView photoIV;
     private TextView header, errorTV;
     private ProgressBar progressBar;
+    private ImageSwitcher imageSwitcher;
     private String name, accessToken;
     private API api;
     private Uri currentPhotoUri;
+    private File image;
     private static final int REQUEST_TAKE_PHOTO = 1;
 
     @Override
@@ -50,7 +58,7 @@ public class PhotoReportActivity extends AppCompatActivity {
         header = findViewById(R.id.photo_report_activity_header);
         progressBar = findViewById(R.id.photo_report_activity_progress_bar);
         errorTV = findViewById(R.id.photo_report_activity_error_tv);
-        photoIV = findViewById(R.id.photo);
+        imageSwitcher = findViewById(R.id.photo_report_activity_image_switcher);
         name = getIntent().getStringExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY);
         header.setText(name);
         SharedPreferencesEngine spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
@@ -73,8 +81,17 @@ public class PhotoReportActivity extends AppCompatActivity {
             new ReactOnStatus(bundle, errorTV) {
                 @Override
                 public void success() {
-                    if (bundle.getInt(BundleEngine.TOTAL_PHOTOS_KEY_BUNDLE) == 0) {
-                        errorTV.setText(R.string.photo_report_activity_error_tv_photos_text);
+                    switch (msg.what) {
+                        case API.GET_PHOTOS_OF_REPORT_HANDLER: {
+                            if (bundle.getInt(BundleEngine.TOTAL_PHOTOS_KEY_BUNDLE) == 0) {
+                                errorTV.setText(R.string.photo_report_activity_error_tv_photos_text);
+                            } else {
+                                errorTV.setText("");
+                            }
+                        } break;
+                        case API.PUT_PHOTO_HANDLER_NUMBER: {
+
+                        } break;
                     }
                 }
             }.execute();
@@ -89,19 +106,33 @@ public class PhotoReportActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), currentPhotoUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();
 //            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 //            byte[] byteArray = stream.toByteArray();
 //            bitmap.recycle();
 //            System.out.println(Arrays.toString(byteArray));
 //            bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            photoIV.setImageURI(currentPhotoUri);
+
+            LayoutInflater inflater = LayoutInflater.from(this);
+            ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imageSwitcher, false);
+            imageView.setImageURI(currentPhotoUri);
+
+            new Thread(() -> {
+                Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+                int size = bitmap.getRowBytes() * height;
+                ByteBuffer byteBuffer = ByteBuffer.allocate(size);
+                bitmap.copyPixelsToBuffer(byteBuffer);
+                byte[] byteArray = byteBuffer.array();
+                api.putPhoto(accessToken, byteArray, name);
+            }).start();
+
+            imageSwitcher.addView(imageView);
+            image.delete();
         }
     }
 
@@ -110,7 +141,7 @@ public class PhotoReportActivity extends AppCompatActivity {
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
+        image = File.createTempFile(
                 imageFileName,
                 ".jpg",
                 storageDir
@@ -120,5 +151,9 @@ public class PhotoReportActivity extends AppCompatActivity {
                 image);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri);
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
+    }
+
+    public void onSwitcherClick(View v) {
+        imageSwitcher.showNext();
     }
 }

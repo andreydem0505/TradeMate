@@ -72,11 +72,8 @@ public class JsonEngine {
         JsonArray array = jo.get(arg).getAsJsonArray();
         Bundle bundle = new Bundle();
         for (int i = 0; i < array.size(); i++) {
-            JsonArray photo = array.get(i).getAsJsonArray();
-            byte[] byteCode = new byte[photo.size()];
-            for (int j = 0; j < photo.size(); j++) {
-                byteCode[j] = photo.get(j).getAsByte();
-            }
+            String byteCodeString = array.get(i).getAsString();
+
             bundle.putByteArray("photo" + i, byteCode);
         }
         return bundle;

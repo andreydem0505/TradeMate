@@ -3,6 +3,7 @@ package com.dementev_a.trademate.api;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 
 import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.bundle.BundleEngine;
@@ -31,7 +32,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 public class API {
-    public static final String
+    private static final String
             MAIN_URL = "https://trademate-api.herokuapp.com",
             AUTH_COMPANY_URL = "/auth/company",
             SIGN_UP_COMPANY_URL = "/register/company",
@@ -46,7 +47,8 @@ public class API {
             ADD_SHOP_URL = "/create/shop",
             GET_PHOTO_REPORTS_URL = "/photo_reports",
             ADD_PHOTO_REPORT_URL = "/create/photo_report",
-            GET_PHOTOS_OF_REPORT = "/photos";
+            GET_PHOTOS_OF_REPORT_URL = "/photos",
+            PUT_PHOTO_URL = "/put_photo";
 
     public static final String
             SUCCESS_RESPONSE = "Success";
@@ -68,7 +70,8 @@ public class API {
         SEND_EMAIL_HANDLER_NUMBER = 11,
         GET_PHOTO_REPORTS_HANDLER_NUMBER = 12,
         ADD_PHOTO_REPORT_HANDLER_NUMBER = 13,
-        GET_PHOTOS_OF_REPORT_HANDLER = 14;
+        GET_PHOTOS_OF_REPORT_HANDLER = 14,
+        PUT_PHOTO_HANDLER_NUMBER = 15;
 
     private final OkHttpClient client;
     private final Context context;
@@ -366,7 +369,7 @@ public class API {
 
     public void getPhotosOfReport(String accessToken, String name) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + GET_PHOTOS_OF_REPORT + "?name=" + name)
+                .url(MAIN_URL + GET_PHOTOS_OF_REPORT_URL + "?name=" + name)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
         new RequestSender(context, client, request, handler, GET_PHOTOS_OF_REPORT_HANDLER) {
@@ -377,5 +380,26 @@ public class API {
                 getBundle().putAll(JsonEngine.getPhotosFromJson(getStringResponse(), "bytes"));
             }
         }.execute();
+    }
+
+    public void putPhoto(String accessToken, byte[] byteCode, String photoReportName) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("byteCode", Base64.encodeToString(byteCode, Base64.DEFAULT));
+            jsonObject.put("photoReportName", photoReportName);
+        } catch (JSONException e) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+            new RequestSender().sendHandlerMessage(bundle, handler, PUT_PHOTO_HANDLER_NUMBER);
+            return;
+        }
+        System.out.println(jsonObject.toString());
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        Request request = new Request.Builder()
+                .url(MAIN_URL + PUT_PHOTO_URL)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .post(body)
+                .build();
+        new RequestSender(context, client, request, handler, PUT_PHOTO_HANDLER_NUMBER).execute();
     }
 }

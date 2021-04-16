@@ -31,8 +31,7 @@
                 android:id="@+id/photo_report_activity.progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/photo_report_activity.header"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
@@ -45,14 +44,16 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 
-            <ImageView
-                android:id="@+id/photo"
+            <ImageSwitcher
+                android:id="@+id/photo_report_activity.image_switcher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitStart"
-                android:adjustViewBounds="true"
+                android:onClick="onSwitcherClick"
+                app:layout_constraintTop_toBottomOf="@id/photo_report_activity.error_tv"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/photo_report_activity.error_tv"/>
+                app:layout_constraintRight_toRightOf="parent">
+
+            </ImageSwitcher>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

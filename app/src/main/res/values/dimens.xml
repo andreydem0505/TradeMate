@@ -75,7 +75,7 @@
     <!-- Add Operator Activity -->
 
     <!-- Photo Report Activity -->
-    <dimen name="photo_report_activity.header.text_size">20sp</dimen>
+    <dimen name="photo_report_activity.header.text_size">24sp</dimen>
     <dimen name="photo_report_activity.error_tv.text_size">16sp</dimen>
     <!-- Photo Report Activity -->
 
