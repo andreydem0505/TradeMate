@@ -44,6 +44,12 @@ public class SharedPreferencesEngine {
         return sp.getString(key, null);
     }
 
+    public void putString(String key, String value) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
     public int count() {
         return sp.getAll().size();
     }

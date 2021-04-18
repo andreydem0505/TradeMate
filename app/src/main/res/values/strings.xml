@@ -11,6 +11,7 @@
 
     <!-- Shared Preferences -->
     <string name="shared_preferences.user" translatable="false">user</string>
+    <string name="shared_preferences.pictures" translatable="false">pictures</string>
     <!-- types -->
     <string name="shared_preferences.type_merchandiser" translatable="false">merchandiser</string>
     <string name="shared_preferences.type_company" translatable="false">company</string>

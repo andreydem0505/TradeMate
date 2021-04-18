@@ -1,6 +1,7 @@
 package com.dementev_a.trademate.json;
 
 import android.os.Bundle;
+import android.util.Base64;
 
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.google.gson.JsonArray;
@@ -73,7 +74,7 @@ public class JsonEngine {
         Bundle bundle = new Bundle();
         for (int i = 0; i < array.size(); i++) {
             String byteCodeString = array.get(i).getAsString();
-
+            byte[] byteCode = Base64.decode(byteCodeString, Base64.DEFAULT);
             bundle.putByteArray("photo" + i, byteCode);
         }
         return bundle;
