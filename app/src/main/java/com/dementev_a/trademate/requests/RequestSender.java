@@ -55,7 +55,6 @@ public class RequestSender {
             public void onResponse(@NotNull Call call, @NotNull Response response) {
                 try {
                     stringResponse = response.body().string();
-                    System.out.println(stringResponse);
                     String message = JsonEngine.getStringFromJson(stringResponse, "message");
                     if (message.equals(API.SUCCESS_RESPONSE)) {
                         successMessage();

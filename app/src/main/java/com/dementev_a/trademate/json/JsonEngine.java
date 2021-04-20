@@ -74,7 +74,7 @@ public class JsonEngine {
         Bundle bundle = new Bundle();
         for (int i = 0; i < array.size(); i++) {
             String byteCodeString = array.get(i).getAsString();
-            byte[] byteCode = Base64.decode(byteCodeString, Base64.DEFAULT);
+            byte[] byteCode = Base64.decode(byteCodeString, Base64.CRLF);
             bundle.putByteArray("photo" + i, byteCode);
         }
         return bundle;

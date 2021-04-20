@@ -372,11 +372,9 @@ public class API {
                 .url(MAIN_URL + GET_PHOTOS_OF_REPORT_URL + "?name=" + name)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
-        System.out.println("-----start-----");
         new RequestSender(context, client, request, handler, GET_PHOTOS_OF_REPORT_HANDLER) {
             @Override
             public void successMessage() {
-                System.out.println("-----end-----");
                 int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
                 getBundle().putInt(BundleEngine.TOTAL_PHOTOS_KEY_BUNDLE, total);
                 getBundle().putAll(JsonEngine.getPhotosFromJson(getStringResponse(), "bytes"));
@@ -387,7 +385,7 @@ public class API {
     public void putPhoto(String accessToken, byte[] byteCode, String photoReportName) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("byteCode", Base64.encodeToString(byteCode, Base64.DEFAULT));
+            jsonObject.put("byteCode", Base64.encodeToString(byteCode, Base64.CRLF));
             jsonObject.put("photoReportName", photoReportName);
         } catch (JSONException e) {
             Bundle bundle = new Bundle();

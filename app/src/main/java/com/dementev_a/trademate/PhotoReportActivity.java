@@ -18,8 +18,8 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,10 +36,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PhotoReportActivity extends AppCompatActivity {
-    private TextView header, errorTV;
+    private TextView errorTV;
     private ProgressBar progressBar;
-    private ImageSwitcher imageSwitcher;
-    private SharedPreferencesEngine spePictures;
+    private LinearLayout imagesLayout;
     private LayoutInflater inflater;
     private String name, accessToken;
     private API api;
@@ -51,33 +50,17 @@ public class PhotoReportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_report);
-        header = findViewById(R.id.photo_report_activity_header);
+        TextView header = findViewById(R.id.photo_report_activity_header);
         progressBar = findViewById(R.id.photo_report_activity_progress_bar);
         errorTV = findViewById(R.id.photo_report_activity_error_tv);
-        imageSwitcher = findViewById(R.id.photo_report_activity_image_switcher);
+        imagesLayout = findViewById(R.id.photo_report_activity_images_layout);
         name = getIntent().getStringExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY);
         header.setText(name);
         SharedPreferencesEngine speUser = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         accessToken = speUser.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY);
-        spePictures = new SharedPreferencesEngine(this, name + getString(R.string.shared_preferences_pictures));
         api = new API(this, handler);
-
+        api.getPhotosOfReport(accessToken, name);
         inflater = LayoutInflater.from(this);
-        int picturesQuality = spePictures.count();
-        if (picturesQuality > 0) {
-            for (int i = 1; i <= picturesQuality; i++) {
-                ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imageSwitcher, false);
-                imageView.setImageURI(Uri.parse(spePictures.getString("picture" + i)));
-                imageSwitcher.addView(imageView);
-            }
-        } else {
-            errorTV.setText(R.string.photo_report_activity_error_tv_photos_text);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {
@@ -89,22 +72,24 @@ public class PhotoReportActivity extends AppCompatActivity {
                 public void success() {
                     switch (msg.what) {
                         case API.GET_PHOTOS_OF_REPORT_HANDLER: {
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
                             if (bundle.getInt(BundleEngine.TOTAL_PHOTOS_KEY_BUNDLE) == 0) {
                                 errorTV.setText(R.string.photo_report_activity_error_tv_photos_text);
                             } else {
                                 errorTV.setText("");
-                                imageSwitcher.removeAllViews();
+                                imagesLayout.removeAllViews();
                                 for (int i = 0; i < bundle.getInt(BundleEngine.TOTAL_PHOTOS_KEY_BUNDLE); i++) {
                                     byte[] byteArray = bundle.getByteArray("photo"+i);
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                                    ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imageSwitcher, false);
+                                    ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imagesLayout, false);
                                     imageView.setImageBitmap(bitmap);
-                                    imageSwitcher.addView(imageView);
+                                    imagesLayout.addView(imageView);
                                 }
                             }
                         } break;
                         case API.PUT_PHOTO_HANDLER_NUMBER: {
-
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
+                            errorTV.setText("");
                         } break;
                     }
                 }
@@ -121,34 +106,36 @@ public class PhotoReportActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
-            ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imageSwitcher, false);
+            ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imagesLayout, false);
             imageView.setImageURI(currentPhotoUri);
+            imagesLayout.addView(imageView);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            errorTV.setText(R.string.photo_report_activity_add_photo_error_text_warning);
 
-//            new Thread(() -> {
-//                Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//                api.putPhoto(accessToken, baos.toByteArray(), name);
-//                try {
-//                    baos.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }).start();
+            new Thread(() -> {
+                Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.WEBP, 0, baos);
+                api.putPhoto(accessToken, baos.toByteArray(), name);
+                try {
+                    baos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
 
-            imageSwitcher.addView(imageView);
-            spePictures.putString("picture" + (spePictures.count()+1), currentPhotoUri.toString());
+            image.delete();
         }
     }
 
     private void saveFullImage() throws IOException {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp;
+        String imageFileName = "WEBP_" + timeStamp;
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         image = File.createTempFile(
                 imageFileName,
-                ".jpg",
+                ".webp",
                 storageDir
         );
         currentPhotoUri = FileProvider.getUriForFile(this,
@@ -156,9 +143,5 @@ public class PhotoReportActivity extends AppCompatActivity {
                 image);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri);
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
-    }
-
-    public void onSwitcherClick(View v) {
-        imageSwitcher.showNext();
     }
 }

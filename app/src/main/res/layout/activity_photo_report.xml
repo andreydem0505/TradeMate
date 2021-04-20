@@ -44,16 +44,16 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 
-            <ImageSwitcher
-                android:id="@+id/photo_report_activity.image_switcher"
+            <LinearLayout
+                android:id="@+id/photo_report_activity.images_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onSwitcherClick"
+                android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/photo_report_activity.error_tv"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
 
-            </ImageSwitcher>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

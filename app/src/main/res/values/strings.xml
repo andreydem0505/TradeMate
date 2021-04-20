@@ -11,7 +11,6 @@
 
     <!-- Shared Preferences -->
     <string name="shared_preferences.user" translatable="false">user</string>
-    <string name="shared_preferences.pictures" translatable="false">pictures</string>
     <!-- types -->
     <string name="shared_preferences.type_merchandiser" translatable="false">merchandiser</string>
     <string name="shared_preferences.type_company" translatable="false">company</string>
@@ -156,5 +155,6 @@
     <!-- Photo Report Activity -->
     <string name="photo_report_activity.error_tv_photos.text">No photos yet</string>
     <string name="photo_report_activity.add_photo_btn.description" translatable="false">Add photo</string>
+    <string name="photo_report_activity.add_photo_error_text.warning">Wait…</string>
     <!-- Photo Report Activity -->
 </resources>
