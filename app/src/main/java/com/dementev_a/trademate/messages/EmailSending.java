@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class EmailSending implements SendingMethod {
-    private final String password = "11112005dima";
+    private final String password = "xxx";
     private final String host = "smtp.gmail.com";
     private final String from = "andreydem42@gmail.com";
     private final String protocol = "smtp";
