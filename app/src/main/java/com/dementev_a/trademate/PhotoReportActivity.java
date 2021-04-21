@@ -26,14 +26,21 @@ import android.widget.TextView;
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
+import com.dementev_a.trademate.messages.EmailSending;
+import com.dementev_a.trademate.messages.MessageSender;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PhotoReportActivity extends AppCompatActivity {
     private TextView errorTV;
@@ -44,6 +51,9 @@ public class PhotoReportActivity extends AppCompatActivity {
     private API api;
     private Uri currentPhotoUri;
     private File image;
+    private List<ImageView> images;
+    private File[] files;
+    private SharedPreferencesEngine speUser;
     private static final int REQUEST_TAKE_PHOTO = 1;
 
     @Override
@@ -56,11 +66,12 @@ public class PhotoReportActivity extends AppCompatActivity {
         imagesLayout = findViewById(R.id.photo_report_activity_images_layout);
         name = getIntent().getStringExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY);
         header.setText(name);
-        SharedPreferencesEngine speUser = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
+        speUser = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         accessToken = speUser.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY);
         api = new API(this, handler);
         api.getPhotosOfReport(accessToken, name);
         inflater = LayoutInflater.from(this);
+        images = new ArrayList<>();
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {
@@ -83,6 +94,7 @@ public class PhotoReportActivity extends AppCompatActivity {
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                                     ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imagesLayout, false);
                                     imageView.setImageBitmap(bitmap);
+                                    images.add(imageView);
                                     imagesLayout.addView(imageView);
                                 }
                             }
@@ -108,20 +120,13 @@ public class PhotoReportActivity extends AppCompatActivity {
 
             ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imagesLayout, false);
             imageView.setImageURI(currentPhotoUri);
+            images.add(imageView);
             imagesLayout.addView(imageView);
             progressBar.setVisibility(ProgressBar.VISIBLE);
             errorTV.setText(R.string.photo_report_activity_add_photo_error_text_warning);
 
             new Thread(() -> {
-                Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.WEBP, 0, baos);
-                api.putPhoto(accessToken, baos.toByteArray(), name);
-                try {
-                    baos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                api.putPhoto(accessToken, getBytesFromImageView(imageView), name);
             }).start();
 
             image.delete();
@@ -139,9 +144,58 @@ public class PhotoReportActivity extends AppCompatActivity {
                 storageDir
         );
         currentPhotoUri = FileProvider.getUriForFile(this,
-                "com.example.android.fileprovider",
+                "com.dementev_a.android.fileprovider",
                 image);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri);
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
+    }
+
+    public void onSendPhotosClickBtn(View v) {
+        if (images.size() > 0) {
+            errorTV.setText(R.string.photo_report_activity_photos_preparing_warning);
+            try {
+                files = new File[images.size()];
+                String[] uris = new String[images.size()];
+                for (int i = 0; i < images.size(); i++) {
+                    files[i] = new File(getCacheDir(), i + ".png");
+                    uris[i] = files[i].getAbsolutePath();
+                    FileOutputStream fos = new FileOutputStream(files[i]);
+                    fos.write(getBytesFromImageViewPng(images.get(i)));
+                    fos.flush();
+                    fos.close();
+                }
+                errorTV.setText(R.string.photo_report_activity_email_sending_warning);
+                Thread thread = new Thread(() -> new EmailSending().sendPhotos(uris, speUser.getString(SharedPreferencesEngine.EMAIL_KEY), name));
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                errorTV.setTextColor(getColor(R.color.green));
+                errorTV.setText(R.string.photo_report_activity_email_was_send_warning);
+                for (File f : files) {
+                    f.delete();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            errorTV.setText(R.string.photo_report_activity_no_images_error_text);
+        }
+    }
+
+    public byte[] getBytesFromImageView(@NotNull ImageView imageView) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        bitmap.compress(Bitmap.CompressFormat.WEBP, 0, baos);
+        return baos.toByteArray();
+    }
+
+    public byte[] getBytesFromImageViewPng(@NotNull ImageView imageView) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
+        return baos.toByteArray();
     }
 }

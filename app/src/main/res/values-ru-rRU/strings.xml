@@ -7,6 +7,7 @@
     <string name="global_errors.empty_fields_error.text">Вы должны заполнить все поля</string>
     <string name="global_errors.password_is_unreliable_error.text">Пароль не надёжен</string>
     <string name="global_errors.email_is_incorrect_error.text">Email некорректен</string>
+    <string name="global_errors.password_is_incorrect_error.text">Пароль не верный</string>
     <!-- Global errors -->
 
     <string name="default.text">Неизвестно</string>
@@ -99,7 +100,6 @@
     <string name="log_in_company_activity.log_in_btn.text">Войти</string>
     <!-- Errors -->
         <string name="log_in_company_activity.company_was_not_found_error.text">Компания с таким email не существует</string>
-        <string name="log_in_company_activity.wrong_password_error.text">Пароль неверный</string>
     <!-- Log In Company Activity -->
 
     <!-- Add Merchandiser Activity -->
@@ -118,7 +118,6 @@
     <string name="log_in_merchandiser_activity.log_in_btn.text">Войти</string>
     <!-- Errors -->
         <string name="log_in_merchandiser_activity.merchandiser_was_not_found_error.text">Мерчендайзер с таким email не существует</string>
-        <string name="log_in_merchandiser_activity.wrong_password_error.text">Пароль неверный</string>
     <!-- Log In Merchandiser Activity -->
 
     <!-- Add Operator Activity -->
@@ -133,5 +132,10 @@
     <!-- Photo Report Activity -->
     <string name="photo_report_activity.error_tv_photos.text">Пока нет фотографий</string>
     <string name="photo_report_activity.add_photo_error_text.warning">Подождите…</string>
+    <string name="photo_report_activity.photos_preparing.warning">Подготовка ваших фотографий…</string>
+    <string name="photo_report_activity.email_sending.warning">Отправка письма…</string>
+    <string name="photo_report_activity.email_was_send.warning">Письмо отправлено успешно!</string>
+    <!-- Errors -->
+        <string name="photo_report_activity.no_images_error.text">Нет изображений для отправки</string>
     <!-- Photo Report Activity -->
 </resources>

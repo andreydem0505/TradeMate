@@ -12,16 +12,18 @@ public class RequestErrors {
         // Global
         errors.put("Password is unreliable", R.string.global_errors_password_is_unreliable_error_text);
         errors.put("Email is incorrect", R.string.global_errors_email_is_incorrect_error_text);
+        errors.put("Password is incorrect", R.string.global_errors_password_is_incorrect_error_text);
         // Sign Up Company Activity
         errors.put("Such company is already exist", R.string.sign_up_company_activity_company_with_this_name_exist_error_text);
         errors.put("Company with this email is already exist", R.string.sign_up_company_activity_company_with_this_email_exist_error_text);
+        // Log In Merchandiser Activity
+        errors.put("Merchandiser with this email wasn't found", R.string.log_in_merchandiser_activity_merchandiser_was_not_found_error_text);
         // Company Fragment
         errors.put("Such shop is already exist", R.string.company_fragment_shop_exist_error);
         // Merchandiser Fragment
         errors.put("Photo report with this name is already exist", R.string.merchandiser_fragment_photo_report_exist_error);
         // Log In Company Activity
-        errors.put( "Company with this email wasn't found", R.string.log_in_company_activity_company_was_not_found_error_text);
-        errors.put("Password is incorrect", R.string.log_in_company_activity_wrong_password_error_text);
+        errors.put("Company with this email wasn't found", R.string.log_in_company_activity_company_was_not_found_error_text);
         // Add Merchandiser Activity
         errors.put("Merchandiser with this name is already exist", R.string.add_merchandiser_activity_merchandiser_exist_with_name_error_text);
         errors.put("Merchandiser with this email is already exist", R.string.add_merchandiser_activity_merchandiser_exist_with_email_error_text);

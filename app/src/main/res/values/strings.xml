@@ -7,6 +7,7 @@
     <string name="global_errors.empty_fields_error.text">You have to fill all fields</string>
     <string name="global_errors.password_is_unreliable_error.text">Password is unreliable</string>
     <string name="global_errors.email_is_incorrect_error.text">Email is incorrect</string>
+    <string name="global_errors.password_is_incorrect_error.text">Password is incorrect</string>
     <!-- Global errors -->
 
     <!-- Shared Preferences -->
@@ -118,7 +119,6 @@
     <string name="log_in_company_activity.log_in_btn.text">Log in</string>
     <!-- Errors -->
     <string name="log_in_company_activity.company_was_not_found_error.text">Company with this email isn`t exist</string>
-    <string name="log_in_company_activity.wrong_password_error.text">Wrong password</string>
     <!-- Log In Company Activity -->
 
     <!-- Add Merchandiser Activity -->
@@ -139,7 +139,6 @@
     <string name="log_in_merchandiser_activity.log_in_btn.text">Log in</string>
     <!-- Errors -->
     <string name="log_in_merchandiser_activity.merchandiser_was_not_found_error.text">Merchandiser with this email isn`t exist</string>
-    <string name="log_in_merchandiser_activity.wrong_password_error.text">Wrong password</string>
     <!-- Log In Merchandiser Activity -->
 
     <!-- Add Operator Activity -->
@@ -156,5 +155,10 @@
     <string name="photo_report_activity.error_tv_photos.text">No photos yet</string>
     <string name="photo_report_activity.add_photo_btn.description" translatable="false">Add photo</string>
     <string name="photo_report_activity.add_photo_error_text.warning">Wait…</string>
+    <string name="photo_report_activity.photos_preparing.warning">Preparing your photos…</string>
+    <string name="photo_report_activity.email_sending.warning">Sending email…</string>
+    <string name="photo_report_activity.email_was_send.warning">Email was send successfully</string>
+    <!-- Errors -->
+    <string name="photo_report_activity.no_images_error.text">No images to send</string>
     <!-- Photo Report Activity -->
 </resources>
