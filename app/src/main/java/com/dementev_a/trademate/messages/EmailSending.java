@@ -1,9 +1,13 @@
 package com.dementev_a.trademate.messages;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
@@ -13,9 +17,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 public class EmailSending implements SendingMethod {
-    private final String password = "xxx";
+    private final String password = "11112005dima";
     private final String host = "smtp.gmail.com";
     private final String from = "andreydem42@gmail.com";
     private final String protocol = "smtp";
@@ -38,7 +43,7 @@ public class EmailSending implements SendingMethod {
         }
     }
 
-    public void sendPhotos(String[] uris, String to, String reportName) {
+    public void sendPhotos(List<byte[]> bytes, String to, String reportName) {
         Session session = createSession();
         try {
             MimeMessage mimeMessage = new MimeMessage(session);
@@ -47,10 +52,15 @@ public class EmailSending implements SendingMethod {
             mimeMessage.setSubject(reportName);
             Multipart multipart = new MimeMultipart();
             try {
-                for (String uri : uris) {
-                    MimeBodyPart attachmentPart = new MimeBodyPart();
-                    attachmentPart.attachFile(new File(uri));
-                    multipart.addBodyPart(attachmentPart);
+                int k = 0;
+                for (byte[] image : bytes) {
+                    k++;
+                    MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                    InputStream inputStream =  new ByteArrayInputStream(image);
+                    DataSource byteArraySource = new ByteArrayDataSource(inputStream, "application/octet-stream");
+                    mimeBodyPart.setFileName(k + ".png");
+                    mimeBodyPart.setDataHandler(new DataHandler(byteArraySource));
+                    multipart.addBodyPart(mimeBodyPart);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -27,7 +27,6 @@ import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.messages.EmailSending;
-import com.dementev_a.trademate.messages.MessageSender;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 
@@ -35,7 +34,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -153,19 +151,12 @@ public class PhotoReportActivity extends AppCompatActivity {
     public void onSendPhotosClickBtn(View v) {
         if (images.size() > 0) {
             errorTV.setText(R.string.photo_report_activity_photos_preparing_warning);
-            try {
-                files = new File[images.size()];
-                String[] uris = new String[images.size()];
+                List<byte[]> bytes = new ArrayList<>();
                 for (int i = 0; i < images.size(); i++) {
-                    files[i] = new File(getCacheDir(), i + ".png");
-                    uris[i] = files[i].getAbsolutePath();
-                    FileOutputStream fos = new FileOutputStream(files[i]);
-                    fos.write(getBytesFromImageViewPng(images.get(i)));
-                    fos.flush();
-                    fos.close();
+                    bytes.add(getBytesFromImageViewPng(images.get(i)));
                 }
                 errorTV.setText(R.string.photo_report_activity_email_sending_warning);
-                Thread thread = new Thread(() -> new EmailSending().sendPhotos(uris, speUser.getString(SharedPreferencesEngine.EMAIL_KEY), name));
+                Thread thread = new Thread(() -> new EmailSending().sendPhotos(bytes, speUser.getString(SharedPreferencesEngine.EMAIL_KEY), name));
                 thread.start();
                 try {
                     thread.join();
@@ -174,12 +165,6 @@ public class PhotoReportActivity extends AppCompatActivity {
                 }
                 errorTV.setTextColor(getColor(R.color.green));
                 errorTV.setText(R.string.photo_report_activity_email_was_send_warning);
-                for (File f : files) {
-                    f.delete();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         } else {
             errorTV.setText(R.string.photo_report_activity_no_images_error_text);
         }

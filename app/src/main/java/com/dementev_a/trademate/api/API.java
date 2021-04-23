@@ -303,8 +303,9 @@ public class API {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("subject", shop);
-            jsonObject.put("text", text);
-            jsonObject.put("operator", operatorName);
+            jsonObject.put("text", text + "\n" + String.format(context.getString(R.string.make_request_activity_letter_merchandiser_text), merchandiserName));
+            jsonObject.put("operatorName", operatorName);
+            jsonObject.put("operatorEmail", operatorEmail);
             jsonObject.put("dateTime", LocalDateTime.now().toString());
         } catch (JSONException e) {
             Bundle bundle = new Bundle();
@@ -318,14 +319,7 @@ public class API {
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .post(body)
                 .build();
-        new RequestSender(context, client, request, handler, SEND_EMAIL_HANDLER_NUMBER) {
-            @Override
-            public void successMessage() {
-                MessageSender sender = new MessageSender();
-                sender.setMethod(new EmailSending());
-                sender.send(new StrategyMessage(operatorEmail, shop, text, String.format(context.getString(R.string.make_request_activity_letter_merchandiser_text), merchandiserName)));
-            }
-        }.execute();
+        new RequestSender(context, client, request, handler, SEND_EMAIL_HANDLER_NUMBER).execute();
     }
 
     public void getPhotoReports(String accessToken) {
