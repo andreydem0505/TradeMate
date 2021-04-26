@@ -30,6 +30,8 @@ public class RequestErrors {
         // Add Operator Activity
         errors.put("Operator with this name is already exist", R.string.add_operator_activity_operator_with_name_exist_error_text);
         errors.put("Operator with this email is already exist", R.string.add_operator_activity_operator_with_email_exist_error_text);
+        // Photo Report Activity
+        errors.put("No photos to send", R.string.photo_report_activity_no_images_error_text);
     }
 
     public static Map<Integer, Integer> globalErrors = Map.of(

@@ -26,7 +26,6 @@ import android.widget.TextView;
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
-import com.dementev_a.trademate.messages.EmailSending;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 
@@ -36,9 +35,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class PhotoReportActivity extends AppCompatActivity {
     private TextView errorTV;
@@ -49,9 +46,6 @@ public class PhotoReportActivity extends AppCompatActivity {
     private API api;
     private Uri currentPhotoUri;
     private File image;
-    private List<ImageView> images;
-    private File[] files;
-    private SharedPreferencesEngine speUser;
     private static final int REQUEST_TAKE_PHOTO = 1;
 
     @Override
@@ -64,12 +58,11 @@ public class PhotoReportActivity extends AppCompatActivity {
         imagesLayout = findViewById(R.id.photo_report_activity_images_layout);
         name = getIntent().getStringExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY);
         header.setText(name);
-        speUser = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
+        SharedPreferencesEngine speUser = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         accessToken = speUser.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY);
         api = new API(this, handler);
         api.getPhotosOfReport(accessToken, name);
         inflater = LayoutInflater.from(this);
-        images = new ArrayList<>();
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {
@@ -92,7 +85,6 @@ public class PhotoReportActivity extends AppCompatActivity {
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                                     ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imagesLayout, false);
                                     imageView.setImageBitmap(bitmap);
-                                    images.add(imageView);
                                     imagesLayout.addView(imageView);
                                 }
                             }
@@ -100,6 +92,11 @@ public class PhotoReportActivity extends AppCompatActivity {
                         case API.PUT_PHOTO_HANDLER_NUMBER: {
                             progressBar.setVisibility(ProgressBar.INVISIBLE);
                             errorTV.setText("");
+                        } break;
+                        case API.SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER: {
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
+                            errorTV.setTextColor(getColor(R.color.green));
+                            errorTV.setText(R.string.photo_report_activity_email_was_send_warning);
                         } break;
                     }
                 }
@@ -118,14 +115,12 @@ public class PhotoReportActivity extends AppCompatActivity {
 
             ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imagesLayout, false);
             imageView.setImageURI(currentPhotoUri);
-            images.add(imageView);
             imagesLayout.addView(imageView);
             progressBar.setVisibility(ProgressBar.VISIBLE);
+            errorTV.setTextColor(getColor(R.color.red));
             errorTV.setText(R.string.photo_report_activity_add_photo_error_text_warning);
 
-            new Thread(() -> {
-                api.putPhoto(accessToken, getBytesFromImageView(imageView), name);
-            }).start();
+            new Thread(() -> api.putPhoto(accessToken, getBytesFromImageView(imageView), name)).start();
 
             image.delete();
         }
@@ -149,38 +144,14 @@ public class PhotoReportActivity extends AppCompatActivity {
     }
 
     public void onSendPhotosClickBtn(View v) {
-        if (images.size() > 0) {
-            errorTV.setText(R.string.photo_report_activity_photos_preparing_warning);
-                List<byte[]> bytes = new ArrayList<>();
-                for (int i = 0; i < images.size(); i++) {
-                    bytes.add(getBytesFromImageViewPng(images.get(i)));
-                }
-                errorTV.setText(R.string.photo_report_activity_email_sending_warning);
-                Thread thread = new Thread(() -> new EmailSending().sendPhotos(bytes, speUser.getString(SharedPreferencesEngine.EMAIL_KEY), name));
-                thread.start();
-                try {
-                    thread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                errorTV.setTextColor(getColor(R.color.green));
-                errorTV.setText(R.string.photo_report_activity_email_was_send_warning);
-        } else {
-            errorTV.setText(R.string.photo_report_activity_no_images_error_text);
-        }
+        errorTV.setText(R.string.photo_report_activity_photos_preparing_warning);
+        api.sendPhotoReport(accessToken, name);
     }
 
     public byte[] getBytesFromImageView(@NotNull ImageView imageView) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         bitmap.compress(Bitmap.CompressFormat.WEBP, 0, baos);
-        return baos.toByteArray();
-    }
-
-    public byte[] getBytesFromImageViewPng(@NotNull ImageView imageView) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
         return baos.toByteArray();
     }
 }

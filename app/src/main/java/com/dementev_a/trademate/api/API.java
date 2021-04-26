@@ -10,9 +10,6 @@ import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.json.JsonEngine;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
-import com.dementev_a.trademate.messages.EmailSending;
-import com.dementev_a.trademate.messages.MessageSender;
-import com.dementev_a.trademate.messages.StrategyMessage;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestSender;
 import com.dementev_a.trademate.requests.RequestStatus;
@@ -47,8 +44,9 @@ public class API {
             ADD_SHOP_URL = "/create/shop",
             GET_PHOTO_REPORTS_URL = "/photo_reports",
             ADD_PHOTO_REPORT_URL = "/create/photo_report",
-            GET_PHOTOS_OF_REPORT_URL = "/photos",
-            PUT_PHOTO_URL = "/put_photo";
+            GET_PHOTOS_OF_REPORT_URL = "/report/%s/photos",
+            PUT_PHOTO_URL = "/report/%s/put_photo",
+            SEND_PHOTO_REPORT_TO_EMAIL_URL = "/report/%s/send";
 
     public static final String
             SUCCESS_RESPONSE = "Success";
@@ -71,7 +69,8 @@ public class API {
         GET_PHOTO_REPORTS_HANDLER_NUMBER = 12,
         ADD_PHOTO_REPORT_HANDLER_NUMBER = 13,
         GET_PHOTOS_OF_REPORT_HANDLER = 14,
-        PUT_PHOTO_HANDLER_NUMBER = 15;
+        PUT_PHOTO_HANDLER_NUMBER = 15,
+        SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER = 16;
 
     private final OkHttpClient client;
     private final Context context;
@@ -363,7 +362,7 @@ public class API {
 
     public void getPhotosOfReport(String accessToken, String name) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + GET_PHOTOS_OF_REPORT_URL + "?name=" + name)
+                .url(MAIN_URL + String.format(GET_PHOTOS_OF_REPORT_URL, name))
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
         new RequestSender(context, client, request, handler, GET_PHOTOS_OF_REPORT_HANDLER) {
@@ -380,7 +379,6 @@ public class API {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("byteCode", Base64.encodeToString(byteCode, Base64.CRLF));
-            jsonObject.put("photoReportName", photoReportName);
         } catch (JSONException e) {
             Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
@@ -389,10 +387,18 @@ public class API {
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
-                .url(MAIN_URL + PUT_PHOTO_URL)
+                .url(MAIN_URL + String.format(PUT_PHOTO_URL, photoReportName))
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .post(body)
                 .build();
         new RequestSender(context, client, request, handler, PUT_PHOTO_HANDLER_NUMBER).execute();
+    }
+
+    public void sendPhotoReport(String accessToken, String name) {
+        Request request = new Request.Builder()
+                .url(MAIN_URL + String.format(SEND_PHOTO_REPORT_TO_EMAIL_URL, name))
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .build();
+        new RequestSender(context, client, request, handler, SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER).execute();
     }
 }
