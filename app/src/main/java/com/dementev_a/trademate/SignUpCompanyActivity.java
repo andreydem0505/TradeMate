@@ -28,6 +28,7 @@ public class SignUpCompanyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_sign_up_company);
         nameET = findViewById(R.id.sign_up_company_activity_name_et);
         emailET = findViewById(R.id.sign_up_company_activity_email_et);

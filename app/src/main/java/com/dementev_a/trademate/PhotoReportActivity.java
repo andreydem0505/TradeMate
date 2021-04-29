@@ -51,6 +51,7 @@ public class PhotoReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_photo_report);
         TextView header = findViewById(R.id.photo_report_activity_header);
         progressBar = findViewById(R.id.photo_report_activity_progress_bar);

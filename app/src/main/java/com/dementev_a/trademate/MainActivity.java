@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        setTheme(R.style.Theme_TradeMate);
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_main);
         spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
         state = NONE;

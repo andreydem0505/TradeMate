@@ -29,6 +29,7 @@ public class AddOperatorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_add_operator);
         nameET = findViewById(R.id.add_operator_activity_name_et);
         emailET = findViewById(R.id.add_operator_activity_email_et);

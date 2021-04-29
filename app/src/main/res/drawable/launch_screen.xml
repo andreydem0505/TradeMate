@@ -4,10 +4,10 @@
 
     <item android:drawable="@android:color/white"/>
 
-    <item>
-        <bitmap
-            android:src="@drawable/trademate_small"
-            android:gravity="center"/>
+    <item
+        android:drawable="@drawable/ic_trademate_small"
+        android:gravity="center">
+
     </item>
 
 </layer-list>

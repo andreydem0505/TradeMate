@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="false"
         android:largeHeap="true"
-        android:theme="@style/Theme.TradeMate">
+        android:theme="@style/Theme.TradeMate.Launcher">
         <activity android:name=".PhotoReportActivity"/>
         <activity android:name=".AboutMerchandiserActivity" />
         <activity android:name=".AboutRequestActivity" />

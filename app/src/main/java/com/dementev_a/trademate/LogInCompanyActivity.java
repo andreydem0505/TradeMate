@@ -27,6 +27,7 @@ public class LogInCompanyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_log_in_company);
         emailET = findViewById(R.id.log_in_company_activity_email_et);
         passwordET = findViewById(R.id.log_in_company_activity_password_et);

@@ -29,6 +29,7 @@ public class AddMerchandiserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_add_merchandiser);
         nameET = findViewById(R.id.add_merchandiser_activity_name_et);
         emailET = findViewById(R.id.add_merchandiser_activity_email_et);

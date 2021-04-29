@@ -44,6 +44,7 @@ public class MakeRequestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_make_request);
         spinner = findViewById(R.id.make_request_activity_spinner);
         nameET = findViewById(R.id.make_request_activity_name_et);

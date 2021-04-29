@@ -18,6 +18,7 @@ public class AboutRequestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_about_request);
         TextView headerTV = findViewById(R.id.about_request_activity_header);
         TextView textTV = findViewById(R.id.about_request_activity_text);

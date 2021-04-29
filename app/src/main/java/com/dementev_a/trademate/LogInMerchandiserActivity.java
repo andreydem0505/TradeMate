@@ -27,6 +27,7 @@ public class LogInMerchandiserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_log_in_merchandiser);
         emailET = findViewById(R.id.log_in_merchandiser_activity_email_et);
         passwordET = findViewById(R.id.log_in_merchandiser_activity_password_et);

@@ -15,6 +15,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_list);
         TextView headerTV = findViewById(R.id.list_activity_header_tv);
         ListView listView = findViewById(R.id.list_activity_list);

@@ -31,6 +31,7 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_about_merchandiser);
         TextView headerTV = findViewById(R.id.about_merchandiser_activity_header_tv);
         TextView emailTV = findViewById(R.id.about_merchandiser_activity_email_tv);
