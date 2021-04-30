@@ -55,14 +55,29 @@ public class RequestSender {
             public void onResponse(@NotNull Call call, @NotNull Response response) {
                 try {
                     stringResponse = response.body().string();
-                    String message = JsonEngine.getStringFromJson(stringResponse, "message");
-                    if (message.equals(API.SUCCESS_RESPONSE)) {
-                        successMessage();
-                        bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_OK);
-                    } else if (RequestErrors.errors.containsKey(message)) {
-                        BundleEngine.putError(bundle, RequestErrors.errors.get(message));
-                    } else {
-                        bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+                    switch (response.code()) {
+                        case 200: {
+                            String message = JsonEngine.getStringFromJson(stringResponse, "message");
+                            if (message.equals(API.SUCCESS_RESPONSE)) {
+                                successMessage();
+                                bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_OK);
+                            } else if (RequestErrors.errors.containsKey(message)) {
+                                BundleEngine.putError(bundle, RequestErrors.errors.get(message));
+                            } else {
+                                bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+                            }
+                        } break;
+                        case 400: {
+                            String message = JsonEngine.getInputError(stringResponse, "violations");
+                            if (RequestErrors.errors.containsKey(message)) {
+                                BundleEngine.putError(bundle, RequestErrors.errors.get(message));
+                            } else {
+                                bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+                            }
+                        } break;
+                        default: {
+                            bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);
+                        } break;
                     }
                 } catch (IOException e) {
                     bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_SERVER_ERROR);

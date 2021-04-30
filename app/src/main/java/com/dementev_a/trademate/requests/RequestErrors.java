@@ -34,9 +34,11 @@ public class RequestErrors {
         errors.put("No photos to send", R.string.photo_report_activity_no_images_error_text);
     }
 
-    public static Map<Integer, Integer> globalErrors = Map.of(
-            RequestStatus.STATUS_SERVER_ERROR, R.string.global_errors_server_error_text,
-            RequestStatus.STATUS_INTERNET_ERROR, R.string.global_errors_internet_connection_error_text,
-            RequestStatus.STATUS_EMPTY_FIELDS, R.string.global_errors_empty_fields_error_text
-    );
+    public static Map<Integer, Integer> globalErrors = new HashMap<>();
+
+    static {
+        globalErrors.put(RequestStatus.STATUS_SERVER_ERROR, R.string.global_errors_server_error_text);
+        globalErrors.put(RequestStatus.STATUS_INTERNET_ERROR, R.string.global_errors_internet_connection_error_text);
+        globalErrors.put(RequestStatus.STATUS_EMPTY_FIELDS, R.string.global_errors_empty_fields_error_text);
+    }
 }

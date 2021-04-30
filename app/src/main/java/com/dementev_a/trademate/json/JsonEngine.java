@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class JsonEngine {
+    // Depend on API
 
     public static String getStringFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
@@ -29,6 +30,27 @@ public class JsonEngine {
         }
         return result;
     }
+
+    public static String getInputError(String json, String arg) {
+        JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
+        JsonArray array = jo.get(arg).getAsJsonArray();
+        jo = array.get(0).getAsJsonObject();
+        return jo.get("message").getAsString();
+    }
+    /* Example
+    {
+        "violations": [
+            {
+                "fieldName": "password",
+                "message": "Password is unreliable"
+            },
+            {
+                "fieldName": "email",
+                "message": "Email is incorrect"
+            }
+        ]
+    }
+    */
 
     public static MerchandiserJson[] getMerchandisersArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
