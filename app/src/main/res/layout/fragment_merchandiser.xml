@@ -25,7 +25,6 @@
                 android:textSize="@dimen/merchandiser_fragment.merchandiser_name.text_size"
                 android:text="@string/default.text"
                 android:paddingBottom="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <LinearLayout

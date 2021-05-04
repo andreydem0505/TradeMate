@@ -40,6 +40,7 @@
     <string name="company_fragment.add_shop_btn.description" translatable="false">Add shop</string>
     <string name="company_fragment.merchandiser.description" translatable="false">Merchandiser</string>
     <string name="company_fragment.shop.description" translatable="false">Shop</string>
+    <string name="company_fragment.settings_btn.description" translatable="false">Settings</string>
     <!-- Errors -->
     <string name="company_fragment.shop_exist.error">Shop is already exist</string>
     <!-- Company Fragment -->
@@ -161,4 +162,12 @@
     <!-- Errors -->
     <string name="photo_report_activity.no_images_error.text">No images to send</string>
     <!-- Photo Report Activity -->
+
+    <!-- Settings Activity -->
+    <string name="settings.text">Settings</string>
+    <!-- Company Settings Activity -->
+    <string name="settings_company_activity.to_merchandiser_tv.text">You are using the app as company. If you want to use it as merchandiser, click the button below. Your name, email and password will remain saved.</string>
+    <string name="settings_company_activity.to_merchandiser_btn.text">Become a merchandiser</string>
+    <!-- Company Settings Activity -->
+    <!-- Settings Activity -->
 </resources>

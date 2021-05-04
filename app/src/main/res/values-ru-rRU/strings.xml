@@ -138,4 +138,12 @@
     <!-- Errors -->
         <string name="photo_report_activity.no_images_error.text">Нет изображений для отправки</string>
     <!-- Photo Report Activity -->
+
+    <!-- Settings Activity -->
+    <string name="settings.text">Настройки</string>
+        <!-- Company Settings Activity -->
+    <string name="settings_company_activity.to_merchandiser_tv.text">Вы используете приложение как руководитель компании. Если вы хотите использовать его в качестве мерчендайзера, нажмите кнопку ниже. Ваше имя, email и пароль останутся сохраненными.</string>
+    <string name="settings_company_activity.to_merchandiser_btn.text">Стать мерчендайзером</string>
+        <!-- Company Settings Activity -->
+    <!-- Settings Activity -->
 </resources>
