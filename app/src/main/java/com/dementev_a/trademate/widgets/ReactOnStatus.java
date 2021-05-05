@@ -11,12 +11,14 @@ import com.dementev_a.trademate.requests.RequestStatus;
 
 public abstract class ReactOnStatus {
     private final int
-        TEXT_VIEW_WIDGET = 0,
-        TOAST_WIDGET = 1;
+        NO_WIDGET = 0,
+        TEXT_VIEW_WIDGET = 1,
+        TOAST_WIDGET = 2;
     private final Bundle bundle;
     private TextView errorTV;
     private Context context;
     private final int widget;
+    private int status;
 
     public ReactOnStatus(Bundle bundle, TextView textView) {
         this.bundle = bundle;
@@ -30,11 +32,22 @@ public abstract class ReactOnStatus {
         widget = TOAST_WIDGET;
     }
 
+    public ReactOnStatus(Bundle bundle) {
+        this.bundle = bundle;
+        widget = NO_WIDGET;
+    }
+
     public void execute() {
-        int status = bundle.getInt(BundleEngine.STATUS_KEY_BUNDLE);
+        status = bundle.getInt(BundleEngine.STATUS_KEY_BUNDLE);
         if (status == RequestStatus.STATUS_OK) {
             success();
-        } else if (status == RequestStatus.STATUS_ERROR_TEXT) {
+        } else {
+            failure();
+        }
+    }
+
+    public void failure() {
+        if (status == RequestStatus.STATUS_ERROR_TEXT) {
             if (widget == TEXT_VIEW_WIDGET) {
                 errorTV.setText(bundle.getInt(BundleEngine.ERROR_TEXT_KEY_BUNDLE));
             } else if (widget == TOAST_WIDGET) {

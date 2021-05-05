@@ -16,7 +16,8 @@ public class SharedPreferencesEngine {
         TYPE_KEY = "type",
         NAME_KEY = "name",
         EMAIL_KEY = "email",
-        ACCESS_TOKEN_KEY = "accessToken";
+        ACCESS_TOKEN_KEY = "accessToken",
+        PASSWORD_KEY = "password";
 
     public SharedPreferencesEngine(@NotNull Context context, String source) {
         sp = context.getSharedPreferences(source, Context.MODE_PRIVATE);
@@ -31,12 +32,13 @@ public class SharedPreferencesEngine {
         editor.apply();
     }
 
-    public void saveUser(String type, String name, String email, String accessToken) {
+    public void saveUser(String type, String name, String email, String accessToken, String password) {
         Map<String, String> map = new HashMap<>();
         map.put(TYPE_KEY, type);
         map.put(NAME_KEY, name);
         map.put(EMAIL_KEY, email);
         map.put(ACCESS_TOKEN_KEY, accessToken);
+        map.put(PASSWORD_KEY, password);
         addManyStrings(map);
     }
 

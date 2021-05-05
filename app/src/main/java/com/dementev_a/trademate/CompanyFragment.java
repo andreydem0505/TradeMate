@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ import java.util.List;
 public class CompanyFragment extends Fragment implements View.OnClickListener {
     private TextView shopsQuantityTV, operatorsQuantityTV, employeesQuantityTV, requestsQuantityTV;
     private Button aboutOperatorsBtn, aboutMerchandisersBtn, aboutRequestsBtn, aboutShopsBtn;
+    private ImageButton settingsBtn;
     private FloatingActionButton addOperatorBtn, addMerchandiserBtn, addShopBtn;
     private EditText addShopET;
     private ProgressBar PB1, PB2, PB3, PB4;
@@ -69,6 +71,8 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         requestsQuantityTV = view.findViewById(R.id.company_fragment_requests_quantity);
         shopsQuantityTV = view.findViewById(R.id.company_fragment_shops_quantity);
         addShopET = view.findViewById(R.id.company_fragment_add_shop_et);
+        settingsBtn = view.findViewById(R.id.company_fragment_settings_btn);
+        settingsBtn.setOnClickListener(this);
         PB1 = view.findViewById(R.id.company_fragment_panel_1_progress_bar);
         PB2 = view.findViewById(R.id.company_fragment_panel_2_progress_bar);
         PB3 = view.findViewById(R.id.company_fragment_panel_3_progress_bar);
@@ -205,6 +209,10 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.SHOPS_DATA_TYPE);
                 intent.putExtra(IntentConstants.SHOPS_INTENT_KEY, shops);
+                startActivity(intent);
+            } break;
+            case R.id.company_fragment_settings_btn: {
+                Intent intent = new Intent(getContext(), CompanySettingsActivity.class);
                 startActivity(intent);
             } break;
         }

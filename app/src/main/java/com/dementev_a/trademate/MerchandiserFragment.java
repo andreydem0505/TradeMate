@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
     private ProgressBar PB1, PB2;
     private Button aboutRequestsBtn, aboutPhotoReportsBtn;
     private FloatingActionButton addRequestBtn, addPhotoReportBtn;
+    private ImageButton settingsBtn;
     private String merchandiserName, accessToken, photoReportsQuantityText;
     private String[] reports;
     private int photoReportsQuantity;
@@ -61,6 +63,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         requestsQuantityTV = view.findViewById(R.id.merchandiser_fragment_requests_quantity);
         photoReportsQuantityTV = view.findViewById(R.id.merchandiser_fragment_photo_reports_quantity);
         addPhotoReportET = view.findViewById(R.id.merchandiser_fragment_add_photo_report_et);
+        settingsBtn = view.findViewById(R.id.merchandiser_fragment_settings_btn);
         PB1 = view.findViewById(R.id.merchandiser_fragment_panel_1_progress_bar);
         PB2 = view.findViewById(R.id.merchandiser_fragment_panel_2_progress_bar);
 
@@ -155,6 +158,10 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
                 } else {
                     api.addPhotoReport(accessToken, addPhotoReportET.getText().toString());
                 }
+            } break;
+            case R.id.merchandiser_fragment_settings_btn: {
+                Intent intent = new Intent(getContext(), MerchandiserSettingsActivity.class);
+                startActivity(intent);
             } break;
         }
     }

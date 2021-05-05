@@ -174,7 +174,7 @@ public class API {
             public void successMessage() {
                 String accessToken = JsonEngine.getStringFromJson(getStringResponse(), "accessToken");
                 SharedPreferencesEngine spe = new SharedPreferencesEngine(context, context.getString(R.string.shared_preferences_user));
-                spe.saveUser(context.getString(R.string.shared_preferences_type_company), name, email, accessToken);
+                spe.saveUser(context.getString(R.string.shared_preferences_type_company), name, email, accessToken, password);
             }
         }.execute();
     }
@@ -225,7 +225,7 @@ public class API {
                 String name = JsonEngine.getStringFromJson(getStringResponse(), "name");
                 String accessToken = JsonEngine.getStringFromJson(getStringResponse(), "accessToken");
                 SharedPreferencesEngine spe = new SharedPreferencesEngine(context, context.getString(R.string.shared_preferences_user));
-                spe.saveUser(context.getString(R.string.shared_preferences_type_company), name, email, accessToken);
+                spe.saveUser(context.getString(R.string.shared_preferences_type_company), name, email, accessToken, password);
             }
         }.execute();
     }
@@ -293,7 +293,7 @@ public class API {
                 String name = JsonEngine.getStringFromJson(getStringResponse(), "name");
                 String accessToken = JsonEngine.getStringFromJson(getStringResponse(), "accessToken");
                 SharedPreferencesEngine spe = new SharedPreferencesEngine(context, context.getString(R.string.shared_preferences_user));
-                spe.saveUser(context.getString(R.string.shared_preferences_type_merchandiser), name, email, accessToken);
+                spe.saveUser(context.getString(R.string.shared_preferences_type_merchandiser), name, email, accessToken, password);
             }
         }.execute();
     }

@@ -23,7 +23,8 @@
         android:roundIcon="@drawable/trademate_letter"
         android:supportsRtl="true"
         android:theme="@style/Theme.TradeMate.Launcher">
-        <activity android:name=".CompanySettingsActivity"></activity>
+        <activity android:name=".MerchandiserSettingsActivity"></activity>
+        <activity android:name=".CompanySettingsActivity" />
         <activity android:name=".PhotoReportActivity" />
         <activity android:name=".AboutMerchandiserActivity" />
         <activity android:name=".AboutRequestActivity" />

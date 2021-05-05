@@ -13,12 +13,8 @@ import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 
 public class MainActivity extends AppCompatActivity {
-    private final int
-            NONE = 0,
-            DESCRIPTION_STATE = 1,
-            USER_STATE = 2;
     private SharedPreferencesEngine spe;
-    private int state;
+    private String userType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_main);
         spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
-        state = NONE;
     }
 
     @Override
@@ -34,28 +29,29 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (spe.count() == 0) { // user has not a role
+        if (spe.count() == 0 && userType == null) { // user has not a role
             Fragment descriptionFragment = new DescriptionFragment();
             transaction.replace(R.id.fragment, descriptionFragment);
-            state = DESCRIPTION_STATE;
-        } else if (state != USER_STATE) { // user has a role
+            transaction.commitNowAllowingStateLoss();
+        } else { // user has a role
             String type = spe.getString(SharedPreferencesEngine.TYPE_KEY);
-            Bundle bundle = new Bundle();
-            bundle.putString(BundleEngine.ACCESS_TOKEN_KEY_BUNDLE, spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY));
-            if (type.equals(getString(R.string.shared_preferences_type_company))) {
-                bundle.putString(BundleEngine.COMPANY_NAME_KEY_BUNDLE, spe.getString(SharedPreferencesEngine.NAME_KEY));
-                Fragment companyFragment = new CompanyFragment();
-                companyFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment, companyFragment);
-                state = USER_STATE;
-            } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
-                bundle.putString(BundleEngine.MERCHANDISER_NAME_KEY_BUNDLE, spe.getString(SharedPreferencesEngine.NAME_KEY));
-                Fragment merchandiserFragment = new MerchandiserFragment();
-                merchandiserFragment.setArguments(bundle);
-                transaction.replace(R.id.fragment, merchandiserFragment);
-                state = USER_STATE;
+            if (userType == null || !userType.equals(type)) {
+                userType = type;
+                Bundle bundle = new Bundle();
+                bundle.putString(BundleEngine.ACCESS_TOKEN_KEY_BUNDLE, spe.getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY));
+                if (type.equals(getString(R.string.shared_preferences_type_company))) {
+                    bundle.putString(BundleEngine.COMPANY_NAME_KEY_BUNDLE, spe.getString(SharedPreferencesEngine.NAME_KEY));
+                    Fragment companyFragment = new CompanyFragment();
+                    companyFragment.setArguments(bundle);
+                    transaction.replace(R.id.fragment, companyFragment);
+                } else if (type.equals(getString(R.string.shared_preferences_type_merchandiser))) {
+                    bundle.putString(BundleEngine.MERCHANDISER_NAME_KEY_BUNDLE, spe.getString(SharedPreferencesEngine.NAME_KEY));
+                    Fragment merchandiserFragment = new MerchandiserFragment();
+                    merchandiserFragment.setArguments(bundle);
+                    transaction.replace(R.id.fragment, merchandiserFragment);
+                }
+                transaction.commitNowAllowingStateLoss();
             }
         }
-        transaction.commitAllowingStateLoss();
     }
 }

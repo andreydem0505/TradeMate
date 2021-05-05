@@ -53,6 +53,7 @@
     <string name="merchandiser_fragment.photo_reports_quantity.text">All photo reports: %1$d</string>
     <string name="merchandiser_fragment.add_photo_report_btn.description" translatable="false">Add photo report</string>
     <string name="merchandiser_fragment.add_photo_report_et.hint">New photo report</string>
+    <string name="merchandiser_fragment.settings_btn.description" translatable="false">Settings</string>
     <!-- Errors -->
     <string name="merchandiser_fragment.photo_report_exist.error">Photo report is already exist</string>
     <!-- Merchandiser Fragment -->
