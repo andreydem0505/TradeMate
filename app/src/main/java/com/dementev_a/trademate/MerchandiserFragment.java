@@ -64,6 +64,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
         photoReportsQuantityTV = view.findViewById(R.id.merchandiser_fragment_photo_reports_quantity);
         addPhotoReportET = view.findViewById(R.id.merchandiser_fragment_add_photo_report_et);
         settingsBtn = view.findViewById(R.id.merchandiser_fragment_settings_btn);
+        settingsBtn.setOnClickListener(this);
         PB1 = view.findViewById(R.id.merchandiser_fragment_panel_1_progress_bar);
         PB2 = view.findViewById(R.id.merchandiser_fragment_panel_2_progress_bar);
 

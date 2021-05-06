@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:textColor="@color/red"
-                    android:text="@string/settings_company_activity.to_merchandiser_tv.text"/>
+                    android:text="@string/settings_merchandiser_activity.to_company_tv.text"/>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                     android:backgroundTint="@color/red"
                     android:textAllCaps="false"
                     android:onClick="onBecomeMerchandiserBtnClick"
-                    android:text="@string/settings_company_activity.to_merchandiser_btn.text"/>
+                    android:text="@string/settings_merchandiser_activity.to_company_btn.text"/>
 
             </LinearLayout>
 

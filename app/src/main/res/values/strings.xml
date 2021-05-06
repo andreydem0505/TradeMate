@@ -167,8 +167,13 @@
     <!-- Settings Activity -->
     <string name="settings.text">Settings</string>
     <!-- Company Settings Activity -->
-    <string name="settings_company_activity.to_merchandiser_tv.text">You are using the app as company. If you want to use it as merchandiser, click the button below. Your name, email and password will remain saved.</string>
+    <string name="settings_company_activity.to_merchandiser_tv.text">You are using the app as company director. If you want to use it as merchandiser, click the button below. Your name, email and password will remain saved.</string>
     <string name="settings_company_activity.to_merchandiser_btn.text">Become a merchandiser</string>
     <!-- Company Settings Activity -->
+    <!-- Merchandiser Settings Activity -->
+    <string name="settings_merchandiser_activity.to_company_tv.text">You are using the app as merchandiser. If you want to use it as company director, click the button below. Your name, email and password will remain saved.</string>
+    <string name="settings_merchandiser_activity.to_company_btn.text">Become a company director</string>
+    <string name="settings_merchandiser_activity.no_company.error">It seems like you haven`t registered as company director</string>
+    <!-- Merchandiser Settings Activity -->
     <!-- Settings Activity -->
 </resources>

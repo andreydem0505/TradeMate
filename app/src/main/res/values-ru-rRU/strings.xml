@@ -142,8 +142,13 @@
     <!-- Settings Activity -->
     <string name="settings.text">Настройки</string>
         <!-- Company Settings Activity -->
-    <string name="settings_company_activity.to_merchandiser_tv.text">Вы используете приложение как руководитель компании. Если вы хотите использовать его в качестве мерчендайзера, нажмите кнопку ниже. Ваше имя, email и пароль останутся сохраненными.</string>
-    <string name="settings_company_activity.to_merchandiser_btn.text">Стать мерчендайзером</string>
+        <string name="settings_company_activity.to_merchandiser_tv.text">Вы используете приложение как руководитель компании. Если вы хотите использовать его в качестве мерчендайзера, нажмите кнопку ниже. Ваше имя, email и пароль останутся сохраненными.</string>
+        <string name="settings_company_activity.to_merchandiser_btn.text">Стать мерчендайзером</string>
         <!-- Company Settings Activity -->
+        <!-- Merchandiser Settings Activity -->
+        <string name="settings_merchandiser_activity.to_company_tv.text">Вы используете приложение как мерчендайзер. Если вы хотите использовать его в качестве руководителя компании, нажмите кнопку ниже. Ваше имя, email и пароль останутся сохраненными.</string>
+        <string name="settings_merchandiser_activity.to_company_btn.text">Стать руководителем компании</string>
+        <string name="settings_merchandiser_activity.no_company.error">Похоже, вы не зарегистрировались как руководитель компании</string>
+        <!-- Merchandiser Settings Activity -->
     <!-- Settings Activity -->
 </resources>
