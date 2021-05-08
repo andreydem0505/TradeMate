@@ -3,7 +3,7 @@
 
     <!-- Global errors -->
     <string name="global_errors.server_error.text">An error on the server</string>
-    <string name="global_errors.internet_connection_error.text">Internet isn`t connected</string>
+    <string name="global_errors.internet_connection_error.text">Internet isn\'t connected</string>
     <string name="global_errors.empty_fields_error.text">You have to fill all fields</string>
     <string name="global_errors.password_is_unreliable_error.text">Password is unreliable</string>
     <string name="global_errors.email_is_incorrect_error.text">Email is incorrect</string>
@@ -22,7 +22,7 @@
 
     <!-- Description Fragment -->
     <string name="description_fragment.logo_description.description" translatable="false">Logo</string>
-    <string name="description_fragment.description.text">TradeMate - assistant with your job. It is a kit with useful functions and clear interface all in one to help you with your duties. Let`s get started!</string>
+    <string name="description_fragment.description.text">TradeMate - assistant with your job. It is a kit with useful functions and clear interface all in one to help you with your duties. Let\'s get started!</string>
     <string name="description_fragment.description_btn.text">Start</string>
     <!-- Description Fragment -->
 
@@ -120,7 +120,7 @@
     <string name="log_in_company_activity.password_et.hint">Password</string>
     <string name="log_in_company_activity.log_in_btn.text">Log in</string>
     <!-- Errors -->
-    <string name="log_in_company_activity.company_was_not_found_error.text">Company with this email isn`t exist</string>
+    <string name="log_in_company_activity.company_was_not_found_error.text">Company with this email isn\'t exist</string>
     <!-- Log In Company Activity -->
 
     <!-- Add Merchandiser Activity -->
@@ -140,7 +140,7 @@
     <string name="log_in_merchandiser_activity.password_et.hint">Password</string>
     <string name="log_in_merchandiser_activity.log_in_btn.text">Log in</string>
     <!-- Errors -->
-    <string name="log_in_merchandiser_activity.merchandiser_was_not_found_error.text">Merchandiser with this email isn`t exist</string>
+    <string name="log_in_merchandiser_activity.merchandiser_was_not_found_error.text">Merchandiser with this email isn\'t exist</string>
     <!-- Log In Merchandiser Activity -->
 
     <!-- Add Operator Activity -->
@@ -173,7 +173,11 @@
     <!-- Merchandiser Settings Activity -->
     <string name="settings_merchandiser_activity.to_company_tv.text">You are using the app as merchandiser. If you want to use it as company director, click the button below. Your name, email and password will remain saved.</string>
     <string name="settings_merchandiser_activity.to_company_btn.text">Become a company director</string>
-    <string name="settings_merchandiser_activity.no_company.error">It seems like you haven`t registered as company director</string>
+    <string name="settings_merchandiser_activity.no_company.error">It seems like you haven\'t registered as company director</string>
+    <string name="settings_merchandiser_activity.panel_1.text">You can choose the keyword, and the microphone, until recognizes it, will wait for the text from you while creating the request to the operator.</string>
+    <string name="settings_merchandiser_activity.radio_1.text">Don\'t use the keyword</string>
+    <string name="settings_merchandiser_activity.radio_2.text">Use the keyword \"%1$s\"</string>
+    <string name="settings_merchandiser_activity.radio_2.default">Use the keyword</string>
     <!-- Merchandiser Settings Activity -->
     <!-- Settings Activity -->
 </resources>

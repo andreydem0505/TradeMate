@@ -148,7 +148,11 @@
         <!-- Merchandiser Settings Activity -->
         <string name="settings_merchandiser_activity.to_company_tv.text">Вы используете приложение как мерчендайзер. Если вы хотите использовать его в качестве руководителя компании, нажмите кнопку ниже. Ваше имя, email и пароль останутся сохраненными.</string>
         <string name="settings_merchandiser_activity.to_company_btn.text">Стать руководителем компании</string>
-        <string name="settings_merchandiser_activity.no_company.error">Похоже, вы не зарегистрировались как руководитель компании</string>
+        <string name="settings_merchandiser_activity.no_company.error">Похоже, вы не регистрировались как руководитель компании</string>
+        <string name="settings_merchandiser_activity.panel_1.text">Вы можете выбрать ключевое слово, и микрофон, пока не распознает его, будет ждать текст от вас при создании заявки.</string>
+        <string name="settings_merchandiser_activity.radio_1.text">Не использовать ключевое слово</string>
+        <string name="settings_merchandiser_activity.radio_2.text">Использовать ключевое слово \"%1$s\"</string>
+        <string name="settings_merchandiser_activity.radio_2.default">Использовать ключевое слово</string>
         <!-- Merchandiser Settings Activity -->
     <!-- Settings Activity -->
 </resources>

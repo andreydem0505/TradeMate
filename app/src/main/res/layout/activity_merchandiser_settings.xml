@@ -34,6 +34,40 @@
                 android:visibility="invisible"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="@id/settings_merchandiser_activity.header"/>
+            
+            <LinearLayout
+                android:id="@+id/settings_merchandiser_activity.panel_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:background="@drawable/primary_alert"
+                app:layout_constraintTop_toBottomOf="@id/settings_merchandiser_activity.header">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/settings_merchandiser_activity.panel_1.text"/>
+                
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_merchandiser_activity.radio_1.text"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_merchandiser_activity.radio_2.default"/>
+                    
+                </RadioGroup>
+                
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +75,8 @@
                 android:background="@drawable/danger_alert"
                 android:orientation="vertical"
                 android:padding="10dp"
-                app:layout_constraintTop_toBottomOf="@id/settings_merchandiser_activity.header">
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/settings_merchandiser_activity.panel_1">
 
                 <TextView
                     android:layout_width="match_parent"
