@@ -178,6 +178,10 @@
     <string name="settings_merchandiser_activity.radio_1.text">Don\'t use the keyword</string>
     <string name="settings_merchandiser_activity.radio_2.text">Use the keyword \"%1$s\"</string>
     <string name="settings_merchandiser_activity.radio_2.default">Use the keyword</string>
+    <string name="settings_merchandiser_activity.panel_1_edit_text.hint">Type keyword</string>
+    <string name="settings_merchandiser_activity.panel_1_floating_btn.description" translatable="false">Add</string>
+    <string name="settings_merchandiser_activity.panel_1_no_text.error">You haven\'t type the keyword</string>
+    <string name="settings_merchandiser_activity.panel_1_btn.text">Change the keyword</string>
     <!-- Merchandiser Settings Activity -->
     <!-- Settings Activity -->
 </resources>

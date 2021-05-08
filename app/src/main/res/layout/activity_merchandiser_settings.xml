@@ -56,17 +56,21 @@
                     android:orientation="vertical">
                     
                     <RadioButton
+                        android:id="@+id/settings_merchandiser_activity.radio_btn_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:onClick="onRadioBtn1Click"
                         android:text="@string/settings_merchandiser_activity.radio_1.text"/>
 
                     <RadioButton
+                        android:id="@+id/settings_merchandiser_activity.radio_btn_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:onClick="onRadioBtn2Click"
                         android:text="@string/settings_merchandiser_activity.radio_2.default"/>
                     
                 </RadioGroup>
-                
+
             </LinearLayout>
 
             <LinearLayout

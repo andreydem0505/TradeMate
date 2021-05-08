@@ -17,7 +17,8 @@ public class SharedPreferencesEngine {
         NAME_KEY = "name",
         EMAIL_KEY = "email",
         ACCESS_TOKEN_KEY = "accessToken",
-        PASSWORD_KEY = "password";
+        PASSWORD_KEY = "password",
+        KEYWORD_KEY = "keyword";
 
     public SharedPreferencesEngine(@NotNull Context context, String source) {
         sp = context.getSharedPreferences(source, Context.MODE_PRIVATE);
@@ -44,6 +45,22 @@ public class SharedPreferencesEngine {
 
     public String getString(String key) {
         return sp.getString(key, null);
+    }
+
+    public void putString(String key, String value) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    public boolean containsKey(String key) {
+        return sp.contains(key);
+    }
+
+    public void removeKey(String key) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(key);
+        editor.apply();
     }
 
     public int count() {

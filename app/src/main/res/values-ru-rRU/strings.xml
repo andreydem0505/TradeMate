@@ -153,6 +153,9 @@
         <string name="settings_merchandiser_activity.radio_1.text">Не использовать ключевое слово</string>
         <string name="settings_merchandiser_activity.radio_2.text">Использовать ключевое слово \"%1$s\"</string>
         <string name="settings_merchandiser_activity.radio_2.default">Использовать ключевое слово</string>
+        <string name="settings_merchandiser_activity.panel_1_edit_text.hint">Введите ключевое слово</string>
+        <string name="settings_merchandiser_activity.panel_1_no_text.error">Вы не ввели ключевое слово</string>
+        <string name="settings_merchandiser_activity.panel_1_btn.text">Изменить слово</string>
         <!-- Merchandiser Settings Activity -->
     <!-- Settings Activity -->
 </resources>

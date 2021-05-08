@@ -7,16 +7,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MerchandiserSettingsActivity extends AppCompatActivity {
+    private LinearLayout panel1;
     private ProgressBar progressBar;
+    private RadioButton radioButton1, radioButton2;
+    private SharedPreferencesEngine spe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +34,17 @@ public class MerchandiserSettingsActivity extends AppCompatActivity {
         setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_merchandiser_settings);
         progressBar = findViewById(R.id.settings_merchandiser_activity_progress_bar);
+        panel1 = findViewById(R.id.settings_merchandiser_activity_panel_1);
+        radioButton1 = findViewById(R.id.settings_merchandiser_activity_radio_btn_1);
+        radioButton2 = findViewById(R.id.settings_merchandiser_activity_radio_btn_2);
+        spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
+        if (spe.containsKey(SharedPreferencesEngine.KEYWORD_KEY)) {
+            radioButton2.setChecked(true);
+            radioButton2.setText(String.format(getString(R.string.settings_merchandiser_activity_radio_2_text), spe.getString(SharedPreferencesEngine.KEYWORD_KEY)));
+            addBtnToChangeKeyword();
+        } else {
+            radioButton1.setChecked(true);
+        }
     }
 
     Handler handler = new Handler(Looper.getMainLooper()) {
@@ -52,5 +73,45 @@ public class MerchandiserSettingsActivity extends AppCompatActivity {
         String email = spe.getString(SharedPreferencesEngine.EMAIL_KEY);
         String password = spe.getString(SharedPreferencesEngine.PASSWORD_KEY);
         api.logInCompany(email, password);
+    }
+
+    public void onRadioBtn1Click(View v) {
+        if (spe.containsKey(SharedPreferencesEngine.KEYWORD_KEY)) {
+            spe.removeKey(SharedPreferencesEngine.KEYWORD_KEY);
+        }
+    }
+
+    public void onRadioBtn2Click(View v) {
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        EditText editText = (EditText) inflater.inflate(R.layout.merchandiser_settings_panel_1_edit_text, linearLayout, false);
+        linearLayout.addView(editText);
+        FloatingActionButton floatingActionButton = (FloatingActionButton) inflater.inflate(R.layout.merchandiser_settings_panel_1_floating_action_btn, linearLayout, false);
+        linearLayout.addView(floatingActionButton);
+        panel1.addView(linearLayout);
+        radioButton1.setOnClickListener(v1 -> panel1.removeView(linearLayout));
+        floatingActionButton.setOnClickListener(v1 -> {
+            if (TextUtils.isEmpty(editText.getText())) {
+                Toast.makeText(this, R.string.settings_merchandiser_activity_panel_1_no_text_error, Toast.LENGTH_SHORT).show();
+            } else {
+                String keyword = editText.getText().toString();
+                spe.putString(SharedPreferencesEngine.KEYWORD_KEY, keyword);
+                panel1.removeView(linearLayout);
+                radioButton1.setOnClickListener(this::onRadioBtn1Click);
+                radioButton2.setText(String.format(getString(R.string.settings_merchandiser_activity_radio_2_text), keyword));
+                addBtnToChangeKeyword();
+            }
+        });
+    }
+
+    private void addBtnToChangeKeyword() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        Button button = (Button) inflater.inflate(R.layout.merchandiser_settings_panel_1_button, panel1, false);
+        panel1.addView(button);
+        button.setOnClickListener(v -> {
+            onRadioBtn2Click(v);
+            panel1.removeView(button);
+        });
     }
 }
