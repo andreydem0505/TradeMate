@@ -157,4 +157,9 @@
         <string name="settings_merchandiser_activity.panel_1_btn.text">Изменить слово</string>
         <!-- Merchandiser Settings Activity -->
     <!-- Settings Activity -->
+
+    <!-- Delete Dialog -->
+    <string name="delete_dialog.title">Удалить?</string>
+    <string name="delete_dialog.yes">Да</string>
+    <!-- Delete Dialog -->
 </resources>

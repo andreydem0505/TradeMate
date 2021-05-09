@@ -265,7 +265,7 @@
                         android:layout_weight="1"
                         android:hint="@string/company_fragment.add_shop_et.hint"
                         android:autofillHints="shop"
-                        android:inputType="text" />
+                        android:inputType="textCapSentences" />
 
                 </LinearLayout>
 

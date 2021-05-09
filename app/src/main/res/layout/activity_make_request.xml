@@ -53,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/make_request_activity.name_et.hint"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:layout_weight="1"
                 android:autofillHints="shop"/>
 

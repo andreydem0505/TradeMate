@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/add_operator_activity.name_et.hint"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:autofillHints="name" />
 
             <EditText

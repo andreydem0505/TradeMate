@@ -2,13 +2,18 @@ package com.dementev_a.trademate.widgets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.dementev_a.trademate.AboutMerchandiserActivity;
 import com.dementev_a.trademate.AboutRequestActivity;
+import com.dementev_a.trademate.DeleteDialog;
 import com.dementev_a.trademate.PhotoReportActivity;
 import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.intent.IntentConstants;
@@ -98,5 +103,10 @@ public class WidgetsEngine {
             });
         } else
             errorTV.setText(R.string.list_activity_error_tv_photo_reports_text);
+    }
+
+    public static void showDialog(FragmentManager manager, Handler handler) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        new DeleteDialog(handler).show(transaction, "dialog");
     }
 }

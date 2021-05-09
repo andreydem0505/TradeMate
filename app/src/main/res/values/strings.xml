@@ -183,4 +183,9 @@
     <string name="settings_merchandiser_activity.panel_1_btn.text">Change the keyword</string>
     <!-- Merchandiser Settings Activity -->
     <!-- Settings Activity -->
+
+    <!-- Delete Dialog -->
+    <string name="delete_dialog.title">Delete?</string>
+    <string name="delete_dialog.yes">Yes</string>
+    <!-- Delete Dialog -->
 </resources>

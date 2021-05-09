@@ -46,7 +46,8 @@ public class API {
             ADD_PHOTO_REPORT_URL = "/create/photo_report",
             GET_PHOTOS_OF_REPORT_URL = "/report/%s/photos",
             PUT_PHOTO_URL = "/report/%s/put_photo",
-            SEND_PHOTO_REPORT_TO_EMAIL_URL = "/report/%s/send";
+            SEND_PHOTO_REPORT_TO_EMAIL_URL = "/report/%s/send",
+            DELETE_PHOTO_REPORT_URL = "/report/%s/delete";
 
     public static final String
             SUCCESS_RESPONSE = "Success";
@@ -70,7 +71,9 @@ public class API {
         ADD_PHOTO_REPORT_HANDLER_NUMBER = 13,
         GET_PHOTOS_OF_REPORT_HANDLER = 14,
         PUT_PHOTO_HANDLER_NUMBER = 15,
-        SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER = 16;
+        SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER = 16,
+        DELETE_DIALOG_HANDLER_NUMBER = 17, // not for the API
+        DELETE_PHOTO_REPORT_HANDLER_NUMBER = 18;
 
     private final OkHttpClient client;
     private final Context context;
@@ -400,5 +403,14 @@ public class API {
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
         new RequestSender(context, client, request, handler, SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER).execute();
+    }
+
+    public void deletePhotoReport(String accessToken, String name) {
+        Request request = new Request.Builder()
+                .url(MAIN_URL + String.format(DELETE_PHOTO_REPORT_URL, name))
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .delete()
+                .build();
+        new RequestSender(context, client, request, handler, DELETE_PHOTO_REPORT_HANDLER_NUMBER).execute();
     }
 }

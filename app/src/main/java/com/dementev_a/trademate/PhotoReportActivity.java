@@ -28,6 +28,7 @@ import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
+import com.dementev_a.trademate.widgets.WidgetsEngine;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -99,6 +100,13 @@ public class PhotoReportActivity extends AppCompatActivity {
                             errorTV.setTextColor(getColor(R.color.green));
                             errorTV.setText(R.string.photo_report_activity_email_was_send_warning);
                         } break;
+                        case API.DELETE_DIALOG_HANDLER_NUMBER: {
+                            progressBar.setVisibility(ProgressBar.VISIBLE);
+                            api.deletePhotoReport(accessToken, name);
+                        } break;
+                        case API.DELETE_PHOTO_REPORT_HANDLER_NUMBER: {
+                            finish();
+                        } break;
                     }
                 }
             }.execute();
@@ -154,5 +162,9 @@ public class PhotoReportActivity extends AppCompatActivity {
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         bitmap.compress(Bitmap.CompressFormat.WEBP, 0, baos);
         return baos.toByteArray();
+    }
+
+    public void onDeleteClickBtn(View v) {
+        WidgetsEngine.showDialog(getSupportFragmentManager(), handler);
     }
 }

@@ -141,7 +141,7 @@
                         android:theme="@style/Theme.AppCompat.Dialog.Alert"
                         android:hint="@string/merchandiser_fragment.add_photo_report_et.hint"
                         android:autofillHints="photoReport"
-                        android:inputType="text" />
+                        android:inputType="textCapSentences" />
 
                 </LinearLayout>
 
