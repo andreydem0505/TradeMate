@@ -42,7 +42,6 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpcore:4.4.13'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
-    implementation "com.github.biodunalfet:SlidingSquaresLoader:1.0"
     // retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'

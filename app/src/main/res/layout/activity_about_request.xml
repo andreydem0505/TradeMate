@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
             android:textSize="@dimen/about_request_activity.header.text_size"
-            android:text="Заявка №1"
+            android:text="@string/default.text"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -33,19 +33,8 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:textSize="@dimen/about_request_activity.text.text_size"
-            android:text="сыр 2 кг\nпельмени 3 кг\nкарандаши 43 шт."
+            android:text="@string/default.text"
             app:layout_constraintTop_toBottomOf="@id/about_request_activity.header"/>
-
-        <TextView
-            android:id="@+id/about_request_activity.sender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:textColor="@color/black"
-            android:textSize="@dimen/about_request_activity.sender.text_size"
-            android:text="От: мерчендайзер 1"
-            app:layout_constraintTop_toBottomOf="@id/about_request_activity.text"
-            app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView
             android:id="@+id/about_request_activity.receiver"
@@ -54,8 +43,8 @@
             android:paddingTop="10dp"
             android:textColor="@color/black"
             android:textSize="@dimen/about_request_activity.receiver.text_size"
-            android:text="Кому: оператор 1"
-            app:layout_constraintTop_toBottomOf="@id/about_request_activity.sender"
+            android:text="@string/default.text"
+            app:layout_constraintTop_toBottomOf="@id/about_request_activity.text"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView
@@ -65,7 +54,7 @@
             android:paddingTop="10dp"
             android:textColor="@color/black"
             android:textSize="@dimen/about_request_activity.time.text_size"
-            android:text="12:34"
+            android:text="@string/default.text"
             app:layout_constraintTop_toTopOf="@id/about_request_activity.receiver"
             app:layout_constraintRight_toRightOf="parent"/>
 

@@ -23,13 +23,10 @@ public class AboutRequestActivity extends AppCompatActivity {
         TextView headerTV = findViewById(R.id.about_request_activity_header);
         TextView textTV = findViewById(R.id.about_request_activity_text);
         TextView receiverTV = findViewById(R.id.about_request_activity_receiver);
-        TextView senderTV = findViewById(R.id.about_request_activity_sender);
         TextView textTime = findViewById(R.id.about_request_activity_time);
 
         headerTV.setText(getIntent().getStringExtra(IntentConstants.SUBJECT_EMAIL_INTENT_KEY));
         textTV.setText(getIntent().getStringExtra(IntentConstants.TEXT_EMAIL_INTENT_KEY));
-        String senderText = getString(R.string.about_request_activity_sender_text);
-        senderTV.setText(String.format(senderText, getIntent().getStringExtra(IntentConstants.SENDER_EMAIL_INTENT_KEY)));
         String receiverText = getString(R.string.about_request_activity_receiver_text);
         receiverTV.setText(String.format(receiverText, getIntent().getStringExtra(IntentConstants.RECEIVER_EMAIL_INTENT_KEY)));
         String dateTimeString = getIntent().getStringExtra(IntentConstants.DATE_TIME_EMAIL_INTENT_KEY);

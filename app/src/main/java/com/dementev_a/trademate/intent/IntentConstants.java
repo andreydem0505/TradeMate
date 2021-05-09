@@ -13,7 +13,6 @@ public class IntentConstants {
             SUBJECT_EMAIL_INTENT_KEY = "subject",
             TEXT_EMAIL_INTENT_KEY = "text",
             RECEIVER_EMAIL_INTENT_KEY = "receiver",
-            SENDER_EMAIL_INTENT_KEY = "sender",
             DATE_TIME_EMAIL_INTENT_KEY = "dateTime",
             NAMES_OF_OPERATORS_INTENT_KEY = "namesOfOperators",
             EMAILS_OF_OPERATORS_INTENT_KEY = "emailsOfOperators",

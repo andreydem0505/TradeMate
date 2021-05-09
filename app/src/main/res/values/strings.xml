@@ -72,7 +72,6 @@
     <!-- List Activity -->
 
     <!-- About Request Activity -->
-    <string name="about_request_activity.sender.text">From: %1$s</string>
     <string name="about_request_activity.receiver.text">To: %1$s</string>
     <!-- About Request Activity -->
 

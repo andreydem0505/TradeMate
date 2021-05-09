@@ -34,7 +34,6 @@ public class WidgetsEngine {
                 intent.putExtra(IntentConstants.SUBJECT_EMAIL_INTENT_KEY, arrayOfRequestJson[position].getSubject());
                 intent.putExtra(IntentConstants.TEXT_EMAIL_INTENT_KEY, arrayOfRequestJson[position].getText());
                 intent.putExtra(IntentConstants.RECEIVER_EMAIL_INTENT_KEY, arrayOfRequestJson[position].getOperator());
-                intent.putExtra(IntentConstants.SENDER_EMAIL_INTENT_KEY, arrayOfRequestJson[position].getSender());
                 intent.putExtra(IntentConstants.DATE_TIME_EMAIL_INTENT_KEY, arrayOfRequestJson[position].getDateTime());
                 context.startActivity(intent);
             });

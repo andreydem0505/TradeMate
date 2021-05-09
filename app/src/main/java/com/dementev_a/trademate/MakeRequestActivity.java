@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
+import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.requests.RequestSender;
 import com.dementev_a.trademate.requests.RequestStatus;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
@@ -37,8 +38,9 @@ public class MakeRequestActivity extends AppCompatActivity {
     private EditText textET;
     private ProgressBar progressBar;
     private TextView errorTV;
+    private Intent intent;
     private String[] shops, namesOfOperators, emailsOfOperators;
-    private String merchandiserName, accessToken;
+    private String merchandiserName, accessToken, keywordLower;
     private final int RESULT_SPEECH = 1;
 
     @Override
@@ -54,6 +56,13 @@ public class MakeRequestActivity extends AppCompatActivity {
 
         merchandiserName = getIntent().getStringExtra(IntentConstants.NAME_OF_MERCHANDISER_INTENT_KEY);
         accessToken = getIntent().getStringExtra(IntentConstants.ACCESS_TOKEN_INTENT_KEY);
+
+        SharedPreferencesEngine spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
+        if (spe.containsKey(SharedPreferencesEngine.KEYWORD_KEY)) {
+            keywordLower = spe.getString(SharedPreferencesEngine.KEYWORD_KEY).toLowerCase();
+        } else {
+            keywordLower = null;
+        }
 
         API api = new API(this, handler);
         api.getOperators(accessToken);
@@ -90,7 +99,7 @@ public class MakeRequestActivity extends AppCompatActivity {
     };
 
     public void onSpeakBtnClick(View v) {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault());
         try {
             startActivityForResult(intent, RESULT_SPEECH);
@@ -109,7 +118,14 @@ public class MakeRequestActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(nameET.getText())) {
                     nameET.setText(resultText);
                 } else {
-                    textET.append(resultText + "\n");
+                    if (keywordLower != null) {
+                        if (!resultText.toLowerCase().equals(keywordLower)) {
+                            textET.append(resultText + "\n");
+                            startActivityForResult(intent, RESULT_SPEECH);
+                        }
+                    } else {
+                        textET.append(resultText + "\n");
+                    }
                 }
             }
         }
