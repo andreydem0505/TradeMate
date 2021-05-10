@@ -18,7 +18,9 @@ public class IntentConstants {
             EMAILS_OF_OPERATORS_INTENT_KEY = "emailsOfOperators",
             PASSWORD_OF_MERCHANDISER_INTENT_KEY = "merchandiserPassword",
             PHOTO_REPORT_NAME_INTENT_KEY = "photoReportName",
-            TYPE_INTENT_KEY = "type";
+            TYPE_INTENT_KEY = "type",
+            TODO_INTENT_KEY = "todo",
+            NAME_INTENT_KEY = "name";
 
     public static final int
             DEFAULT_DATA_TYPE = -1,
@@ -26,5 +28,6 @@ public class IntentConstants {
             MERCHANDISERS_DATA_TYPE = 1,
             OPERATORS_DATA_TYPE = 2,
             SHOPS_DATA_TYPE = 3,
-            PHOTO_REPORTS_DATA_TYPE = 4;
+            PHOTO_REPORTS_DATA_TYPE = 4,
+            TODO_DELETE = 5;
 }

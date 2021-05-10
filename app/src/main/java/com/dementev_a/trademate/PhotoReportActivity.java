@@ -17,6 +17,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -105,6 +107,10 @@ public class PhotoReportActivity extends AppCompatActivity {
                             api.deletePhotoReport(accessToken, name);
                         } break;
                         case API.DELETE_PHOTO_REPORT_HANDLER_NUMBER: {
+                            Intent intent = new Intent();
+                            intent.putExtra(IntentConstants.TODO_INTENT_KEY, IntentConstants.TODO_DELETE);
+                            intent.putExtra(IntentConstants.NAME_INTENT_KEY, name);
+                            setResult(RESULT_OK, intent);
                             finish();
                         } break;
                     }
@@ -164,7 +170,23 @@ public class PhotoReportActivity extends AppCompatActivity {
         return baos.toByteArray();
     }
 
-    public void onDeleteClickBtn(View v) {
-        WidgetsEngine.showDialog(getSupportFragmentManager(), handler);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_photo_report, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.photo_report_menu_action_delete: {
+                WidgetsEngine.showDeleteDialog(getSupportFragmentManager(), handler);
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -188,4 +188,8 @@
     <string name="delete_dialog.title">Delete?</string>
     <string name="delete_dialog.yes">Yes</string>
     <!-- Delete Dialog -->
+
+    <!-- menu -->
+    <string name="photo_report_menu.action_delete.text">delete</string>
+    <!-- menu -->
 </resources>

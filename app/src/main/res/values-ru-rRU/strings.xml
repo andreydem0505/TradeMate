@@ -162,4 +162,8 @@
     <string name="delete_dialog.title">Удалить?</string>
     <string name="delete_dialog.yes">Да</string>
     <!-- Delete Dialog -->
+
+    <!-- menu -->
+    <string name="photo_report_menu.action_delete.text">удалить</string>
+    <!-- menu -->
 </resources>
