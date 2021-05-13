@@ -6,21 +6,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ArrayAdapterListView {
     private ArrayAdapter<String> adapter;
-    private String[] names;
-    private ListView listView;
+    private List<String> names;
     private Context context;
 
     public int deleteItem(String name) {
-        List<String> list = new ArrayList<>(Arrays.asList(names));
-        int index = list.indexOf(name);
-        list.remove(index);
-        names = list.toArray(new String[0]);
+        int index = names.indexOf(name);
+        adapter.remove(name);
         adapter.notifyDataSetChanged();
         return index;
     }
@@ -30,12 +25,8 @@ public class ArrayAdapterListView {
         return adapter;
     }
 
-    public String[] getNames() {
+    public List<String> getNames() {
         return names;
-    }
-
-    public ListView getListView() {
-        return listView;
     }
 
     public Context getContext() {
@@ -43,16 +34,13 @@ public class ArrayAdapterListView {
     }
 
     // setters
-    public void setAdapter(ArrayAdapter<String> adapter) {
-        this.adapter = adapter;
-    }
-
-    public void setNames(String[] names) {
+    public void setNames(List<String> names) {
         this.names = names;
     }
 
     public void setListView(ListView listView) {
-        this.listView = listView;
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, names);
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(this::onItemClickListener);
     }
 

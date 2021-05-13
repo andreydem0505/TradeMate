@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,7 +32,6 @@ public class WidgetsEngine {
         private RequestJson[] arrayOfRequestJson;
 
         public RequestsListView(@NotNull Parcelable[] requests, ListView listView, Context context, TextView errorTV) {
-            setListView(listView);
             setContext(context);
             if (requests.length > 0) {
                 arrayOfRequestJson = new RequestJson[requests.length];
@@ -43,9 +41,8 @@ public class WidgetsEngine {
                     arrayOfRequestJson[i] = requestJson;
                     arrayNames[i] = requestJson.getSubject();
                 }
-                setNames(arrayNames);
-                setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, getNames()));
-                getListView().setAdapter(getAdapter());
+                setNames(new ArrayList<>(Arrays.asList(arrayNames)));
+                setListView(listView);
             } else
                 errorTV.setText(R.string.list_activity_error_tv_requests_text);
         }
@@ -62,15 +59,11 @@ public class WidgetsEngine {
 
         @Override
         public int deleteItem(String name) {
+            int index = super.deleteItem(name);
             List<RequestJson> list = new ArrayList<>(Arrays.asList(arrayOfRequestJson));
-            for (RequestJson rj : list) {
-                if (rj.getSubject().equals(name)) {
-                    list.remove(rj);
-                    break;
-                }
-            }
+            list.remove(index);
             arrayOfRequestJson = list.toArray(new RequestJson[0]);
-            return super.deleteItem(name);
+            return index;
         }
     }
 
@@ -79,7 +72,6 @@ public class WidgetsEngine {
         private MerchandiserJson[] arrayOfMerchandiserJson;
 
         public MerchandisersListView(@NotNull Parcelable[] merchandisers, ListView listView, Context context, TextView errorTV) {
-            setListView(listView);
             setContext(context);
             if (merchandisers.length > 0) {
                 arrayOfMerchandiserJson = new MerchandiserJson[merchandisers.length];
@@ -89,9 +81,8 @@ public class WidgetsEngine {
                     arrayOfMerchandiserJson[i] = merchandiserJson;
                     arrayNames[i] = merchandiserJson.getName();
                 }
-                setNames(arrayNames);
-                setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, getNames()));
-                getListView().setAdapter(getAdapter());
+                setNames(new ArrayList<>(Arrays.asList(arrayNames)));
+                setListView(listView);
             } else
                 errorTV.setText(R.string.list_activity_error_tv_merchandisers_text);
         }
@@ -107,15 +98,11 @@ public class WidgetsEngine {
 
         @Override
         public int deleteItem(String name) {
+            int index = super.deleteItem(name);
             List<MerchandiserJson> list = new ArrayList<>(Arrays.asList(arrayOfMerchandiserJson));
-            for (MerchandiserJson mj : list) {
-                if (mj.getName().equals(name)) {
-                    list.remove(mj);
-                    break;
-                }
-            }
+            list.remove(index);
             arrayOfMerchandiserJson = list.toArray(new MerchandiserJson[0]);
-            return super.deleteItem(name);
+            return index;
         }
     }
 
@@ -125,21 +112,19 @@ public class WidgetsEngine {
         private String[] emails;
 
         public OperatorsListView(@NotNull String[] names, String[] emails, ListView listView, Context context, TextView errorTV) {
-            setNames(names);
-            setListView(listView);
+            setNames(new ArrayList<>(Arrays.asList(names)));
             setContext(context);
             this.emails = emails;
             if (names.length > 0) {
-                setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, getNames()));
-                getListView().setAdapter(getAdapter());
+                setListView(listView);
             } else
                 errorTV.setText(R.string.list_activity_error_tv_operators_text);
         }
 
         @Override
         public void onItemClickListener(AdapterView<?> parent, View view, int position, long id) {
-            getNames()[lastOperatorNameEdit] = getNames()[lastOperatorNameEdit].replaceAll("\n.+", "");
-            getNames()[position] = getNames()[position] + "\n" + emails[position];
+            getNames().set(lastOperatorNameEdit, getNames().get(lastOperatorNameEdit).replaceAll("\n.+", ""));
+            getNames().set(position, getNames().get(position) + "\n" + emails[position]);
             lastOperatorNameEdit = position;
             getAdapter().notifyDataSetChanged();
         }
@@ -157,12 +142,10 @@ public class WidgetsEngine {
 
     public static class ShopsListView extends ArrayAdapterListView {
         public ShopsListView(@NotNull String[] shops, ListView listView, Context context, TextView errorTV) {
-            setNames(shops);
-            setListView(listView);
+            setNames(new ArrayList<>(Arrays.asList(shops)));
             setContext(context);
-            if (getNames().length > 0) {
-                setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, getNames()));
-                getListView().setAdapter(getAdapter());
+            if (getNames().size() > 0) {
+                setListView(listView);
             } else
                 errorTV.setText(R.string.list_activity_error_tv_shops_text);
         }
@@ -171,12 +154,10 @@ public class WidgetsEngine {
 
     public static class PhotoReportsListView extends ArrayAdapterListView {
         public PhotoReportsListView(@NotNull String[] reports, ListView listView, Context context, TextView errorTV) {
-            setNames(reports);
-            setListView(listView);
+            setNames(new ArrayList<>(Arrays.asList(reports)));
             setContext(context);
-            if (getNames().length > 0) {
-                setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, getNames()));
-                getListView().setAdapter(getAdapter());
+            if (getNames().size() > 0) {
+                setListView(listView);
             } else
                 errorTV.setText(R.string.list_activity_error_tv_photo_reports_text);
         }

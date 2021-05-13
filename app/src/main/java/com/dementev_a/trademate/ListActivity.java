@@ -58,7 +58,7 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void onItemClickListener(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(getContext(), PhotoReportActivity.class);
-                        intent.putExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY, getNames()[position]);
+                        intent.putExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY, getNames().get(position));
                         startActivityForResult(intent, REQUEST_CODE);
                     }
                 };
