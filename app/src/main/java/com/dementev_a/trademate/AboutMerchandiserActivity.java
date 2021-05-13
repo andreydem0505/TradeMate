@@ -87,7 +87,7 @@ public class AboutMerchandiserActivity extends AppCompatActivity {
             new ReactOnStatus(bundle, errorTV) {
                 @Override
                 public void success() {
-//                    new WidgetsEngine.RequestsListView(bundle.getParcelableArray(BundleEngine.REQUESTS_KEY_BUNDLE), listView, AboutMerchandiserActivity.this, errorTV);
+                    new WidgetsEngine.RequestsListView(bundle.getParcelableArray(BundleEngine.REQUESTS_KEY_BUNDLE), listView, AboutMerchandiserActivity.this, errorTV);
                 }
             }.execute();
         }

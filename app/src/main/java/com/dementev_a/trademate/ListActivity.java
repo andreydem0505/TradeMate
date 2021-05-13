@@ -1,22 +1,29 @@
 package com.dementev_a.trademate;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.dementev_a.trademate.api.API;
+import com.dementev_a.trademate.bundle.BundleEngine;
 import com.dementev_a.trademate.intent.IntentConstants;
+import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.widgets.ArrayAdapterListView;
 import com.dementev_a.trademate.widgets.WidgetsEngine;
 
 
 public class ListActivity extends AppCompatActivity {
-    private TextView headerTV, errorTV;
+    private TextView errorTV;
     private ListView listView;
     private ArrayAdapterListView arrayAdapterListView;
     private final int REQUEST_CODE = 1;
@@ -26,7 +33,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_TradeMate);
         setContentView(R.layout.activity_list);
-        headerTV = findViewById(R.id.list_activity_header_tv);
+        TextView headerTV = findViewById(R.id.list_activity_header_tv);
         listView = findViewById(R.id.list_activity_list);
         errorTV = findViewById(R.id.list_activity_error_tv);
         int type = getIntent().getIntExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.DEFAULT_DATA_TYPE);
@@ -61,6 +68,12 @@ public class ListActivity extends AppCompatActivity {
                         intent.putExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY, getNames().get(position));
                         startActivityForResult(intent, REQUEST_CODE);
                     }
+
+                    @Override
+                    public boolean onItemLongClickListener(AdapterView<?> parent, View view, int position, long id) {
+                        WidgetsEngine.showDeleteDialog(getSupportFragmentManager(), handler, getNames().get(position));
+                        return true;
+                    }
                 };
             } break;
         }
@@ -81,4 +94,20 @@ public class ListActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            Bundle bundle = msg.getData();
+            switch (msg.what) {
+                case API.DELETE_DIALOG_HANDLER_NUMBER: {
+                    String name = bundle.getString(BundleEngine.NAME_KEY_BUNDLE);
+                    API api = new API(ListActivity.this, this);
+                    api.deletePhotoReport(new SharedPreferencesEngine(ListActivity.this, getString(R.string.shared_preferences_user)).getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY), name);
+                    arrayAdapterListView.deleteItem(name);
+                } break;
+            }
+        }
+    };
 }

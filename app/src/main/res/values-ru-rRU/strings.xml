@@ -159,7 +159,7 @@
     <!-- Settings Activity -->
 
     <!-- Delete Dialog -->
-    <string name="delete_dialog.title">Удалить?</string>
+    <string name="delete_dialog.title_with_word">Удалить "%1$s"?</string>
     <string name="delete_dialog.yes">Да</string>
     <!-- Delete Dialog -->
 

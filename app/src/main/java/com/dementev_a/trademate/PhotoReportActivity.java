@@ -182,7 +182,7 @@ public class PhotoReportActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.photo_report_menu_action_delete: {
-                WidgetsEngine.showDeleteDialog(getSupportFragmentManager(), handler);
+                WidgetsEngine.showDeleteDialog(getSupportFragmentManager(), handler, name);
                 return true;
             }
             default:

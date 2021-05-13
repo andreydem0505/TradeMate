@@ -163,8 +163,8 @@ public class WidgetsEngine {
         }
     }
 
-    public static void showDeleteDialog(FragmentManager manager, Handler handler) {
+    public static void showDeleteDialog(FragmentManager manager, Handler handler, String name) {
         FragmentTransaction transaction = manager.beginTransaction();
-        new DeleteDialog(handler).show(transaction, "dialog");
+        new DeleteDialog(handler, name).show(transaction, "dialog");
     }
 }

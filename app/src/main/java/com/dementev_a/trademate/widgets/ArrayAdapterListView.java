@@ -42,6 +42,7 @@ public class ArrayAdapterListView {
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, names);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this::onItemClickListener);
+        listView.setOnItemLongClickListener(this::onItemLongClickListener);
     }
 
     public void setContext(Context context) {
@@ -49,4 +50,8 @@ public class ArrayAdapterListView {
     }
 
     public void onItemClickListener(AdapterView<?> parent, View view, int position, long id) {}
+
+    public boolean onItemLongClickListener(AdapterView<?> parent, View view, int position, long id) {
+        return true;
+    }
 }
