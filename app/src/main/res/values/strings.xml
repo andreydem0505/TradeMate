@@ -156,7 +156,6 @@
     <string name="photo_report_activity.error_tv_photos.text">No photos yet</string>
     <string name="photo_report_activity.add_photo_btn.description" translatable="false">Add photo</string>
     <string name="photo_report_activity.add_photo_error_text.warning">Wait…</string>
-    <string name="photo_report_activity.photos_preparing.warning">Preparing your photos…</string>
     <string name="photo_report_activity.email_sending.warning">Sending email…</string>
     <string name="photo_report_activity.email_was_send.warning">Email was send successfully</string>
     <!-- Errors -->

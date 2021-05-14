@@ -131,7 +131,6 @@
     <!-- Photo Report Activity -->
     <string name="photo_report_activity.error_tv_photos.text">Пока нет фотографий</string>
     <string name="photo_report_activity.add_photo_error_text.warning">Подождите…</string>
-    <string name="photo_report_activity.photos_preparing.warning">Подготовка ваших фотографий…</string>
     <string name="photo_report_activity.email_sending.warning">Отправка письма…</string>
     <string name="photo_report_activity.email_was_send.warning">Письмо отправлено успешно!</string>
     <!-- Errors -->

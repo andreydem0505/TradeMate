@@ -159,7 +159,7 @@ public class PhotoReportActivity extends AppCompatActivity {
     }
 
     public void onSendPhotosClickBtn(View v) {
-        errorTV.setText(R.string.photo_report_activity_photos_preparing_warning);
+        errorTV.setText(R.string.photo_report_activity_add_photo_error_text_warning);
         api.sendPhotoReport(accessToken, name);
     }
 
