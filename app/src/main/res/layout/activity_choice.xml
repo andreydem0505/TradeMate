@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill"
-        android:backgroundTint="@color/color_3B70CD"
+        android:backgroundTint="@color/dark_blue"
         android:text="@string/choice_activity.log_in_company_btn.text"
         android:textAllCaps="false"
         android:onClick="onLogInCompanyClickBtn"

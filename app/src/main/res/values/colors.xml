@@ -13,7 +13,7 @@
     <color name="blue">#08A8F3</color>
     <color name="orange">#FF5722</color>
     <color name="red">#FF0000</color>
-    <color name="color_3B70CD">#3B70CD</color>
+    <color name="dark_blue">#3B70CD</color>
     <color name="panel_background">#EEEFF1</color>
     <color name="panel_background_dark">#3E3F40</color>
 </resources>

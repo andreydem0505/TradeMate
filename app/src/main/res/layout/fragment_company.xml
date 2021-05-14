@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="@string/company_fragment.about_merchandisers_btn.text"
-                    android:backgroundTint="@color/color_3B70CD" />
+                    android:backgroundTint="@color/dark_blue" />
 
                 <ProgressBar
                     android:id="@+id/company_fragment.panel_1_progress_bar"
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/color_3B70CD"
+                android:background="@color/dark_blue"
                 android:padding="@dimen/company_fragment.panel.padding"
                 android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@id/company_fragment.panel_1">
@@ -231,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="@string/company_fragment.about_shops_btn.text"
-                        android:backgroundTint="@color/color_3B70CD" />
+                        android:backgroundTint="@color/dark_blue" />
 
                     <ProgressBar
                         android:id="@+id/company_fragment.panel_4_progress_bar"
@@ -251,7 +251,7 @@
                         android:layout_width="38dp"
                         android:layout_height="38dp"
                         android:layout_gravity="center"
-                        android:backgroundTint="@color/color_3B70CD"
+                        android:backgroundTint="@color/dark_blue"
                         app:fabCustomSize="38dp"
                         app:maxImageSize="20dp"
                         app:tint="@color/white"
