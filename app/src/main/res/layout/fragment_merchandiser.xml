@@ -31,8 +31,7 @@
                 android:id="@+id/merchandiser_fragment.settings_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/settings"
-                android:backgroundTint="@color/white"
+                android:background="@drawable/settings"
                 android:contentDescription="@string/merchandiser_fragment.settings_btn.description"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/merchandiser_fragment.merchandiser_name"/>
