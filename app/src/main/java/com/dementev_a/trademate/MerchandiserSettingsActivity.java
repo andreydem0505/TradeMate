@@ -27,6 +27,8 @@ public class MerchandiserSettingsActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RadioButton radioButton1, radioButton2;
     private SharedPreferencesEngine spe;
+    private boolean layoutHasBtn, layoutHasET;
+    private String keyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,12 @@ public class MerchandiserSettingsActivity extends AppCompatActivity {
         radioButton1 = findViewById(R.id.settings_merchandiser_activity_radio_btn_1);
         radioButton2 = findViewById(R.id.settings_merchandiser_activity_radio_btn_2);
         spe = new SharedPreferencesEngine(this, getString(R.string.shared_preferences_user));
+        layoutHasBtn = false;
+        layoutHasET = false;
         if (spe.containsKey(SharedPreferencesEngine.KEYWORD_KEY)) {
             radioButton2.setChecked(true);
-            radioButton2.setText(String.format(getString(R.string.settings_merchandiser_activity_radio_2_text), spe.getString(SharedPreferencesEngine.KEYWORD_KEY)));
+            keyword = spe.getString(SharedPreferencesEngine.KEYWORD_KEY);
+            radioButton2.setText(String.format(getString(R.string.settings_merchandiser_activity_radio_2_text), keyword));
             addBtnToChangeKeyword();
         } else {
             radioButton1.setChecked(true);
@@ -82,34 +87,45 @@ public class MerchandiserSettingsActivity extends AppCompatActivity {
     }
 
     public void onRadioBtn2Click(View v) {
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        EditText editText = (EditText) inflater.inflate(R.layout.merchandiser_settings_panel_1_edit_text, linearLayout, false);
-        linearLayout.addView(editText);
-        FloatingActionButton floatingActionButton = (FloatingActionButton) inflater.inflate(R.layout.merchandiser_settings_panel_1_floating_action_btn, linearLayout, false);
-        linearLayout.addView(floatingActionButton);
-        panel1.addView(linearLayout);
-        radioButton1.setOnClickListener(v1 -> panel1.removeView(linearLayout));
-        floatingActionButton.setOnClickListener(v1 -> {
-            if (TextUtils.isEmpty(editText.getText())) {
-                Toast.makeText(this, R.string.settings_merchandiser_activity_panel_1_no_text_error, Toast.LENGTH_SHORT).show();
-            } else {
-                String keyword = editText.getText().toString();
-                spe.putString(SharedPreferencesEngine.KEYWORD_KEY, keyword);
+        if (!layoutHasBtn && !layoutHasET) {
+            layoutHasET = true;
+            LinearLayout linearLayout = new LinearLayout(this);
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            LayoutInflater inflater = LayoutInflater.from(this);
+            EditText editText = (EditText) inflater.inflate(R.layout.merchandiser_settings_panel_1_edit_text, linearLayout, false);
+            linearLayout.addView(editText);
+            FloatingActionButton floatingActionButton = (FloatingActionButton) inflater.inflate(R.layout.merchandiser_settings_panel_1_floating_action_btn, linearLayout, false);
+            linearLayout.addView(floatingActionButton);
+            panel1.addView(linearLayout);
+            radioButton1.setOnClickListener(v1 -> {
+                layoutHasET = false;
                 panel1.removeView(linearLayout);
-                radioButton1.setOnClickListener(this::onRadioBtn1Click);
-                radioButton2.setText(String.format(getString(R.string.settings_merchandiser_activity_radio_2_text), keyword));
-                addBtnToChangeKeyword();
-            }
-        });
+            });
+            floatingActionButton.setOnClickListener(v1 -> {
+                if (TextUtils.isEmpty(editText.getText().toString().trim())) {
+                    Toast.makeText(this, R.string.settings_merchandiser_activity_panel_1_no_text_error, Toast.LENGTH_SHORT).show();
+                } else {
+                    keyword = editText.getText().toString();
+                    spe.putString(SharedPreferencesEngine.KEYWORD_KEY, keyword);
+                    panel1.removeView(linearLayout);
+                    radioButton1.setOnClickListener(this::onRadioBtn1Click);
+                    radioButton2.setText(String.format(getString(R.string.settings_merchandiser_activity_radio_2_text), keyword));
+                    addBtnToChangeKeyword();
+                }
+            });
+        } else {
+            spe.putString(SharedPreferencesEngine.KEYWORD_KEY, keyword);
+        }
     }
 
     private void addBtnToChangeKeyword() {
+        layoutHasBtn = true;
         LayoutInflater inflater = LayoutInflater.from(this);
         Button button = (Button) inflater.inflate(R.layout.merchandiser_settings_panel_1_button, panel1, false);
         panel1.addView(button);
         button.setOnClickListener(v -> {
+            layoutHasBtn = false;
+            layoutHasET = false;
             onRadioBtn2Click(v);
             panel1.removeView(button);
         });

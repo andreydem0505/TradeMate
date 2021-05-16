@@ -37,7 +37,7 @@ public class LogInMerchandiserActivity extends AppCompatActivity {
 
     public void onLogInClickBtn(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        if (TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(emailET.getText())) {
+        if (TextUtils.isEmpty(emailET.getText().toString().trim()) || TextUtils.isEmpty(emailET.getText().toString().trim())) {
             Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
             new RequestSender().sendHandlerMessage(bundle, handler, API.LOG_IN_MERCHANDISER_HANDLER_NUMBER);

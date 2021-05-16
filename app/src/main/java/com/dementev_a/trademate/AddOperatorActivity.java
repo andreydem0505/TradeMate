@@ -40,7 +40,7 @@ public class AddOperatorActivity extends AppCompatActivity {
 
     public void onAddClickBtn(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText())) {
+        if (TextUtils.isEmpty(nameET.getText().toString().trim()) || TextUtils.isEmpty(emailET.getText().toString().trim())) {
             Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
             new RequestSender().sendHandlerMessage(bundle, handler, API.ADD_OPERATOR_HANDLER_NUMBER);

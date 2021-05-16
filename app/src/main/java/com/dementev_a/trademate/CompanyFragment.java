@@ -197,7 +197,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
             } break;
             case R.id.company_fragment_add_shop_btn: {
                 PB4.setVisibility(ProgressBar.VISIBLE);
-                if (TextUtils.isEmpty(addShopET.getText())) {
+                if (TextUtils.isEmpty(addShopET.getText().toString().trim())) {
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
                     new RequestSender().sendHandlerMessage(bundle, handler, API.ADD_SHOP_HANDLER_NUMBER);

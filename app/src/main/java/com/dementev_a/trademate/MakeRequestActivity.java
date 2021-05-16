@@ -115,7 +115,7 @@ public class MakeRequestActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK && data != null) {
                 ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 String resultText = text.get(0);
-                if (TextUtils.isEmpty(nameET.getText())) {
+                if (TextUtils.isEmpty(nameET.getText().toString().trim())) {
                     nameET.setText(resultText);
                 } else {
                     if (keywordLower != null) {
@@ -133,7 +133,7 @@ public class MakeRequestActivity extends AppCompatActivity {
 
     public void onSendBtnClick(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(textET.getText())) {
+        if (TextUtils.isEmpty(nameET.getText().toString().trim()) || TextUtils.isEmpty(textET.getText().toString().trim())) {
             Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
             new RequestSender().sendHandlerMessage(bundle, handler, API.SEND_EMAIL_HANDLER_NUMBER);

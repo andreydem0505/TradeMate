@@ -152,7 +152,7 @@ public class MerchandiserFragment extends Fragment implements View.OnClickListen
             } break;
             case R.id.merchandiser_fragment_add_photo_report_btn: {
                 PB2.setVisibility(ProgressBar.VISIBLE);
-                if (TextUtils.isEmpty(addPhotoReportET.getText())) {
+                if (TextUtils.isEmpty(addPhotoReportET.getText().toString().trim())) {
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
                     new RequestSender().sendHandlerMessage(bundle, handler, API.ADD_PHOTO_REPORT_HANDLER_NUMBER);

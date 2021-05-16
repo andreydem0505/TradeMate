@@ -41,7 +41,7 @@ public class AddMerchandiserActivity extends AppCompatActivity {
 
     public void onAddMerchandiserClickBtn(View v) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        if (TextUtils.isEmpty(nameET.getText()) || TextUtils.isEmpty(emailET.getText()) || TextUtils.isEmpty(passwordET.getText())) {
+        if (TextUtils.isEmpty(nameET.getText().toString().trim()) || TextUtils.isEmpty(emailET.getText().toString().trim()) || TextUtils.isEmpty(passwordET.getText().toString().trim())) {
             Bundle bundle = new Bundle();
             bundle.putInt(BundleEngine.STATUS_KEY_BUNDLE, RequestStatus.STATUS_EMPTY_FIELDS);
             new RequestSender().sendHandlerMessage(bundle, handler, API.ADD_MERCHANDISER_HANDLER_NUMBER);
