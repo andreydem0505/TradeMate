@@ -14,8 +14,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.dementev_a.trademate.AboutMerchandiserActivity;
 import com.dementev_a.trademate.AboutRequestActivity;
-import com.dementev_a.trademate.DeleteDialog;
+import com.dementev_a.trademate.dialogs.DeleteDialog;
 import com.dementev_a.trademate.R;
+import com.dementev_a.trademate.dialogs.OperatorDialog;
 import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.json.MerchandiserJson;
 import com.dementev_a.trademate.json.RequestJson;
@@ -108,10 +109,11 @@ public class WidgetsEngine {
 
 
     public static class OperatorsListView extends ArrayAdapterListView {
-        private static int lastOperatorNameEdit = 0;
         private String[] emails;
+        private final FragmentManager fragmentManager;
 
-        public OperatorsListView(@NotNull String[] names, String[] emails, ListView listView, Context context, TextView errorTV) {
+        public OperatorsListView(@NotNull String[] names, String[] emails, ListView listView, Context context, TextView errorTV, FragmentManager fragmentManager) {
+            this.fragmentManager = fragmentManager;
             setNames(new ArrayList<>(Arrays.asList(names)));
             setContext(context);
             this.emails = emails;
@@ -123,10 +125,7 @@ public class WidgetsEngine {
 
         @Override
         public void onItemClickListener(AdapterView<?> parent, View view, int position, long id) {
-            getNames().set(lastOperatorNameEdit, getNames().get(lastOperatorNameEdit).replaceAll("\n.+", ""));
-            getNames().set(position, getNames().get(position) + "\n" + emails[position]);
-            lastOperatorNameEdit = position;
-            getAdapter().notifyDataSetChanged();
+            showOperatorDialog(fragmentManager, getNames().get(position), emails[position]);
         }
 
         @Override
@@ -166,5 +165,10 @@ public class WidgetsEngine {
     public static void showDeleteDialog(FragmentManager manager, Handler handler, String name) {
         FragmentTransaction transaction = manager.beginTransaction();
         new DeleteDialog(handler, name).show(transaction, "dialog");
+    }
+
+    public static void showOperatorDialog(FragmentManager manager, String name, String email) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        new OperatorDialog(name, email).show(transaction, "dialog");
     }
 }

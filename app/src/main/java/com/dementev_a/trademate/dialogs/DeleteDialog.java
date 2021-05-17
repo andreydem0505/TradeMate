@@ -1,4 +1,4 @@
-package com.dementev_a.trademate;
+package com.dementev_a.trademate.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.dementev_a.trademate.R;
 import com.dementev_a.trademate.api.API;
 import com.dementev_a.trademate.bundle.BundleEngine;
 
@@ -41,5 +42,11 @@ public class DeleteDialog extends DialogFragment {
                     dialog.cancel();
                 });
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red, getContext().getTheme()));
     }
 }

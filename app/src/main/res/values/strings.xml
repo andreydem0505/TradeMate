@@ -19,6 +19,7 @@
     <!-- Shared Preferences -->
 
     <string name="default.text">No data</string>
+    <string name="ok" translatable="false">@android:string/ok</string>
 
     <!-- Description Fragment -->
     <string name="description_fragment.logo_description.description" translatable="false">Logo</string>
@@ -187,6 +188,10 @@
     <string name="delete_dialog.title_with_word">Delete "%1$s"?</string>
     <string name="delete_dialog.yes">Yes</string>
     <!-- Delete Dialog -->
+
+    <!-- Operator Dialog -->
+    <string name="operator_dialog.message" translatable="false">Email: %1$s</string>
+    <!-- Operator Dialog -->
 
     <!-- menu -->
     <string name="photo_report_menu.action_delete.text">delete</string>

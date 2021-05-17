@@ -53,7 +53,7 @@ public class ListActivity extends AppCompatActivity {
                 arrayAdapterListView = new WidgetsEngine.OperatorsListView(
                         getIntent().getStringArrayExtra(IntentConstants.NAMES_OF_OPERATORS_INTENT_KEY),
                         getIntent().getStringArrayExtra(IntentConstants.EMAILS_OF_OPERATORS_INTENT_KEY),
-                        listView, this, errorTV);
+                        listView, this, errorTV, getSupportFragmentManager());
             } break;
             case IntentConstants.SHOPS_DATA_TYPE: {
                 headerTV.setText(R.string.list_activity_header_shops_text);

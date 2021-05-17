@@ -34,20 +34,13 @@ public class API {
             AUTH_COMPANY_URL = "/auth/company",
             SIGN_UP_COMPANY_URL = "/register/company",
             AUTH_MERCHANDISER_URL = "/auth/merchandiser",
-            ADD_MERCHANDISER_URL = "/register/merchandiser",
-            ALL_MERCHANDISERS_URL = "/merchandisers",
-            ADD_OPERATOR_URL = "/register/operator",
-            ALL_OPERATORS_URL = "/operators",
-            CREATE_REQUEST_URL = "/create/request",
-            GET_ALL_REQUESTS_URL = "/requests",
-            GET_ALL_SHOPS_URL = "/shops",
-            ADD_SHOP_URL = "/create/shop",
-            GET_PHOTO_REPORTS_URL = "/photo_reports",
-            ADD_PHOTO_REPORT_URL = "/create/photo_report",
-            GET_PHOTOS_OF_REPORT_URL = "/report/%s/photos",
-            PUT_PHOTO_URL = "/report/%s/put_photo",
-            SEND_PHOTO_REPORT_TO_EMAIL_URL = "/report/%s/send",
-            DELETE_PHOTO_REPORT_URL = "/report/%s/delete";
+            MERCHANDISERS_URL = "/merchandisers",
+            OPERATORS_URL = "/operators",
+            REQUESTS_URL = "/requests",
+            SHOPS_URL = "/shops",
+            PHOTO_REPORTS_URL = "/photo_reports",
+            PHOTO_REPORT_URL = "/report/%s",
+            SEND_PHOTO_REPORT_URL = PHOTO_REPORT_URL + "/send";
 
     public static final String
             SUCCESS_RESPONSE = "Success";
@@ -88,7 +81,7 @@ public class API {
 
     public void getOperators(String accessToken) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + ALL_OPERATORS_URL)
+                .url(MAIN_URL + OPERATORS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
        new RequestSender(context, client, request, handler, GET_OPERATORS_HANDLER_NUMBER) {
@@ -103,7 +96,7 @@ public class API {
 
     public void getMerchandisers(String accessToken) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + ALL_MERCHANDISERS_URL)
+                .url(MAIN_URL + MERCHANDISERS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
         new RequestSender(context, client, request, handler, GET_MERCHANDISERS_HANDLER_NUMBER) {
@@ -122,7 +115,7 @@ public class API {
         Clock clock = Clock.systemUTC();
         LocalDate localDate = LocalDate.now(clock);
         String formattedDate = localDate.format(formatter);
-        String url = MAIN_URL + GET_ALL_REQUESTS_URL + "?date=" + formattedDate;
+        String url = MAIN_URL + REQUESTS_URL + "?date=" + formattedDate;
         if (merchandiser.length > 0)
             url += "&name=" + merchandiser[0];
         Request request = new Request.Builder()
@@ -142,7 +135,7 @@ public class API {
 
     public void getShops(String accessToken) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + GET_ALL_SHOPS_URL)
+                .url(MAIN_URL + SHOPS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
         new RequestSender(context, client, request, handler, GET_SHOPS_HANDLER_NUMBER) {
@@ -194,9 +187,9 @@ public class API {
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
-                .url(MAIN_URL + ADD_SHOP_URL)
+                .url(MAIN_URL + SHOPS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
-                .post(body)
+                .put(body)
                 .build();
         new RequestSender(context, client, request, handler, ADD_SHOP_HANDLER_NUMBER) {
             @Override
@@ -247,9 +240,9 @@ public class API {
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
-                .url(MAIN_URL + ADD_MERCHANDISER_URL)
+                .url(MAIN_URL + MERCHANDISERS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
-                .post(body)
+                .put(body)
                 .build();
         new RequestSender(context, client, request, handler, ADD_MERCHANDISER_HANDLER_NUMBER).execute();
     }
@@ -267,9 +260,9 @@ public class API {
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
-                .url(MAIN_URL + ADD_OPERATOR_URL)
+                .url(MAIN_URL + OPERATORS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
-                .post(body)
+                .put(body)
                 .build();
         new RequestSender(context, client, request, handler, ADD_OPERATOR_HANDLER_NUMBER).execute();
     }
@@ -317,16 +310,16 @@ public class API {
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
-                .url(MAIN_URL + CREATE_REQUEST_URL)
+                .url(MAIN_URL + REQUESTS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
-                .post(body)
+                .put(body)
                 .build();
         new RequestSender(context, client, request, handler, SEND_EMAIL_HANDLER_NUMBER).execute();
     }
 
     public void getPhotoReports(String accessToken) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + GET_PHOTO_REPORTS_URL)
+                .url(MAIN_URL + PHOTO_REPORTS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
         new RequestSender(context, client, request, handler, GET_PHOTO_REPORTS_HANDLER_NUMBER) {
@@ -351,9 +344,9 @@ public class API {
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
-                .url(MAIN_URL + ADD_PHOTO_REPORT_URL)
+                .url(MAIN_URL + PHOTO_REPORTS_URL)
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
-                .post(body)
+                .put(body)
                 .build();
         new RequestSender(context, client, request, handler, ADD_PHOTO_REPORT_HANDLER_NUMBER) {
             @Override
@@ -365,7 +358,7 @@ public class API {
 
     public void getPhotosOfReport(String accessToken, String name) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + String.format(GET_PHOTOS_OF_REPORT_URL, name))
+                .url(MAIN_URL + String.format(PHOTO_REPORT_URL, name))
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
         new RequestSender(context, client, request, handler, GET_PHOTOS_OF_REPORT_HANDLER) {
@@ -390,16 +383,16 @@ public class API {
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Request request = new Request.Builder()
-                .url(MAIN_URL + String.format(PUT_PHOTO_URL, photoReportName))
+                .url(MAIN_URL + String.format(PHOTO_REPORT_URL, photoReportName))
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
-                .post(body)
+                .put(body)
                 .build();
         new RequestSender(context, client, request, handler, PUT_PHOTO_HANDLER_NUMBER).execute();
     }
 
     public void sendPhotoReport(String accessToken, String name) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + String.format(SEND_PHOTO_REPORT_TO_EMAIL_URL, name))
+                .url(MAIN_URL + String.format(SEND_PHOTO_REPORT_URL, name))
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .build();
         new RequestSender(context, client, request, handler, SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER).execute();
@@ -407,7 +400,7 @@ public class API {
 
     public void deletePhotoReport(String accessToken, String name) {
         Request request = new Request.Builder()
-                .url(MAIN_URL + String.format(DELETE_PHOTO_REPORT_URL, name))
+                .url(MAIN_URL + String.format(PHOTO_REPORT_URL, name))
                 .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
                 .delete()
                 .build();
