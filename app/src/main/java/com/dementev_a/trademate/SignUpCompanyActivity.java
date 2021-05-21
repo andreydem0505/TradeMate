@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.dementev_a.trademate.widgets.ReactOnStatus;
 public class SignUpCompanyActivity extends AppCompatActivity {
     private EditText nameET, emailET, passwordET;
     private ProgressBar progressBar;
+    private Button button;
     private TextView errorTV;
 
     @Override
@@ -34,10 +36,12 @@ public class SignUpCompanyActivity extends AppCompatActivity {
         emailET = findViewById(R.id.sign_up_company_activity_email_et);
         passwordET = findViewById(R.id.sign_up_company_activity_password_et);
         progressBar = findViewById(R.id.sign_up_company_activity_progress_bar);
+        button = findViewById(R.id.sign_up_company_activity_button);
         errorTV = findViewById(R.id.sign_up_company_activity_error_tv);
     }
 
     public void onSignUpClickBtn(View v) {
+        button.setOnClickListener(null);
         progressBar.setVisibility(ProgressBar.VISIBLE);
         if (TextUtils.isEmpty(nameET.getText().toString().trim()) || TextUtils.isEmpty(emailET.getText().toString().trim()) || TextUtils.isEmpty(passwordET.getText().toString().trim())) {
             Bundle bundle = new Bundle();
@@ -58,6 +62,12 @@ public class SignUpCompanyActivity extends AppCompatActivity {
                 @Override
                 public void success() {
                     finish();
+                }
+
+                @Override
+                public void failure() {
+                    super.failure();
+                    button.setOnClickListener(SignUpCompanyActivity.this::onSignUpClickBtn);
                 }
             }.execute();
         }

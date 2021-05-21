@@ -38,7 +38,6 @@ import java.util.List;
 public class CompanyFragment extends Fragment implements View.OnClickListener {
     private TextView shopsQuantityTV, operatorsQuantityTV, employeesQuantityTV, requestsQuantityTV;
     private Button aboutOperatorsBtn, aboutMerchandisersBtn, aboutRequestsBtn, aboutShopsBtn;
-    private ImageButton settingsBtn;
     private FloatingActionButton addOperatorBtn, addMerchandiserBtn, addShopBtn;
     private EditText addShopET;
     private ProgressBar PB1, PB2, PB3, PB4;
@@ -71,7 +70,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
         requestsQuantityTV = view.findViewById(R.id.company_fragment_requests_quantity);
         shopsQuantityTV = view.findViewById(R.id.company_fragment_shops_quantity);
         addShopET = view.findViewById(R.id.company_fragment_add_shop_et);
-        settingsBtn = view.findViewById(R.id.company_fragment_settings_btn);
+        ImageButton settingsBtn = view.findViewById(R.id.company_fragment_settings_btn);
         settingsBtn.setOnClickListener(this);
         PB1 = view.findViewById(R.id.company_fragment_panel_1_progress_bar);
         PB2 = view.findViewById(R.id.company_fragment_panel_2_progress_bar);
@@ -153,6 +152,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                             shops = list.toArray(new String[0]);
                             PB4.setVisibility(ProgressBar.INVISIBLE);
                             addShopET.setText("");
+                            addShopBtn.setOnClickListener(CompanyFragment.this);
                         } break;
                     }
                 }
@@ -196,6 +196,7 @@ public class CompanyFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             } break;
             case R.id.company_fragment_add_shop_btn: {
+                addShopBtn.setOnClickListener(null);
                 PB4.setVisibility(ProgressBar.VISIBLE);
                 if (TextUtils.isEmpty(addShopET.getText().toString().trim())) {
                     Bundle bundle = new Bundle();

@@ -35,9 +35,12 @@ public class API {
             SIGN_UP_COMPANY_URL = "/register/company",
             AUTH_MERCHANDISER_URL = "/auth/merchandiser",
             MERCHANDISERS_URL = "/merchandisers",
+            MERCHANDISER_URL = "/merchandiser",
             OPERATORS_URL = "/operators",
+            OPERATOR_URL = "/operator",
             REQUESTS_URL = "/requests",
             SHOPS_URL = "/shops",
+            SHOP_URL = "/shop",
             PHOTO_REPORTS_URL = "/photo_reports",
             PHOTO_REPORT_URL = "/report/%s",
             SEND_PHOTO_REPORT_URL = PHOTO_REPORT_URL + "/send";
@@ -66,7 +69,10 @@ public class API {
         PUT_PHOTO_HANDLER_NUMBER = 15,
         SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER = 16,
         DELETE_DIALOG_HANDLER_NUMBER = 17, // not for the API
-        DELETE_PHOTO_REPORT_HANDLER_NUMBER = 18;
+        DELETE_PHOTO_REPORT_HANDLER_NUMBER = 18,
+        DELETE_SHOP_HANDLER_NUMBER = 19,
+        DELETE_OPERATOR_HANDLER_NUMBER = 20,
+        DELETE_MERCHANDISER_HANDLER_NUMBER = 21;
 
     private final OkHttpClient client;
     private final Context context;
@@ -405,5 +411,32 @@ public class API {
                 .delete()
                 .build();
         new RequestSender(context, client, request, handler, DELETE_PHOTO_REPORT_HANDLER_NUMBER).execute();
+    }
+
+    public void deleteShop(String accessToken, String name) {
+        Request request = new Request.Builder()
+                .url(MAIN_URL + SHOP_URL + "?name=" + name)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .delete()
+                .build();
+        new RequestSender(context, client, request, handler, DELETE_SHOP_HANDLER_NUMBER).execute();
+    }
+
+    public void deleteOperator(String accessToken, String name) {
+        Request request = new Request.Builder()
+                .url(MAIN_URL + OPERATOR_URL + "?name=" + name)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .delete()
+                .build();
+        new RequestSender(context, client, request, handler, DELETE_OPERATOR_HANDLER_NUMBER).execute();
+    }
+
+    public void deleteMerchandiser(String accessToken, String name) {
+        Request request = new Request.Builder()
+                .url(MAIN_URL + MERCHANDISER_URL + "?name=" + name)
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .delete()
+                .build();
+        new RequestSender(context, client, request, handler, DELETE_MERCHANDISER_HANDLER_NUMBER).execute();
     }
 }

@@ -87,7 +87,7 @@
             android:autofillHints="text" />
 
         <Button
-            android:id="@+id/make_request_activity.make_btn"
+            android:id="@+id/make_request_activity.send_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -102,7 +102,7 @@
             android:id="@+id/make_request_activity.progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/make_request_activity.make_btn"
+            app:layout_constraintTop_toBottomOf="@id/make_request_activity.send_btn"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 

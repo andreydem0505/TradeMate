@@ -26,6 +26,7 @@ public class ListActivity extends AppCompatActivity {
     private TextView errorTV;
     private ListView listView;
     private ArrayAdapterListView arrayAdapterListView;
+    private int type;
     private final int REQUEST_CODE = 1;
 
     @Override
@@ -36,7 +37,7 @@ public class ListActivity extends AppCompatActivity {
         TextView headerTV = findViewById(R.id.list_activity_header_tv);
         listView = findViewById(R.id.list_activity_list);
         errorTV = findViewById(R.id.list_activity_error_tv);
-        int type = getIntent().getIntExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.DEFAULT_DATA_TYPE);
+        type = getIntent().getIntExtra(IntentConstants.TYPE_INTENT_KEY, IntentConstants.DEFAULT_DATA_TYPE);
         switch (type) {
             case IntentConstants.REQUESTS_DATA_TYPE: {
                 headerTV.setText(R.string.list_activity_header_requests_text);
@@ -45,7 +46,13 @@ public class ListActivity extends AppCompatActivity {
             case IntentConstants.MERCHANDISERS_DATA_TYPE: {
                 String header = getString(R.string.list_activity_header_merchandisers_text);
                 headerTV.setText(String.format(header, getIntent().getStringExtra(IntentConstants.COMPANY_NAME_INTENT_KEY)));
-                arrayAdapterListView = new WidgetsEngine.MerchandisersListView(getIntent().getParcelableArrayExtra(IntentConstants.MERCHANDISERS_INTENT_KEY), listView, this, errorTV);
+                arrayAdapterListView = new WidgetsEngine.MerchandisersListView(getIntent().getParcelableArrayExtra(IntentConstants.MERCHANDISERS_INTENT_KEY), listView, this, errorTV) {
+                    @Override
+                    public boolean onItemLongClickListener(AdapterView<?> parent, View view, int position, long id) {
+                        WidgetsEngine.showDeleteDialog(getSupportFragmentManager(), handler, getNames().get(position));
+                        return true;
+                    }
+                };
             } break;
             case IntentConstants.OPERATORS_DATA_TYPE: {
                 String header = getString(R.string.list_activity_header_operators_text);
@@ -53,11 +60,17 @@ public class ListActivity extends AppCompatActivity {
                 arrayAdapterListView = new WidgetsEngine.OperatorsListView(
                         getIntent().getStringArrayExtra(IntentConstants.NAMES_OF_OPERATORS_INTENT_KEY),
                         getIntent().getStringArrayExtra(IntentConstants.EMAILS_OF_OPERATORS_INTENT_KEY),
-                        listView, this, errorTV, getSupportFragmentManager());
+                        listView,  handler, this, errorTV, getSupportFragmentManager());
             } break;
             case IntentConstants.SHOPS_DATA_TYPE: {
                 headerTV.setText(R.string.list_activity_header_shops_text);
-                arrayAdapterListView = new WidgetsEngine.ShopsListView(getIntent().getStringArrayExtra(IntentConstants.SHOPS_INTENT_KEY), listView, this, errorTV);
+                arrayAdapterListView = new WidgetsEngine.ShopsListView(getIntent().getStringArrayExtra(IntentConstants.SHOPS_INTENT_KEY), listView, this, errorTV) {
+                    @Override
+                    public boolean onItemLongClickListener(AdapterView<?> parent, View view, int position, long id) {
+                        WidgetsEngine.showDeleteDialog(getSupportFragmentManager(), handler, getNames().get(position));
+                        return true;
+                    }
+                };
             } break;
             case IntentConstants.PHOTO_REPORTS_DATA_TYPE: {
                 headerTV.setText(R.string.list_activity_header_photo_reports_text);
@@ -104,7 +117,21 @@ public class ListActivity extends AppCompatActivity {
                 case API.DELETE_DIALOG_HANDLER_NUMBER: {
                     String name = bundle.getString(BundleEngine.NAME_KEY_BUNDLE);
                     API api = new API(ListActivity.this, this);
-                    api.deletePhotoReport(new SharedPreferencesEngine(ListActivity.this, getString(R.string.shared_preferences_user)).getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY), name);
+                    String accessToken = new SharedPreferencesEngine(ListActivity.this, getString(R.string.shared_preferences_user)).getString(SharedPreferencesEngine.ACCESS_TOKEN_KEY);
+                    switch (type) {
+                        case IntentConstants.MERCHANDISERS_DATA_TYPE:
+                            api.deleteMerchandiser(accessToken, name);
+                            break;
+                        case IntentConstants.PHOTO_REPORTS_DATA_TYPE:
+                            api.deletePhotoReport(accessToken, name);
+                            break;
+                        case IntentConstants.SHOPS_DATA_TYPE:
+                            api.deleteShop(accessToken, name);
+                            break;
+                        case IntentConstants.OPERATORS_DATA_TYPE:
+                            api.deleteOperator(accessToken, name);
+                            break;
+                    }
                     arrayAdapterListView.deleteItem(name);
                 } break;
             }

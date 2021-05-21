@@ -31,6 +31,7 @@ import com.dementev_a.trademate.intent.IntentConstants;
 import com.dementev_a.trademate.preferences.SharedPreferencesEngine;
 import com.dementev_a.trademate.widgets.ReactOnStatus;
 import com.dementev_a.trademate.widgets.WidgetsEngine;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,6 +45,7 @@ public class PhotoReportActivity extends AppCompatActivity {
     private TextView errorTV;
     private ProgressBar progressBar;
     private LinearLayout imagesLayout;
+    private FloatingActionButton sendBtn;
     private LayoutInflater inflater;
     private String name, accessToken;
     private API api;
@@ -59,6 +61,7 @@ public class PhotoReportActivity extends AppCompatActivity {
         TextView header = findViewById(R.id.photo_report_activity_header);
         progressBar = findViewById(R.id.photo_report_activity_progress_bar);
         errorTV = findViewById(R.id.photo_report_activity_error_tv);
+        sendBtn = findViewById(R.id.photo_report_activity_send_email_btn);
         imagesLayout = findViewById(R.id.photo_report_activity_images_layout);
         name = getIntent().getStringExtra(IntentConstants.PHOTO_REPORT_NAME_INTENT_KEY);
         header.setText(name);
@@ -98,6 +101,7 @@ public class PhotoReportActivity extends AppCompatActivity {
                             errorTV.setText("");
                         } break;
                         case API.SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER: {
+                            sendBtn.setOnClickListener(PhotoReportActivity.this::onSendPhotosClickBtn);
                             progressBar.setVisibility(ProgressBar.INVISIBLE);
                             errorTV.setTextColor(getColor(R.color.green));
                             errorTV.setText(R.string.photo_report_activity_email_was_send_warning);
@@ -114,6 +118,13 @@ public class PhotoReportActivity extends AppCompatActivity {
                             finish();
                         } break;
                     }
+                }
+
+                @Override
+                public void failure() {
+                    super.failure();
+                    if (msg.what == API.SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER)
+                        sendBtn.setOnClickListener(PhotoReportActivity.this::onSendPhotosClickBtn);
                 }
             }.execute();
         }
@@ -159,6 +170,7 @@ public class PhotoReportActivity extends AppCompatActivity {
     }
 
     public void onSendPhotosClickBtn(View v) {
+        sendBtn.setOnClickListener(null);
         errorTV.setText(R.string.photo_report_activity_add_photo_error_text_warning);
         api.sendPhotoReport(accessToken, name);
     }

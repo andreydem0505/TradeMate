@@ -111,9 +111,11 @@ public class WidgetsEngine {
     public static class OperatorsListView extends ArrayAdapterListView {
         private String[] emails;
         private final FragmentManager fragmentManager;
+        private final Handler handler;
 
-        public OperatorsListView(@NotNull String[] names, String[] emails, ListView listView, Context context, TextView errorTV, FragmentManager fragmentManager) {
+        public OperatorsListView(@NotNull String[] names, String[] emails, ListView listView, Handler handler, Context context, TextView errorTV, FragmentManager fragmentManager) {
             this.fragmentManager = fragmentManager;
+            this.handler = handler;
             setNames(new ArrayList<>(Arrays.asList(names)));
             setContext(context);
             this.emails = emails;
@@ -125,7 +127,7 @@ public class WidgetsEngine {
 
         @Override
         public void onItemClickListener(AdapterView<?> parent, View view, int position, long id) {
-            showOperatorDialog(fragmentManager, getNames().get(position), emails[position]);
+            showOperatorDialog(handler, fragmentManager, getNames().get(position), emails[position]);
         }
 
         @Override
@@ -167,8 +169,8 @@ public class WidgetsEngine {
         new DeleteDialog(handler, name).show(transaction, "dialog");
     }
 
-    public static void showOperatorDialog(FragmentManager manager, String name, String email) {
+    public static void showOperatorDialog(Handler handler, FragmentManager manager, String name, String email) {
         FragmentTransaction transaction = manager.beginTransaction();
-        new OperatorDialog(name, email).show(transaction, "dialog");
+        new OperatorDialog(handler, manager, name, email).show(transaction, "dialog");
     }
 }

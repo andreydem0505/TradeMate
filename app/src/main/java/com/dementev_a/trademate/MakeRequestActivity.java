@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -34,6 +35,7 @@ import java.util.Locale;
 
 public class MakeRequestActivity extends AppCompatActivity {
     private Spinner spinner;
+    private Button sendBtn;
     private AutoCompleteTextView nameET;
     private EditText textET;
     private ProgressBar progressBar;
@@ -53,6 +55,7 @@ public class MakeRequestActivity extends AppCompatActivity {
         textET = findViewById(R.id.make_request_activity_text_et);
         progressBar = findViewById(R.id.make_request_activity_progress_bar);
         errorTV = findViewById(R.id.make_request_activity_error_tv);
+        sendBtn = findViewById(R.id.make_request_activity_send_btn);
 
         merchandiserName = getIntent().getStringExtra(IntentConstants.NAME_OF_MERCHANDISER_INTENT_KEY);
         accessToken = getIntent().getStringExtra(IntentConstants.ACCESS_TOKEN_INTENT_KEY);
@@ -132,6 +135,7 @@ public class MakeRequestActivity extends AppCompatActivity {
     }
 
     public void onSendBtnClick(View v) {
+        sendBtn.setOnClickListener(null);
         progressBar.setVisibility(ProgressBar.VISIBLE);
         if (TextUtils.isEmpty(nameET.getText().toString().trim()) || TextUtils.isEmpty(textET.getText().toString().trim())) {
             Bundle bundle = new Bundle();

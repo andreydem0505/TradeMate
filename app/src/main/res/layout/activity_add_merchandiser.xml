@@ -48,6 +48,7 @@
                 android:autofillHints="password" />
 
             <Button
+                android:id="@+id/add_merchandiser_activity.button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/green"
