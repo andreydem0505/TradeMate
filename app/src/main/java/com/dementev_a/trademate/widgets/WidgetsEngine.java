@@ -164,12 +164,17 @@ public class WidgetsEngine {
         }
     }
 
-    public static void showDeleteDialog(FragmentManager manager, Handler handler, String name) {
+    public static void showDeleteDialog(@NotNull FragmentManager manager, Handler handler, String name) {
         FragmentTransaction transaction = manager.beginTransaction();
         new DeleteDialog(handler, name).show(transaction, "dialog");
     }
 
-    public static void showOperatorDialog(Handler handler, FragmentManager manager, String name, String email) {
+    public static void showDeletePhotoDialog(@NotNull FragmentManager manager, Handler handler, long id) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        new DeleteDialog(handler, id).show(transaction, "dialog");
+    }
+
+    public static void showOperatorDialog(Handler handler, @NotNull FragmentManager manager, String name, String email) {
         FragmentTransaction transaction = manager.beginTransaction();
         new OperatorDialog(handler, manager, name, email).show(transaction, "dialog");
     }

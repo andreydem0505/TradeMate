@@ -1,5 +1,6 @@
 package com.dementev_a.trademate.api;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,6 +44,7 @@ public class API {
             SHOP_URL = "/shop",
             PHOTO_REPORTS_URL = "/photo_reports",
             PHOTO_REPORT_URL = "/report/%s",
+            PHOTO_URL = PHOTO_REPORT_URL + "/photo/%d",
             SEND_PHOTO_REPORT_URL = PHOTO_REPORT_URL + "/send";
 
     public static final String
@@ -69,10 +71,12 @@ public class API {
         PUT_PHOTO_HANDLER_NUMBER = 15,
         SEND_PHOTO_REPORT_TO_EMAIL_HANDLER_NUMBER = 16,
         DELETE_DIALOG_HANDLER_NUMBER = 17, // not for the API
-        DELETE_PHOTO_REPORT_HANDLER_NUMBER = 18,
-        DELETE_SHOP_HANDLER_NUMBER = 19,
-        DELETE_OPERATOR_HANDLER_NUMBER = 20,
-        DELETE_MERCHANDISER_HANDLER_NUMBER = 21;
+        DELETE_DIALOG_PHOTO_HANDLER_NUMBER = 18, // not for the API
+        DELETE_PHOTO_REPORT_HANDLER_NUMBER = 19,
+        DELETE_SHOP_HANDLER_NUMBER = 20,
+        DELETE_OPERATOR_HANDLER_NUMBER = 21,
+        DELETE_MERCHANDISER_HANDLER_NUMBER = 22,
+        DELETE_PHOTO_HANDLER_NUMBER = 23;
 
     private final OkHttpClient client;
     private final Context context;
@@ -372,7 +376,7 @@ public class API {
             public void successMessage() {
                 int total = JsonEngine.getIntegerFromJson(getStringResponse(), "total");
                 getBundle().putInt(BundleEngine.TOTAL_PHOTOS_KEY_BUNDLE, total);
-                getBundle().putAll(JsonEngine.getPhotosFromJson(getStringResponse(), "bytes"));
+                getBundle().putAll(JsonEngine.getPhotosFromJson(getStringResponse(), "photos"));
             }
         }.execute();
     }
@@ -438,5 +442,14 @@ public class API {
                 .delete()
                 .build();
         new RequestSender(context, client, request, handler, DELETE_MERCHANDISER_HANDLER_NUMBER).execute();
+    }
+
+    public void deletePhoto(String accessToken, String name, long id) {
+        @SuppressLint("DefaultLocale") Request request = new Request.Builder()
+                .url(MAIN_URL + String.format(PHOTO_URL, name, id))
+                .header(ACCESS_TOKEN_KEY_HEADER, accessToken)
+                .delete()
+                .build();
+        new RequestSender(context, client, request, handler, DELETE_PHOTO_HANDLER_NUMBER).execute();
     }
 }

@@ -47,6 +47,7 @@ public class PhotoReportActivity extends AppCompatActivity {
     private LinearLayout imagesLayout;
     private FloatingActionButton sendBtn;
     private LayoutInflater inflater;
+    private ImageView toDelete;
     private String name, accessToken;
     private API api;
     private Uri currentPhotoUri;
@@ -89,9 +90,15 @@ public class PhotoReportActivity extends AppCompatActivity {
                                 imagesLayout.removeAllViews();
                                 for (int i = 0; i < bundle.getInt(BundleEngine.TOTAL_PHOTOS_KEY_BUNDLE); i++) {
                                     byte[] byteArray = bundle.getByteArray("photo"+i);
+                                    long id = bundle.getLong("id"+i);
                                     Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                                     ImageView imageView = (ImageView) inflater.inflate(R.layout.picture, imagesLayout, false);
                                     imageView.setImageBitmap(bitmap);
+                                    imageView.setOnLongClickListener(v -> {
+                                        toDelete = imageView;
+                                        WidgetsEngine.showDeletePhotoDialog(getSupportFragmentManager(), handler, id);
+                                        return false;
+                                    });
                                     imagesLayout.addView(imageView);
                                 }
                             }
@@ -109,6 +116,10 @@ public class PhotoReportActivity extends AppCompatActivity {
                         case API.DELETE_DIALOG_HANDLER_NUMBER: {
                             progressBar.setVisibility(ProgressBar.VISIBLE);
                             api.deletePhotoReport(accessToken, name);
+                        } break;
+                        case API.DELETE_DIALOG_PHOTO_HANDLER_NUMBER: {
+                            api.deletePhoto(accessToken, name, bundle.getLong(BundleEngine.ID_KEY_BUNDLE));
+                            imagesLayout.removeView(toDelete);
                         } break;
                         case API.DELETE_PHOTO_REPORT_HANDLER_NUMBER: {
                             Intent intent = new Intent();

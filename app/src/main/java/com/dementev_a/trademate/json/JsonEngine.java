@@ -8,6 +8,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.jetbrains.annotations.NotNull;
+
 public class JsonEngine {
     // Depend on API
 
@@ -21,6 +23,7 @@ public class JsonEngine {
         return jo.get(arg).getAsInt();
     }
 
+    @NotNull
     public static String[] getStringArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
@@ -52,6 +55,7 @@ public class JsonEngine {
     }
     */
 
+    @NotNull
     public static MerchandiserJson[] getMerchandisersArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
@@ -63,6 +67,7 @@ public class JsonEngine {
         return merchandisersArray;
     }
 
+    @NotNull
     public static Bundle getOperatorsArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
@@ -79,6 +84,7 @@ public class JsonEngine {
         return bundle;
     }
 
+    @NotNull
     public static RequestJson[] getRequestsArrayFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
@@ -90,14 +96,18 @@ public class JsonEngine {
         return requestsArray;
     }
 
+    @NotNull
     public static Bundle getPhotosFromJson(String json, String arg) {
         JsonObject jo = JsonParser.parseString(json).getAsJsonObject();
         JsonArray array = jo.get(arg).getAsJsonArray();
         Bundle bundle = new Bundle();
         for (int i = 0; i < array.size(); i++) {
-            String byteCodeString = array.get(i).getAsString();
+            jo = array.get(i).getAsJsonObject();
+            String byteCodeString = jo.get("bytecode").getAsString();
+            long id = jo.get("id").getAsLong();
             byte[] byteCode = Base64.decode(byteCodeString, Base64.CRLF);
             bundle.putByteArray("photo" + i, byteCode);
+            bundle.putLong("id" + i, id);
         }
         return bundle;
     }

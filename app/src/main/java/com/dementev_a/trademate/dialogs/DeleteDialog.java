@@ -18,11 +18,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class DeleteDialog extends DialogFragment {
     private final Handler handler;
-    private final String name;
+    private String name;
+    private long id;
 
     public DeleteDialog(Handler handler, String name) {
         this.handler = handler;
         this.name = name;
+    }
+
+    public DeleteDialog(Handler handler, long id) {
+        this.handler = handler;
+        this.id = id;
     }
 
     @NonNull
@@ -30,13 +36,22 @@ public class DeleteDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder = builder.setTitle(String.format(getString(R.string.delete_dialog_title_with_word), name));
+        if (name != null)
+            builder = builder.setTitle(String.format(getString(R.string.delete_dialog_title_with_word), name));
+        else
+            builder = builder.setTitle(R.string.delete_dialog_title_photo);
         builder.setIcon(R.drawable.delete_icon)
                 .setPositiveButton(R.string.delete_dialog_yes, (dialog, which) -> {
                     Message message = Message.obtain();
-                    message.what = API.DELETE_DIALOG_HANDLER_NUMBER;
+                    if (name != null)
+                        message.what = API.DELETE_DIALOG_HANDLER_NUMBER;
+                    else
+                        message.what = API.DELETE_DIALOG_PHOTO_HANDLER_NUMBER;
                     Bundle bundle = new Bundle();
-                    bundle.putString(BundleEngine.NAME_KEY_BUNDLE, name);
+                    if (name != null)
+                        bundle.putString(BundleEngine.NAME_KEY_BUNDLE, name);
+                    else
+                        bundle.putLong(BundleEngine.ID_KEY_BUNDLE, id);
                     message.setData(bundle);
                     handler.sendMessage(message);
                     dialog.cancel();

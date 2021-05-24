@@ -9,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 public class BundleEngine {
     public static final String
             STATUS_KEY_BUNDLE = "status",
-            NAME_KEY_BUNDLE = "status",
+            NAME_KEY_BUNDLE = "name",
+            ID_KEY_BUNDLE = "id",
             ERROR_TEXT_KEY_BUNDLE = "error_text",
             TOTAL_OPERATORS_KEY_BUNDLE = "total_operators",
             TOTAL_MERCHANDISERS_KEY_BUNDLE = "total_merchandisers",
